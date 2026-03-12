@@ -17,6 +17,12 @@ from hotelrate.config import get_settings
 from hotelrate.schemas import LiveQuoteRequest, Platform
 from hotelrate.services import LiveQuoteService
 
+try:
+    from rich.live import Live
+    RICH_AVAILABLE = True
+except ImportError:
+    RICH_AVAILABLE = False
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run live meta quote across Trip/Booking/Google/Agoda")
@@ -36,6 +42,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--probe-step", type=int, default=3)
     parser.add_argument("--out", default="")
     parser.add_argument("--demo-mode", action="store_true", help="Use deterministic demo offers.")
+    parser.add_argument("--rich", action="store_true", help="Show live Rich TUI dashboard during crawl.")
+    parser.add_argument("--no-rich", action="store_true", help="Disable Rich dashboard even when stdout is a TTY.")
     return parser.parse_args()
 
 
@@ -85,16 +93,50 @@ async def main() -> None:
 
     settings = get_settings().model_copy(update={"demo_mode": bool(args.demo_mode)})
     service = LiveQuoteService(settings)
-    resp = await service.quote(req)
-    payload = resp.model_dump(mode="json")
+
+    use_rich = RICH_AVAILABLE and (args.rich or (not args.no_rich and sys.stdout.isatty()))
+    if use_rich:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "crawl_dashboard",
+            ROOT / "scripts" / "crawl_dashboard.py",
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        CrawlDashboard = mod.CrawlDashboard
+        platform_order = [p.value for p in requested_platforms]
+        request_summary = {
+            "hotel_name": req.hotel_name,
+            "checkin": req.checkin.isoformat(),
+            "checkout": req.checkout.isoformat(),
+            "currency": req.currency,
+        }
+        dashboard = CrawlDashboard(platform_order, request_summary)
+        with Live(
+            dashboard._render(),
+            console=dashboard.console,
+            refresh_per_second=2,
+            transient=False,
+        ) as live:
+            dashboard._live = live
+            resp = await service.quote(req, on_progress=dashboard.on_progress)
+        payload = resp.model_dump(mode="json")
+        dashboard.print_final(payload)
+    else:
+        resp = await service.quote(req)
+        payload = resp.model_dump(mode="json")
 
     if args.out:
         out_path = Path(args.out)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"saved report: {out_path}")
+        if use_rich:
+            dashboard.console.print(f"[dim]saved report:[/] [cyan]{out_path}[/]")
+        else:
+            print(f"saved report: {out_path}")
 
-    print(json.dumps(payload, ensure_ascii=False, indent=2))
+    if not use_rich:
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

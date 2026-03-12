@@ -35,7 +35,11 @@ class Settings(BaseSettings):
     firecrawl_base_url: str = "http://localhost:3002"
     firecrawl_timeout_seconds: int = Field(default=20, ge=3, le=120)
     firecrawl_enabled: bool = True
+    firecrawl_api_key: str = ""
+    firecrawl_fallback_for_live_quote: bool = True
     url_mapping_cache_path: str = "reports/url_mapping_cache.json"
+    # 当 Google 只拿到 fallback 时，是否把当前页面 HTML 存到 reports/ 便于对照选择器
+    google_debug_save_html: bool = False
 
 
 @lru_cache

@@ -477,11 +477,52 @@ class BaseCollector(ABC):
             )
         return offers
 
+    def parse_text_price_fallback_from_text(
+        self,
+        *,
+        body_text: str,
+        request: SearchRequest,
+        min_price: Decimal = Decimal("20"),
+        max_price: Decimal = Decimal("10000"),
+        max_offers: int = 8,
+        mode: str = "text_fallback",
+    ) -> list[RawRateOffer]:
+        """Parse prices from plain body text (e.g. from Firecrawl HTML/markdown)."""
+        prices = self._extract_prices_from_text(
+            text=body_text,
+            currency=request.currency,
+            min_price=min_price,
+            max_price=max_price,
+            max_results=max_offers,
+        )
+        offers: list[RawRateOffer] = []
+        for idx, price in enumerate(prices, start=1):
+            offers.append(
+                RawRateOffer(
+                    platform=self.platform,
+                    platform_hotel_id=request.platform_hotel_id,
+                    room_name=f"Web Offer #{idx}",
+                    meal_plan=None,
+                    cancellation_policy=None,
+                    currency=request.currency.upper(),
+                    base_price=price,
+                    tax_fee=Decimal("0"),
+                    final_price=price,
+                    checkin=request.checkin,
+                    checkout=request.checkout,
+                    adults=request.adults,
+                    children=request.children,
+                    source_url=request.platform_url,
+                    raw_payload={"mode": mode},
+                )
+            )
+        return offers
+
     def count_structured_offers(self, offers: list[RawRateOffer]) -> int:
         total = 0
         for offer in offers:
             mode = str(offer.raw_payload.get("mode", "")).strip().lower()
-            if mode in {"text_fallback", "url_fallback", "demo"}:
+            if mode in {"text_fallback", "url_fallback", "demo", "firecrawl_fallback"}:
                 continue
             total += 1
         return total

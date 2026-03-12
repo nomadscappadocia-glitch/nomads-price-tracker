@@ -15,6 +15,47 @@ class FirecrawlClient:
         self.settings = settings
         self.logger = logging.getLogger(self.__class__.__name__)
 
+    async def scrape_url(self, url: str) -> dict[str, Any]:
+        """Scrape a single URL; returns dict with 'markdown' and/or 'html' on success."""
+        if not self.settings.firecrawl_enabled:
+            return {}
+        base = self.settings.firecrawl_base_url.rstrip("/")
+        endpoint = f"{base}/v1/scrape"
+        timeout = self.settings.firecrawl_timeout_seconds
+        headers: dict[str, str] = {"Content-Type": "application/json"}
+        if getattr(self.settings, "firecrawl_api_key", None):
+            key = (self.settings.firecrawl_api_key or "").strip()
+            if key:
+                headers["Authorization"] = f"Bearer {key}"
+        try:
+            async with httpx.AsyncClient(timeout=timeout, follow_redirects=True) as client:
+                resp = await client.post(
+                    endpoint,
+                    json={"url": url, "formats": ["markdown", "html"]},
+                    headers=headers,
+                )
+        except Exception as exc:
+            self.logger.debug("firecrawl scrape failed url=%s err=%s", url, exc)
+            return {}
+        if resp.status_code != 200:
+            self.logger.debug(
+                "firecrawl scrape non-200 url=%s status=%s body=%s",
+                url,
+                resp.status_code,
+                (resp.text or "")[:300],
+            )
+            return {}
+        try:
+            payload: dict[str, Any] = resp.json()
+        except Exception:
+            return {}
+        if not payload.get("success"):
+            return {}
+        data = payload.get("data") or {}
+        if not isinstance(data, dict):
+            return {}
+        return {k: v for k, v in data.items() if isinstance(v, str)}
+
     async def map_url(self, url: str) -> list[str]:
         if not self.settings.firecrawl_enabled:
             return []

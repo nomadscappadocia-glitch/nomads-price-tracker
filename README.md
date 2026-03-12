@@ -29,6 +29,12 @@ Trip / Booking / Google Hotels / Agoda 多源酒店价格抓取学习项目（MV
 docker compose up -d
 ```
 
+可选：若要用 Firecrawl 做 URL 发现，可同时启动 Firecrawl（见 [13) Firecrawl 集成说明](#13-firecrawl-集成说明本地-3002)）：
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.firecrawl.yml up -d
+```
+
 ### 3.2 安装依赖
 
 ```bash
@@ -201,6 +207,7 @@ URL_MAPPING_CACHE_PATH=reports/url_mapping_cache.json
 DEMO_MODE=false
 PLAYWRIGHT_USER_DATA_DIR_TRIP=/Users/<you>/Desktop/hotelrate/.playwright/trip-profile
 PLAYWRIGHT_USER_DATA_DIR_BOOKING=/Users/<you>/Desktop/hotelrate/.playwright/booking-profile
+PLAYWRIGHT_USER_DATA_DIR_AGODA=/Users/<you>/Desktop/hotelrate/.playwright/agoda-profile
 HEADLESS=true
 ```
 
@@ -258,6 +265,50 @@ python scripts/report_nightly_summary.py
 - `crawl`：候选 URL 深挖与补充
 
 如本地 Firecrawl 暂不可用，系统会自动降级为 DuckDuckGo + 平台规则 URL 生成，不影响主流程执行。
+
+### 在本地 Docker 中添加 Firecrawl
+
+**方式一：使用本项目提供的 Compose（推荐）**
+
+与现有 PostgreSQL 一起启动（同时起数据库 + Firecrawl）：
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.firecrawl.yml up -d
+```
+
+仅启动 Firecrawl（本机已有 Postgres 时）：
+
+```bash
+docker compose -f docker-compose.firecrawl.yml up -d
+```
+
+可选：在 `.env` 中为 Firecrawl 单独设置（否则用默认值即可）：
+
+```bash
+# Firecrawl 管理后台认证（可选，默认 CHANGEME）
+FIRECRAWL_BULL_AUTH_KEY=CHANGEME
+# NuQ 用到的 Postgres（与主库无关，默认 5433 映射）
+# FIRECRAWL_POSTGRES_USER=postgres
+# FIRECRAWL_POSTGRES_PASSWORD=postgres
+# FIRECRAWL_POSTGRES_DB=postgres
+```
+
+验证：`curl -s http://127.0.0.1:3002/health` 或访问 `http://127.0.0.1:3002/admin/CHANGEME/queues`（将 `CHANGEME` 换成你的 `FIRECRAWL_BULL_AUTH_KEY`）。
+
+**方式二：在 Firecrawl 官方仓库中单独启动**
+
+若方式一拉取/启动失败（例如缺少 `ghcr.io/firecrawl/nuq-postgres`），可改为在官方仓库中启动：
+
+```bash
+git clone https://github.com/mendableai/firecrawl.git
+cd firecrawl
+cp apps/api/.env.example .env
+# 编辑 .env：PORT=3002, HOST=0.0.0.0, USE_DB_AUTHENTICATION=false
+docker compose build
+docker compose up -d
+```
+
+本项目中保持 `FIRECRAWL_BASE_URL=http://localhost:3002` 即可。
 
 ## 14) 运行速度优化（已内置）
 

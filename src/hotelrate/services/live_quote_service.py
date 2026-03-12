@@ -3,8 +3,11 @@ from __future__ import annotations
 import asyncio
 import logging
 import re
+import time
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 from datetime import timedelta
+from typing import Any
 
 from hotelrate.collectors import AgodaCollector, BookingCollector, GoogleHotelsCollector, TripCollector
 from hotelrate.config import Settings, get_settings
@@ -17,8 +20,18 @@ from hotelrate.schemas import (
     Platform,
     SearchRequest,
 )
+from hotelrate.services.firecrawl_client import FirecrawlClient
 from hotelrate.services.url_mapping_cache import UrlMappingCache, UrlMappingRecord
 from hotelrate.services.url_discovery import UrlDiscoveryService
+
+
+def _html_to_text(html: str) -> str:
+    """Strip HTML tags and collapse whitespace for price extraction."""
+    if not html:
+        return ""
+    text = re.sub(r"<[^>]+>", " ", html)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
 
 
 @dataclass(slots=True)
@@ -38,6 +51,7 @@ class LiveQuoteService:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.discovery = UrlDiscoveryService(self.settings)
         self.mapping_cache = UrlMappingCache(self.settings.url_mapping_cache_path)
+        self.firecrawl = FirecrawlClient(self.settings)
         self.collectors = {
             Platform.TRIP: TripCollector(self.settings),
             Platform.BOOKING: BookingCollector(self.settings),
@@ -45,7 +59,11 @@ class LiveQuoteService:
             Platform.AGODA: AgodaCollector(self.settings),
         }
 
-    async def quote(self, request: LiveQuoteRequest) -> LiveQuoteResponse:
+    async def quote(
+        self,
+        request: LiveQuoteRequest,
+        on_progress: Callable[[str, str, dict[str, Any]], Awaitable[None]] | None = None,
+    ) -> LiveQuoteResponse:
         platforms = request.platforms or list(self.collectors.keys())
         if not platforms:
             return LiveQuoteResponse(request=request, results=[])
@@ -54,7 +72,11 @@ class LiveQuoteService:
 
         async def run_one(platform: Platform) -> LivePlatformResult:
             async with semaphore:
-                return await self._quote_one_platform(platform=platform, request=request)
+                return await self._quote_one_platform(
+                    platform=platform,
+                    request=request,
+                    on_progress=on_progress,
+                )
 
         results = await asyncio.gather(*(run_one(platform) for platform in platforms))
 
@@ -65,7 +87,13 @@ class LiveQuoteService:
         *,
         platform: Platform,
         request: LiveQuoteRequest,
+        on_progress: Callable[[str, str, dict[str, Any]], Awaitable[None]] | None = None,
     ) -> LivePlatformResult:
+        platform_key = platform.value
+        t0 = time.monotonic()
+        if on_progress:
+            await on_progress(platform_key, "start", {"ts": t0})
+
         collector = self.collectors[platform]
         known_url = self._resolve_known_url(platform=platform, request=request)
 
@@ -119,6 +147,18 @@ class LiveQuoteService:
                     currency=request.currency,
                 )
 
+                if on_progress:
+                    await on_progress(
+                        platform_key,
+                        "attempt",
+                        {
+                            "attempt_index": len(attempts),
+                            "url": candidate_url,
+                            "checkin": checkin.isoformat(),
+                            "checkout": checkout.isoformat(),
+                        },
+                    )
+
                 try:
                     offers = await collector.fetch_rates(search)
                 except Exception as exc:
@@ -133,6 +173,18 @@ class LiveQuoteService:
                         diagnosis=diagnosis,
                     )
                     attempts.append(state)
+                    if on_progress:
+                        await on_progress(
+                            platform_key,
+                            "attempt_done",
+                            {
+                                "error": str(exc),
+                                "offer_count": 0,
+                                "structured_count": 0,
+                                "diagnosis": diagnosis,
+                                "elapsed": time.monotonic() - t0,
+                            },
+                        )
                     continue
 
                 if not offers and platform in {Platform.TRIP, Platform.BOOKING, Platform.AGODA}:
@@ -158,6 +210,19 @@ class LiveQuoteService:
                 )
                 attempts.append(state)
 
+                if on_progress:
+                    await on_progress(
+                        platform_key,
+                        "attempt_done",
+                        {
+                            "offer_count": len(offers),
+                            "structured_count": structured_count,
+                            "fallback_count": fallback_count,
+                            "diagnosis": diagnosis,
+                            "elapsed": time.monotonic() - t0,
+                        },
+                    )
+
                 if best is None or self._is_better_attempt(state, best):
                     best = state
 
@@ -167,6 +232,72 @@ class LiveQuoteService:
                 break
             if len(attempts) >= max_attempts:
                 break
+
+        if (
+            best is not None
+            and self.settings.firecrawl_enabled
+            and getattr(self.settings, "firecrawl_fallback_for_live_quote", True)
+            and best.structured_count == 0
+            and best.url
+        ):
+            try:
+                if on_progress:
+                    await on_progress(
+                        platform_key,
+                        "attempt",
+                        {
+                            "attempt_index": len(attempts),
+                            "url": best.url,
+                            "firecrawl_fallback": True,
+                        },
+                    )
+                scrape_result = await self.firecrawl.scrape_url(best.url)
+                body_text = (scrape_result.get("markdown") or "").strip()
+                if not body_text and scrape_result.get("html"):
+                    body_text = _html_to_text(scrape_result["html"])
+                if body_text:
+                    firecrawl_offers = collector.parse_text_price_fallback_from_text(
+                        body_text=body_text,
+                        request=best.request,
+                        max_offers=8,
+                        mode="firecrawl_fallback",
+                    )
+                    if firecrawl_offers and len(firecrawl_offers) >= len(best.offers):
+                        fc_structured = collector.count_structured_offers(firecrawl_offers)
+                        fc_fallback = self._fallback_count(firecrawl_offers)
+                        fc_diag = self._diagnosis(
+                            platform=platform,
+                            offers=firecrawl_offers,
+                            structured_count=fc_structured,
+                        )
+                        state = AttemptState(
+                            request=best.request,
+                            url=best.url,
+                            offers=firecrawl_offers,
+                            structured_count=fc_structured,
+                            fallback_count=fc_fallback,
+                            match_score=self._offer_match_score(
+                                hotel_name=request.hotel_name, offers=firecrawl_offers
+                            ),
+                            diagnosis=fc_diag,
+                        )
+                        attempts.append(state)
+                        if self._is_better_attempt(state, best):
+                            best = state
+                        if on_progress:
+                            await on_progress(
+                                platform_key,
+                                "attempt_done",
+                                {
+                                    "offer_count": len(firecrawl_offers),
+                                    "structured_count": fc_structured,
+                                    "diagnosis": fc_diag,
+                                    "firecrawl_fallback": True,
+                                    "elapsed": time.monotonic() - t0,
+                                },
+                            )
+            except Exception as exc:
+                self.logger.debug("firecrawl fallback failed platform=%s url=%s err=%s", platform_key, best.url, exc)
 
         if best is None:
             attempt_rows = [
@@ -187,6 +318,17 @@ class LiveQuoteService:
             diagnosis = "no candidate URL resolved"
             if attempts:
                 diagnosis = "all attempts failed (see attempts diagnosis)"
+            if on_progress:
+                await on_progress(
+                    platform_key,
+                    "done",
+                    {
+                        "success": False,
+                        "diagnosis": diagnosis,
+                        "attempts": len(attempts),
+                        "elapsed": time.monotonic() - t0,
+                    },
+                )
             return LivePlatformResult(
                 platform=platform,
                 selected_url=selected_url,
@@ -238,6 +380,18 @@ class LiveQuoteService:
             except Exception as exc:
                 self.logger.debug("failed to update mapping cache: %s", exc)
 
+        if on_progress:
+            await on_progress(
+                platform_key,
+                "done",
+                {
+                    "success": True,
+                    "offer_count": len(best.offers),
+                    "structured_count": best.structured_count,
+                    "diagnosis": best.diagnosis,
+                    "elapsed": time.monotonic() - t0,
+                },
+            )
         return LivePlatformResult(
             platform=platform,
             selected_url=best.url,
@@ -368,7 +522,7 @@ class LiveQuoteService:
         count = 0
         for offer in offers:
             mode = str(offer.raw_payload.get("mode", "")).lower()
-            if mode in {"text_fallback", "url_fallback", "demo"}:
+            if mode in {"text_fallback", "url_fallback", "demo", "firecrawl_fallback"}:
                 count += 1
         return count
 

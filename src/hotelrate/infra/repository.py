@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Any
 
 from sqlalchemy import Select, select, text
@@ -8,6 +8,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from hotelrate.infra.models import CrawlJobLog, HotelMapping, HotelMaster, RateSnapshot
 from hotelrate.schemas import NormalizedSnapshot, Platform
+
+
+def _ensure_date(v: date | str) -> date:
+    if isinstance(v, date):
+        return v
+    return date.fromisoformat(str(v))
 
 
 class RateRepository:
@@ -160,8 +166,8 @@ class RateRepository:
             query,
             {
                 "city": city,
-                "checkin": checkin,
-                "checkout": checkout,
+                "checkin": _ensure_date(checkin),
+                "checkout": _ensure_date(checkout),
                 "adults": adults,
                 "children": children,
                 "limit": limit,
@@ -222,8 +228,8 @@ class RateRepository:
             query,
             {
                 "city": city,
-                "checkin": checkin,
-                "checkout": checkout,
+                "checkin": _ensure_date(checkin),
+                "checkout": _ensure_date(checkout),
                 "adults": adults,
                 "children": children,
                 "limit": limit,
@@ -267,8 +273,8 @@ class RateRepository:
             )
             params: dict[str, Any] = {
                 "hotel_id": hotel_id,
-                "checkin": checkin,
-                "checkout": checkout,
+                "checkin": _ensure_date(checkin),
+                "checkout": _ensure_date(checkout),
                 "adults": adults,
                 "children": children,
                 "limit": limit,
@@ -300,8 +306,8 @@ class RateRepository:
             params = {
                 "hotel_id": hotel_id,
                 "platform": platform.value,
-                "checkin": checkin,
-                "checkout": checkout,
+                "checkin": _ensure_date(checkin),
+                "checkout": _ensure_date(checkout),
                 "adults": adults,
                 "children": children,
                 "limit": limit,
