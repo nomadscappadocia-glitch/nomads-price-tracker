@@ -262,7 +262,7 @@ class LiveQuoteService:
                         max_offers=8,
                         mode="firecrawl_fallback",
                     )
-                    if firecrawl_offers and len(firecrawl_offers) >= len(best.offers):
+                    if firecrawl_offers:
                         fc_structured = collector.count_structured_offers(firecrawl_offers)
                         fc_fallback = self._fallback_count(firecrawl_offers)
                         fc_diag = self._diagnosis(
@@ -270,6 +270,7 @@ class LiveQuoteService:
                             offers=firecrawl_offers,
                             structured_count=fc_structured,
                         )
+                        should_replace = len(firecrawl_offers) > len(best.offers) or fc_structured > best.structured_count
                         state = AttemptState(
                             request=best.request,
                             url=best.url,
@@ -281,21 +282,22 @@ class LiveQuoteService:
                             ),
                             diagnosis=fc_diag,
                         )
-                        attempts.append(state)
-                        if self._is_better_attempt(state, best):
-                            best = state
-                        if on_progress:
-                            await on_progress(
-                                platform_key,
-                                "attempt_done",
-                                {
-                                    "offer_count": len(firecrawl_offers),
-                                    "structured_count": fc_structured,
-                                    "diagnosis": fc_diag,
-                                    "firecrawl_fallback": True,
-                                    "elapsed": time.monotonic() - t0,
-                                },
-                            )
+                        if should_replace:
+                            attempts.append(state)
+                            if self._is_better_attempt(state, best):
+                                best = state
+                            if on_progress:
+                                await on_progress(
+                                    platform_key,
+                                    "attempt_done",
+                                    {
+                                        "offer_count": len(firecrawl_offers),
+                                        "structured_count": fc_structured,
+                                        "diagnosis": fc_diag,
+                                        "firecrawl_fallback": True,
+                                        "elapsed": time.monotonic() - t0,
+                                    },
+                                )
             except Exception as exc:
                 self.logger.debug("firecrawl fallback failed platform=%s url=%s err=%s", platform_key, best.url, exc)
 

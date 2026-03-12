@@ -1,0 +1,16 @@
+2026/03/12-18:11:43.013 18674d7 Reusing MANIFEST /Users/sean/Desktop/hotelrate-crawl/.playwright/trip-profile/Default/Session Storage/MANIFEST-000001
+2026/03/12-18:11:43.013 18674d7 Recovering log #8
+2026/03/12-18:11:43.013 18674d7 Level-0 table #10: started
+2026/03/12-18:11:43.021 18674d7 Level-0 table #10: 16387 bytes OK
+2026/03/12-18:11:43.021 18674d7 Recovering log #10
+2026/03/12-18:11:43.021 18674d7 Reusing old log /Users/sean/Desktop/hotelrate-crawl/.playwright/trip-profile/Default/Session Storage/000010.log 
+2026/03/12-18:11:43.023 18674d7 Delete type=2 #11
+2026/03/12-18:11:43.023 18674d7 Delete type=0 #8
+2026/03/12-18:11:43.025 18674dd Compacting 4@0 + 0@1 files
+2026/03/12-18:11:43.027 18674dd Generated table #11@0: 9 keys, 5436 bytes
+2026/03/12-18:11:43.028 18674dd Compacted 4@0 + 0@1 files => 5436 bytes
+2026/03/12-18:11:43.029 18674dd compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/03/12-18:11:43.029 18674dd Delete type=2 #3
+2026/03/12-18:11:43.029 18674dd Delete type=2 #6
+2026/03/12-18:11:43.029 18674dd Delete type=2 #10
+2026/03/12-18:11:43.029 18674dd Delete type=2 #8

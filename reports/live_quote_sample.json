@@ -1,0 +1,362 @@
+{
+  "generated_at": "2026-03-12T10:12:24.847437Z",
+  "request": {
+    "hotel_name": "Moxy Shanghai Hongqiao",
+    "city": "Shanghai",
+    "checkin": "2026-03-13",
+    "checkout": "2026-03-14",
+    "adults": 2,
+    "children": 0,
+    "currency": "USD",
+    "platforms": [
+      "trip",
+      "booking",
+      "google_hotels",
+      "agoda"
+    ],
+    "known_urls": {},
+    "probe_days_ahead": 12,
+    "probe_step_days": 3
+  },
+  "results": [
+    {
+      "platform": "trip",
+      "selected_url": "https://www.trip.com/hotels/detail/?hotelId=77162341&checkIn=2026-03-13&checkOut=2026-03-14&adult=2&children=0&curr=USD&barcurr=USD",
+      "selected_checkin": "2026-03-13",
+      "selected_checkout": "2026-03-14",
+      "offer_count": 13,
+      "structured_offer_count": 13,
+      "diagnosis": "structured offers captured",
+      "offers": [
+        {
+          "room_name": "Standard Twin room",
+          "final_price": "46.89",
+          "base_price": "40.00",
+          "tax_fee": "6.67",
+          "currency": "USD",
+          "meal_plan": "Great breakfast for US$9.90 (optional)",
+          "cancellation_policy": "Free cancellation before 23:59, Mar 12, 2026 (hotel's local time)",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Standard Twin room",
+          "final_price": "83.69",
+          "base_price": "72.00",
+          "tax_fee": "11.92",
+          "currency": "USD",
+          "meal_plan": "Includes 2 great breakfasts",
+          "cancellation_policy": "Free cancellation before 23:59, Mar 12, 2026 (hotel's local time)",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Moxie King Room",
+          "final_price": "75.39",
+          "base_price": "65.00",
+          "tax_fee": "10.74",
+          "currency": "USD",
+          "meal_plan": "Great breakfast for US$9.90 (optional)",
+          "cancellation_policy": "Free cancellation before 23:59, Mar 12, 2026 (hotel's local time)",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Moxie King Room",
+          "final_price": "95.19",
+          "base_price": "82.00",
+          "tax_fee": "13.55",
+          "currency": "USD",
+          "meal_plan": "Includes 2 great breakfasts",
+          "cancellation_policy": "Free cancellation before 23:59, Mar 12, 2026 (hotel's local time)",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Deluxe King Room",
+          "final_price": "87.47",
+          "base_price": "75.00",
+          "tax_fee": "12.45",
+          "currency": "USD",
+          "meal_plan": "Great breakfast for US$9.90 (optional)",
+          "cancellation_policy": "30-minute Cancellation Window",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Deluxe King Room",
+          "final_price": "111.92",
+          "base_price": "96.00",
+          "tax_fee": "15.94",
+          "currency": "USD",
+          "meal_plan": "Includes 2 great breakfasts",
+          "cancellation_policy": "30-minute Cancellation Window",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Deluxe King Room",
+          "final_price": "93.00",
+          "base_price": "80.00",
+          "tax_fee": "13.24",
+          "currency": "USD",
+          "meal_plan": "Great breakfast for US$9.90 (optional)",
+          "cancellation_policy": "Free cancellation before 23:59, Mar 12, 2026 (hotel's local time)",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Deluxe King Room",
+          "final_price": "102.90",
+          "base_price": "88.00",
+          "tax_fee": "14.65",
+          "currency": "USD",
+          "meal_plan": "Includes 1 great breakfast",
+          "cancellation_policy": "Free cancellation before 23:59, Mar 12, 2026 (hotel's local time)",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Deluxe King Room",
+          "final_price": "112.80",
+          "base_price": "97.00",
+          "tax_fee": "16.05",
+          "currency": "USD",
+          "meal_plan": "Includes 2 great breakfasts",
+          "cancellation_policy": "Free cancellation before 23:59, Mar 12, 2026 (hotel's local time)",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Moxie Twin room",
+          "final_price": "78.45",
+          "base_price": "67.00",
+          "tax_fee": "11.17",
+          "currency": "USD",
+          "meal_plan": "Great breakfast for US$9.90 (optional)",
+          "cancellation_policy": "Free cancellation before 23:59, Mar 12, 2026 (hotel's local time)",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773310261104-3231627",
+          "mode": "trip_room_list_oversea"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.trip.com/hotels/detail/?hotelId=77162341&checkIn=2026-03-13&checkOut=2026-03-14&adult=2&children=0&curr=USD&barcurr=USD",
+          "checkin": "2026-03-13",
+          "checkout": "2026-03-14",
+          "offer_count": 13,
+          "structured_offer_count": 13,
+          "modes": [
+            "trip_room_list_oversea"
+          ],
+          "diagnosis": "structured offers captured; fallback=0; match=0"
+        }
+      ]
+    },
+    {
+      "platform": "booking",
+      "selected_url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+      "selected_checkin": "2026-03-16",
+      "selected_checkout": "2026-03-17",
+      "offer_count": 7,
+      "structured_offer_count": 7,
+      "diagnosis": "structured offers captured",
+      "offers": [
+        {
+          "room_name": "Standard King Room",
+          "final_price": "116.45",
+          "base_price": "116.45",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": null,
+          "cancellation_policy": "Free cancellation",
+          "source_url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+          "mode": "booking_env"
+        },
+        {
+          "room_name": "Standard King Room",
+          "final_price": "136.24",
+          "base_price": "136.24",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": "Breakfast included",
+          "cancellation_policy": "Free cancellation",
+          "source_url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+          "mode": "booking_env"
+        },
+        {
+          "room_name": "Standard King Room",
+          "final_price": "126.35",
+          "base_price": "126.35",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": "Breakfast included",
+          "cancellation_policy": "Free cancellation",
+          "source_url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+          "mode": "booking_env"
+        },
+        {
+          "room_name": "Moxie King Room - High Floor",
+          "final_price": "131.00",
+          "base_price": "131.00",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": null,
+          "cancellation_policy": "Free cancellation",
+          "source_url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+          "mode": "booking_env"
+        },
+        {
+          "room_name": "Deluxe King Room",
+          "final_price": "145.56",
+          "base_price": "145.56",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": null,
+          "cancellation_policy": "Free cancellation",
+          "source_url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+          "mode": "booking_env"
+        },
+        {
+          "room_name": "Deluxe King Room",
+          "final_price": "165.36",
+          "base_price": "165.36",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": "Breakfast included",
+          "cancellation_policy": "Free cancellation",
+          "source_url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+          "mode": "booking_env"
+        },
+        {
+          "room_name": "Deluxe King Room",
+          "final_price": "155.46",
+          "base_price": "155.46",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": "Breakfast included",
+          "cancellation_policy": "Free cancellation",
+          "source_url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+          "mode": "booking_env"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+          "checkin": "2026-03-13",
+          "checkout": "2026-03-14",
+          "offer_count": 4,
+          "structured_offer_count": 0,
+          "modes": [
+            "text_fallback"
+          ],
+          "diagnosis": "fallback only (text_fallback); fallback=4; match=0"
+        },
+        {
+          "url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+          "checkin": "2026-03-16",
+          "checkout": "2026-03-17",
+          "offer_count": 7,
+          "structured_offer_count": 7,
+          "modes": [
+            "booking_env"
+          ],
+          "diagnosis": "structured offers captured; fallback=0; match=0"
+        }
+      ]
+    },
+    {
+      "platform": "google_hotels",
+      "selected_url": "https://www.google.com/travel/search?q=Moxy+Shanghai+Hongqiao+Shanghai&checkin=2026-03-13&checkout=2026-03-14&adults=2&children=0&hl=en-US&gl=us",
+      "selected_checkin": "2026-03-13",
+      "selected_checkout": "2026-03-14",
+      "offer_count": 1,
+      "structured_offer_count": 0,
+      "diagnosis": "fallback only (text_fallback)",
+      "offers": [
+        {
+          "room_name": "Web Offer #1",
+          "final_price": "100.00",
+          "base_price": "100.00",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": null,
+          "cancellation_policy": null,
+          "source_url": "https://www.google.com/travel/search?q=Moxy+Shanghai+Hongqiao+Shanghai&checkin=2026-03-13&checkout=2026-03-14&adults=2&children=0&hl=en-US&gl=us",
+          "mode": "text_fallback"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.google.com/travel/search?q=Moxy+Shanghai+Hongqiao+Shanghai&checkin=2026-03-13&checkout=2026-03-14&adults=2&children=0&hl=en-US&gl=us",
+          "checkin": "2026-03-13",
+          "checkout": "2026-03-14",
+          "offer_count": 1,
+          "structured_offer_count": 0,
+          "modes": [
+            "text_fallback"
+          ],
+          "diagnosis": "fallback only (text_fallback); fallback=1; match=0"
+        }
+      ]
+    },
+    {
+      "platform": "agoda",
+      "selected_url": "https://www.agoda.com/moxy-shanghai-hongqiao-cbd/hotel/shanghai-cn.html?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+      "selected_checkin": "2026-03-13",
+      "selected_checkout": "2026-03-14",
+      "offer_count": 3,
+      "structured_offer_count": 3,
+      "diagnosis": "structured offers captured",
+      "offers": [
+        {
+          "room_name": "Guest room, 2 Double, City view, High floor",
+          "final_price": "67.27",
+          "base_price": "67.27",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": null,
+          "cancellation_policy": null,
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=hsndep25cknbejsc101mgad2&pagetypeid=7",
+          "mode": "below_fold_room_grid"
+        },
+        {
+          "room_name": "Larger Guest room, 1 King, City view",
+          "final_price": "79.76",
+          "base_price": "79.76",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": null,
+          "cancellation_policy": null,
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=hsndep25cknbejsc101mgad2&pagetypeid=7",
+          "mode": "below_fold_room_grid"
+        },
+        {
+          "room_name": "Moxy Shanghai Hongqiao NECC",
+          "final_price": "67.00",
+          "base_price": "67.00",
+          "tax_fee": "0",
+          "currency": "USD",
+          "meal_plan": null,
+          "cancellation_policy": null,
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=hsndep25cknbejsc101mgad2&pagetypeid=7",
+          "mode": "below_fold_summary"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.agoda.com/moxy-shanghai-hongqiao-cbd/hotel/shanghai-cn.html?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+          "checkin": "2026-03-13",
+          "checkout": "2026-03-14",
+          "offer_count": 3,
+          "structured_offer_count": 3,
+          "modes": [
+            "below_fold_room_grid",
+            "below_fold_summary"
+          ],
+          "diagnosis": "structured offers captured; fallback=0; match=3"
+        }
+      ]
+    }
+  ]
+}

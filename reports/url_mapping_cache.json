@@ -1,0 +1,38 @@
+{
+  "booking|moxy-shanghai-hongqiao|shanghai": {
+    "platform": "booking",
+    "hotel_name": "Moxy Shanghai Hongqiao",
+    "city": "Shanghai",
+    "url": "https://www.booking.com/hotel/cn/moxy-shanghai-hongqiao-cbd.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+    "structured_offer_count": 7,
+    "offer_count": 7,
+    "diagnosis": "structured offers captured"
+  },
+  "google_hotels|moxy-shanghai-hongqiao|shanghai": {
+    "platform": "google_hotels",
+    "hotel_name": "Moxy Shanghai Hongqiao",
+    "city": "Shanghai",
+    "url": "https://www.google.com/travel/search?q=Moxy+Shanghai+Hongqiao+Shanghai&checkin=2026-03-13&checkout=2026-03-14&adults=2&children=0&hl=en-US&gl=us",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "agoda|moxy-shanghai-hongqiao|shanghai": {
+    "platform": "agoda",
+    "hotel_name": "Moxy Shanghai Hongqiao",
+    "city": "Shanghai",
+    "url": "https://www.agoda.com/moxy-shanghai-hongqiao-cbd/hotel/shanghai-cn.html?checkIn=2026-03-12&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 4,
+    "offer_count": 4,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|moxy-shanghai-hongqiao|shanghai": {
+    "platform": "trip",
+    "hotel_name": "Moxy Shanghai Hongqiao",
+    "city": "Shanghai",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=77162341&checkIn=2026-03-13&checkOut=2026-03-14&adult=2&children=0&curr=USD&barcurr=USD",
+    "structured_offer_count": 13,
+    "offer_count": 13,
+    "diagnosis": "structured offers captured"
+  }
+}
