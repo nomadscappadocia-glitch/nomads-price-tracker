@@ -132,7 +132,16 @@ class BaseCollector(ABC):
     async def open_playwright_context(self, pw: Playwright) -> tuple[Browser | None, BrowserContext]:
         launch_kwargs: dict[str, Any] = {"headless": self.settings.headless}
         if self.settings.playwright_disable_automation_flags:
-            launch_kwargs["args"] = ["--disable-blink-features=AutomationControlled"]
+            launch_kwargs["args"] = [
+                "--disable-blink-features=AutomationControlled",
+                "--disable-dev-shm-usage",
+                "--disable-component-extensions-with-background-pages",
+                "--disable-default-apps",
+                "--disable-extensions",
+                "--disable-sync",
+                "--metrics-recording-only",
+                "--no-first-run",
+            ]
 
         channel = self.settings.playwright_browser_channel.strip()
         user_data_dir = self._resolve_user_data_dir()
@@ -246,7 +255,7 @@ class BaseCollector(ABC):
         try:
             await page.goto(
                 url,
-                wait_until="domcontentloaded",
+                wait_until="load",
                 timeout=self.settings.request_timeout_seconds * 1000,
             )
             try:

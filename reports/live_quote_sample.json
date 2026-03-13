@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-13T00:05:09.576181Z",
+  "generated_at": "2026-03-13T00:09:29.330040Z",
   "request": {
     "hotel_name": "Moxy Shanghai Hongqiao",
     "city": "Shanghai",
@@ -36,7 +36,7 @@
           "currency": "USD",
           "meal_plan": "Great breakfast for US$9.89 (optional)",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -47,7 +47,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -58,7 +58,7 @@
           "currency": "USD",
           "meal_plan": "Great breakfast for US$9.89 (optional)",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -69,7 +69,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -80,7 +80,7 @@
           "currency": "USD",
           "meal_plan": "Great breakfast for US$9.89 (optional)",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -91,7 +91,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -102,7 +102,7 @@
           "currency": "USD",
           "meal_plan": "Great breakfast for US$9.89 (optional)",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -113,7 +113,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -124,7 +124,7 @@
           "currency": "USD",
           "meal_plan": "Great breakfast for US$9.89 (optional)",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -135,7 +135,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360225698-4523027",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773360498704-7197398",
           "mode": "trip_room_list_oversea"
         }
       ],
@@ -317,7 +317,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-16&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=dnxv2qhwcwivl2bw1frcre45&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-16&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=frvlnjiamze12y5ibt1bpaqo&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -328,7 +328,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-16&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=dnxv2qhwcwivl2bw1frcre45&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-16&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=frvlnjiamze12y5ibt1bpaqo&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -339,7 +339,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-16&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=dnxv2qhwcwivl2bw1frcre45&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-16&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=frvlnjiamze12y5ibt1bpaqo&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -350,7 +350,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-16&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=dnxv2qhwcwivl2bw1frcre45&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-16&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=25570007&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=frvlnjiamze12y5ibt1bpaqo&pagetypeid=7",
           "mode": "below_fold_summary"
         }
       ],

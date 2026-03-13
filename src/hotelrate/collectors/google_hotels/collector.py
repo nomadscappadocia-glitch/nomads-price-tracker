@@ -319,7 +319,7 @@ class GoogleHotelsCollector(BaseCollector):
             "adults": request.adults,
             "children": request.children,
             "hl": "en-US",
-            "gl": "us",
+            "gl": "cn",
         }
 
         if request.platform_url:

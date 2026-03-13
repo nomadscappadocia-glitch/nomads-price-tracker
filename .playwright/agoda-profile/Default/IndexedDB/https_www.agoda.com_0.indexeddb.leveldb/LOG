@@ -1,3 +1,12 @@
-2026/03/13-08:04:56.337 1ae5b7d Reusing MANIFEST /Users/sean/Desktop/hotelrate-crawl/.playwright/agoda-profile/Default/IndexedDB/https_www.agoda.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/03/13-08:04:56.337 1ae5b7d Recovering log #7
-2026/03/13-08:04:56.340 1ae5b7d Reusing old log /Users/sean/Desktop/hotelrate-crawl/.playwright/agoda-profile/Default/IndexedDB/https_www.agoda.com_0.indexeddb.leveldb/000007.log 
+2026/03/13-08:09:16.484 1aecc21 Reusing MANIFEST /Users/sean/Desktop/hotelrate-crawl/.playwright/agoda-profile/Default/IndexedDB/https_www.agoda.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/03/13-08:09:16.485 1aecc21 Recovering log #7
+2026/03/13-08:09:16.495 1aecc21 Reusing old log /Users/sean/Desktop/hotelrate-crawl/.playwright/agoda-profile/Default/IndexedDB/https_www.agoda.com_0.indexeddb.leveldb/000007.log 
+2026/03/13-08:09:17.510 1aecc26 Level-0 table #12: started
+2026/03/13-08:09:17.523 1aecc26 Level-0 table #12: 1208746 bytes OK
+2026/03/13-08:09:17.525 1aecc26 Delete type=0 #7
+2026/03/13-08:09:19.143 1aecc26 Compacting 1@1 + 1@2 files
+2026/03/13-08:09:19.149 1aecc26 Generated table #13@1: 2562 keys, 328441 bytes
+2026/03/13-08:09:19.149 1aecc26 Compacted 1@1 + 1@2 files => 328441 bytes
+2026/03/13-08:09:19.150 1aecc26 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/03/13-08:09:19.150 1aecc26 Delete type=2 #12
+2026/03/13-08:09:19.150 1aecc26 Delete type=2 #9
