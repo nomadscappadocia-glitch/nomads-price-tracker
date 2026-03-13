@@ -49,6 +49,21 @@ class BookingCollector(BaseCollector):
                 settle_ms=3000,
                 after_load=self._after_load_interactions,
             )
+            
+            # Debug: save raw API responses if enabled
+            if getattr(self.settings, "booking_debug_save_json", False) and payloads:
+                try:
+                    from pathlib import Path
+                    import json
+                    import time
+                    reports_dir = Path("reports")
+                    reports_dir.mkdir(parents=True, exist_ok=True)
+                    path = reports_dir / f"booking_debug_{int(time.time()*1000)}.json"
+                    path.write_text(json.dumps(payloads, indent=2, default=str), encoding="utf-8")
+                    self.logger.info("booking debug: saved %d payloads to %s", len(payloads), path)
+                except Exception as e:
+                    self.logger.debug("booking debug save failed: %s", e)
+            
             offers = self._parse_structured_offers(request=request, payloads=payloads)
             if not offers:
                 offers = await self.parse_ld_json_fallback(page=page, request=request, max_offers=10)

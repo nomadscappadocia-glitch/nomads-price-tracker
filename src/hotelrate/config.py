@@ -42,6 +42,8 @@ class Settings(BaseSettings):
     url_mapping_cache_path: str = "reports/url_mapping_cache.json"
     # 当 Google 只拿到 fallback 时，是否把当前页面 HTML 存到 reports/ 便于对照选择器
     google_debug_save_html: bool = False
+    booking_debug_save_json: bool = False
+    agoda_debug_save_json: bool = False
 
 
 @lru_cache

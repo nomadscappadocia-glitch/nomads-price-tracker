@@ -34,5 +34,32 @@
     "structured_offer_count": 13,
     "offer_count": 13,
     "diagnosis": "structured offers captured"
+  },
+  "booking|peace-hotel|shanghai": {
+    "platform": "booking",
+    "hotel_name": "Peace hotel",
+    "city": "Shanghai",
+    "url": "https://www.booking.com/hotel/cn/fairmont-peace.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+    "structured_offer_count": 10,
+    "offer_count": 10,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|peace-hotel|shanghai": {
+    "platform": "agoda",
+    "hotel_name": "Peace hotel",
+    "city": "Shanghai",
+    "url": "https://www.agoda.com/fairmont-peace-hotel/hotel/shanghai-cn.html?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 8,
+    "offer_count": 8,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|peace-hotel|shanghai": {
+    "platform": "trip",
+    "hotel_name": "Peace hotel",
+    "city": "Shanghai",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=375539&checkIn=2026-03-13&checkOut=2026-03-14&adult=2&children=0&curr=USD&barcurr=USD",
+    "structured_offer_count": 25,
+    "offer_count": 25,
+    "diagnosis": "structured offers captured"
   }
 }

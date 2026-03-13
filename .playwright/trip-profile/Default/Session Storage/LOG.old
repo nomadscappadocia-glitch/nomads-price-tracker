@@ -1,5 +1,8 @@
-2026/03/13-08:13:40.168 1af2e26 Reusing MANIFEST /Users/sean/Desktop/hotelrate-crawl/.playwright/trip-profile/Default/Session Storage/MANIFEST-000001
-2026/03/13-08:13:40.169 1af2e26 Recovering log #10
-2026/03/13-08:13:40.170 1af2e26 Reusing old log /Users/sean/Desktop/hotelrate-crawl/.playwright/trip-profile/Default/Session Storage/000010.log 
-2026/03/13-08:13:52.482 1af2e2c Level-0 table #14: started
-2026/03/13-08:13:52.526 1af2e2c Level-0 table #14: 16382 bytes OK
+2026/03/13-08:13:56.375 1af36b9 Reusing MANIFEST /Users/sean/Desktop/hotelrate-crawl/.playwright/trip-profile/Default/Session Storage/MANIFEST-000001
+2026/03/13-08:13:56.376 1af36b9 Recovering log #10
+2026/03/13-08:13:56.377 1af36b9 Level-0 table #13: started
+2026/03/13-08:13:56.410 1af36b9 Level-0 table #13: 16382 bytes OK
+2026/03/13-08:13:56.410 1af36b9 Recovering log #13
+2026/03/13-08:13:56.410 1af36b9 Reusing old log /Users/sean/Desktop/hotelrate-crawl/.playwright/trip-profile/Default/Session Storage/000013.log 
+2026/03/13-08:13:56.412 1af36b9 Delete type=0 #10
+2026/03/13-08:13:56.412 1af36b9 Delete type=2 #14

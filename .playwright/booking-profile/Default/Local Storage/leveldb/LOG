@@ -1,7 +1,3 @@
-2026/03/13-08:13:50.130 1af3398 Reusing MANIFEST /Users/sean/Desktop/hotelrate-crawl/.playwright/booking-profile/Default/Local Storage/leveldb/MANIFEST-000001
-2026/03/13-08:13:50.132 1af3398 Recovering log #4
-2026/03/13-08:13:50.133 1af3398 Level-0 table #6: started
-2026/03/13-08:13:50.139 1af3398 Level-0 table #6: 43811 bytes OK
-2026/03/13-08:13:50.140 1af3398 Recovering log #6
-2026/03/13-08:13:50.141 1af3398 Reusing old log /Users/sean/Desktop/hotelrate-crawl/.playwright/booking-profile/Default/Local Storage/leveldb/000006.log 
-2026/03/13-08:13:50.143 1af3398 Delete type=0 #4
+2026/03/13-08:39:27.562 1b0eaff Reusing MANIFEST /Users/sean/Desktop/hotelrate-crawl/.playwright/booking-profile/Default/Local Storage/leveldb/MANIFEST-000001
+2026/03/13-08:39:27.653 1b0eaff Recovering log #6
+2026/03/13-08:39:27.653 1b0eaff Reusing old log /Users/sean/Desktop/hotelrate-crawl/.playwright/booking-profile/Default/Local Storage/leveldb/000006.log 
