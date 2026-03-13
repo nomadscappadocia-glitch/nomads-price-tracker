@@ -326,7 +326,7 @@ class GoogleHotelsCollector(BaseCollector):
             cleaned = self.remove_url_query_keys(request.platform_url, self.DROPPED_QUERY_KEYS)
             return self.merge_url_query(cleaned, query)
 
-        return self.merge_url_query("https://www.google.com/travel/search", query)
+        return self.merge_url_query("https://www.google.com/travel/hotels", query)
 
     def _parse_structured_offers(
         self,
@@ -568,6 +568,17 @@ class GoogleHotelsCollector(BaseCollector):
         return offers
 
     async def _after_load_interactions(self, page, request: SearchRequest | None = None) -> None:
+        # Simulate human-like mouse movement to avoid bot detection
+        try:
+            await page.mouse.move(100, 200)
+            await page.wait_for_timeout(300)
+            await page.mouse.move(300, 400)
+            await page.wait_for_timeout(200)
+            await page.mouse.move(500, 300)
+            await page.wait_for_timeout(400)
+        except Exception:
+            pass
+
         # Google Travel often shows "Loading results" first; wait for hotel list to render
         # (hotel name or "Prices starting from" in body). Without this, saved HTML has no
         # price panel and no link to click.
