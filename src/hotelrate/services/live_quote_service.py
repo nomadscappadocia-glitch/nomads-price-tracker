@@ -68,7 +68,7 @@ class LiveQuoteService:
         if not platforms:
             return LiveQuoteResponse(request=request, results=[])
 
-        semaphore = asyncio.Semaphore(min(2, len(platforms)))
+        semaphore = asyncio.Semaphore(min(3, len(platforms)))
 
         async def run_one(platform: Platform) -> LivePlatformResult:
             async with semaphore:
