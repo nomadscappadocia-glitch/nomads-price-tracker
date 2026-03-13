@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-13T00:40:11.134992Z",
+  "generated_at": "2026-03-13T00:59:40.924770Z",
   "request": {
     "hotel_name": "Peace hotel",
     "city": "Shanghai",
@@ -36,7 +36,7 @@
           "currency": "USD",
           "meal_plan": "Great breakfast for US$48.84 (optional)",
           "cancellation_policy": "30-minute Cancellation Window",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -47,7 +47,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "30-minute Cancellation Window",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -58,7 +58,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "30-minute Cancellation Window",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -69,7 +69,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "US$655.38 cancellation fee",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -80,18 +80,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "US$584.70 cancellation fee",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
-          "mode": "trip_room_list_oversea"
-        },
-        {
-          "room_name": "Fairmont Gold Queen Room",
-          "final_price": "638.94",
-          "base_price": "602.00",
-          "tax_fee": "36.73",
-          "currency": "USD",
-          "meal_plan": "Includes 2 great breakfasts",
-          "cancellation_policy": "Non-refundable",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -102,7 +91,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "30-minute Cancellation Window",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -113,7 +102,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "30-minute Cancellation Window",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -124,7 +113,7 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "30-minute Cancellation Window",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
           "mode": "trip_room_list_oversea"
         },
         {
@@ -135,7 +124,18 @@
           "currency": "USD",
           "meal_plan": "Includes 2 great breakfasts",
           "cancellation_policy": "30-minute Cancellation Window",
-          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773362375146-7781743",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
+          "mode": "trip_room_list_oversea"
+        },
+        {
+          "room_name": "Deluxe City-view Twin Room",
+          "final_price": "536.01",
+          "base_price": "506.00",
+          "tax_fee": "30.34",
+          "currency": "USD",
+          "meal_plan": "Includes 2 great breakfasts",
+          "cancellation_policy": "30-minute Cancellation Window",
+          "source_url": "https://www.trip.com/restapi/soa2/33269/getHotelRoomListOversea?_fxpcqlniredt=09034095416015954427&x-traceID=09034095416015954427-1773363561114-5103346",
           "mode": "trip_room_list_oversea"
         }
       ],
@@ -325,7 +325,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=vnn43vkcoujkxd023xmeavh3&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=2r522en4oyot5vom4n5mtond&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -336,7 +336,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=vnn43vkcoujkxd023xmeavh3&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=2r522en4oyot5vom4n5mtond&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -347,7 +347,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=vnn43vkcoujkxd023xmeavh3&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=2r522en4oyot5vom4n5mtond&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -358,7 +358,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=vnn43vkcoujkxd023xmeavh3&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=2r522en4oyot5vom4n5mtond&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -369,7 +369,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=vnn43vkcoujkxd023xmeavh3&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=2r522en4oyot5vom4n5mtond&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -380,7 +380,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=vnn43vkcoujkxd023xmeavh3&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=2r522en4oyot5vom4n5mtond&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -391,7 +391,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=vnn43vkcoujkxd023xmeavh3&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=2r522en4oyot5vom4n5mtond&pagetypeid=7",
           "mode": "below_fold_room_grid"
         },
         {
@@ -402,7 +402,7 @@
           "currency": "USD",
           "meal_plan": null,
           "cancellation_policy": null,
-          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=vnn43vkcoujkxd023xmeavh3&pagetypeid=7",
+          "source_url": "https://www.agoda.com/api/cronos/property/BelowFoldParams/GetSecondaryData?checkIn=2026-03-13&los=1&adults=2&children=0&rooms=1&currencyCode=USD&finalPriceView=1&hotel_id=255492&all=false&isHostPropertiesEnabled=false&price_view=1&sessionid=2r522en4oyot5vom4n5mtond&pagetypeid=7",
           "mode": "below_fold_summary"
         }
       ],

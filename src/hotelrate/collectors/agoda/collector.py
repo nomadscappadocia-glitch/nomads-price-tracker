@@ -156,7 +156,13 @@ class AgodaCollector(BaseCollector):
 
                 final_price = self._extract_decimal_deep(room, ("finalPrice", "inclusivePrice", "totalPrice"), depth=4)
                 base_price = self._extract_decimal_deep(room, ("displayPrice", "exclusivePrice", "basePrice"), depth=4)
-                tax_fee = self._extract_decimal_deep(room, ("taxAndServiceFee", "tax", "taxesAndFees"), depth=4) or Decimal("0")
+                tax_fee = self._extract_decimal_deep(room, ("taxesAndFeesAmount", "taxAndServiceFee", "tax", "taxesAndFees"), depth=4) or Decimal("0")
+
+                # Extract cancellation policy
+                cancellation_policy = None
+                raw_cancel = room.get("cancellationPolicy") or room.get("cancellationType") or room.get("cancellation")
+                if raw_cancel:
+                    cancellation_policy = str(raw_cancel)[:255]
 
                 if final_price is None and base_price is None:
                     continue
@@ -176,7 +182,7 @@ class AgodaCollector(BaseCollector):
                         platform_hotel_id=request.platform_hotel_id,
                         room_name=room_name[:255],
                         meal_plan=None,
-                        cancellation_policy=None,
+                        cancellation_policy=cancellation_policy,
                         currency=currency,
                         base_price=base_price.quantize(Decimal("0.01")),
                         tax_fee=tax_fee.quantize(Decimal("0.01")),
@@ -231,6 +237,19 @@ class AgodaCollector(BaseCollector):
                         if final_price is None or final_price <= Decimal("0"):
                             continue
 
+                        # Extract tax fee from API response
+                        tax_fee = self._extract_decimal_deep(
+                            room,
+                            ("taxesAndFeesAmount", "taxAndServiceFee", "tax"),
+                            depth=3,
+                        ) or Decimal("0")
+
+                        # Extract cancellation policy from API response
+                        cancellation_policy = None
+                        raw_cancel = room.get("cancellationPolicy") or room.get("cancellationType") or room.get("cancellation")
+                        if raw_cancel:
+                            cancellation_policy = str(raw_cancel)[:255]
+
                         currency = str(
                             room.get("currencyCode")
                             or room.get("currency")
@@ -244,10 +263,10 @@ class AgodaCollector(BaseCollector):
                                 platform_hotel_id=request.platform_hotel_id,
                                 room_name=room_name[:255],
                                 meal_plan=None,
-                                cancellation_policy=None,
+                                cancellation_policy=cancellation_policy,
                                 currency=currency,
                                 base_price=amount,
-                                tax_fee=Decimal("0"),
+                                tax_fee=tax_fee.quantize(Decimal("0.01")),
                                 final_price=amount,
                                 checkin=request.checkin,
                                 checkout=request.checkout,
