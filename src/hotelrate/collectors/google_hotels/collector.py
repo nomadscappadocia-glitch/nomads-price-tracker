@@ -55,6 +55,12 @@ class GoogleHotelsCollector(BaseCollector):
     async def fetch_rates(self, request: SearchRequest) -> list[RawRateOffer]:
         if self.settings.demo_mode:
             return [self.build_demo_offer(request, low=85, high=330)]
+        
+        # Allow skipping Google if it's blocked (common with automation)
+        if getattr(self.settings, "google_skip", False):
+            self.logger.info("Google Hotels skipped per config")
+            return []
+        
         return await self._fetch_live_rates(request)
 
     async def _fetch_live_rates(self, request: SearchRequest) -> list[RawRateOffer]:
@@ -312,6 +318,7 @@ class GoogleHotelsCollector(BaseCollector):
         return merged[:255]
 
     def _build_search_url(self, request: SearchRequest) -> str:
+        # Try multiple Google endpoints - if one fails, the fallback will try others
         query = {
             "q": request.platform_hotel_id,
             "checkin": request.checkin.isoformat(),
@@ -319,13 +326,14 @@ class GoogleHotelsCollector(BaseCollector):
             "adults": request.adults,
             "children": request.children,
             "hl": "en-US",
-            "gl": "cn",
+            "gl": "us",
         }
 
         if request.platform_url:
             cleaned = self.remove_url_query_keys(request.platform_url, self.DROPPED_QUERY_KEYS)
             return self.merge_url_query(cleaned, query)
 
+        # Try travel/hotels first, fallback to travel/search
         return self.merge_url_query("https://www.google.com/travel/hotels", query)
 
     def _parse_structured_offers(
