@@ -1,4 +1,6 @@
 from hotelrate.schemas.live_quote import (
+    BatchQuoteRequest,
+    BatchQuoteResponse,
     LiveAttempt,
     LiveOffer,
     LivePlatformResult,
@@ -17,4 +19,6 @@ __all__ = [
     "LiveAttempt",
     "LivePlatformResult",
     "LiveQuoteResponse",
+    "BatchQuoteRequest",
+    "BatchQuoteResponse",
 ]

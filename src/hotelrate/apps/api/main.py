@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from hotelrate.infra.db import get_session
 from hotelrate.infra.repository import RateRepository
 from hotelrate.logging import configure_logging
-from hotelrate.schemas import LiveQuoteRequest, Platform
+from hotelrate.schemas import BatchQuoteRequest, BatchQuoteResponse, LiveQuoteRequest, Platform
 from hotelrate.services import LiveQuoteService
 
 configure_logging()
@@ -99,3 +99,10 @@ async def rate_history(
 async def meta_quote(payload: LiveQuoteRequest) -> dict:
     response = await live_quote_service.quote(payload)
     return response.model_dump()
+
+
+@app.post("/meta/quote/batch")
+async def meta_quote_batch(payload: BatchQuoteRequest) -> BatchQuoteResponse:
+    """批量爬取多个酒店"""
+    response = await live_quote_service.batch_quote(payload)
+    return response

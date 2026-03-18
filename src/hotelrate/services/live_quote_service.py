@@ -12,6 +12,8 @@ from typing import Any
 from hotelrate.collectors import AgodaCollector, BookingCollector, GoogleHotelsCollector, TripCollector
 from hotelrate.config import Settings, get_settings
 from hotelrate.schemas import (
+    BatchQuoteRequest,
+    BatchQuoteResponse,
     LiveAttempt,
     LiveOffer,
     LivePlatformResult,
@@ -81,6 +83,46 @@ class LiveQuoteService:
         results = await asyncio.gather(*(run_one(platform) for platform in platforms))
 
         return LiveQuoteResponse(request=request, results=list(results))
+
+    async def batch_quote(
+        self,
+        request: BatchQuoteRequest,
+        on_progress: Callable[[str, str, dict[str, Any]], Awaitable[None]] | None = None,
+    ) -> BatchQuoteResponse:
+        """批量爬取多个酒店"""
+        semaphore = asyncio.Semaphore(request.concurrency)
+        results: list[LiveQuoteResponse] = []
+        errors: list[dict] = []
+
+        async def crawl_one(req: LiveQuoteRequest, index: int) -> tuple[int, LiveQuoteResponse | dict]:
+            async with semaphore:
+                try:
+                    result = await self.quote(req, on_progress)
+                    return index, result
+                except Exception as e:
+                    return index, {"hotel": req.hotel_name, "error": str(e)}
+
+        # 并发执行所有酒店的爬取
+        tasks = [crawl_one(req, i) for i, req in enumerate(request.hotels)]
+        outcomes = await asyncio.gather(*tasks)
+
+        # 按顺序整理结果
+        outcomes_dict = {idx: outcome for idx, outcome in outcomes}
+
+        for i in range(len(request.hotels)):
+            outcome = outcomes_dict[i]
+            if isinstance(outcome, LiveQuoteResponse):
+                results.append(outcome)
+            else:
+                errors.append(outcome)
+
+        return BatchQuoteResponse(
+            total_hotels=len(request.hotels),
+            successful=len(results),
+            failed=len(errors),
+            results=results,
+            errors=errors,
+        )
 
     async def _quote_one_platform(
         self,

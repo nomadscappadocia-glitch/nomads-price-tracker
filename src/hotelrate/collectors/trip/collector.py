@@ -127,6 +127,22 @@ class TripCollector(BaseCollector):
             data = payload.get("data")
             if not isinstance(data, dict):
                 continue
+
+            # Debug: save raw API response
+            import os
+            save_debug = os.environ.get("TRIP_DEBUG_SAVE_JSON", "").lower() == "true"
+            if save_debug:
+                try:
+                    from pathlib import Path
+                    import json
+                    import time
+                    reports_dir = Path("/Users/sean/Desktop/hotelrate-crawl/reports")
+                    reports_dir.mkdir(parents=True, exist_ok=True)
+                    path = reports_dir / f"trip_debug_{int(time.time()*1000)}.json"
+                    path.write_text(json.dumps(payloads, indent=2, default=str), encoding="utf-8")
+                    self.logger.info("trip debug: saved %d payloads to %s", len(payloads), path)
+                except Exception as e:
+                    self.logger.debug("trip debug save failed: %s", e)
             body = data.get("data")
             if not isinstance(body, dict):
                 continue
@@ -149,10 +165,11 @@ class TripCollector(BaseCollector):
                     or self._extract_decimal_path(raw_sale, ("priceDetail", "priceInfo", "totalPrice", "content"))
                     or self._extract_decimal_path(raw_sale, ("priceInfo", "displayPrice"))
                 )
+                # quantityDays = number of nights, NOT price — do not use for base_price
                 base_price = (
                     self._extract_decimal_path(raw_sale, ("priceInfo", "price"))
-                    or self._extract_decimal_path(raw_sale, ("totalPriceInfo", "quantityDays", "content"))
                     or self._extract_decimal_path(raw_sale, ("priceInfo", "displayPrice"))
+                    or self._extract_decimal_path(raw_sale, ("priceDetail", "priceInfo", "totalPrice", "content"))
                 )
                 tax_fee = (
                     self._extract_decimal_path(raw_sale, ("totalPriceInfo", "payTax", "price"))
@@ -203,9 +220,10 @@ class TripCollector(BaseCollector):
                         },
                     )
                 )
-                if len(offers) >= 25:
-                    return offers
 
+        # Sort by final_price ascending so cheapest rooms appear first
+        if offers:
+            offers.sort(key=lambda o: o.final_price)
         return offers
 
     def _trip_room_name(self, *, raw_sale: dict[str, Any], physical_map: dict[str, Any]) -> str:

@@ -60,3 +60,19 @@ class LiveQuoteResponse(BaseModel):
     generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     request: LiveQuoteRequest
     results: list[LivePlatformResult] = Field(default_factory=list)
+
+
+class BatchQuoteRequest(BaseModel):
+    """批量爬取请求"""
+    hotels: list[LiveQuoteRequest] = Field(min_length=1, max_length=50)
+    concurrency: int = Field(default=3, ge=1, le=10, description="并发爬取的酒店数量")
+
+
+class BatchQuoteResponse(BaseModel):
+    """批量爬取响应"""
+    generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    total_hotels: int
+    successful: int
+    failed: int
+    results: list[LiveQuoteResponse] = Field(default_factory=list)
+    errors: list[dict] = Field(default_factory=list)

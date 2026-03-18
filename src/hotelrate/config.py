@@ -44,6 +44,7 @@ class Settings(BaseSettings):
     google_debug_save_html: bool = False
     booking_debug_save_json: bool = False
     agoda_debug_save_json: bool = False
+    trip_debug_save_json: bool = False
 
 
 @lru_cache
