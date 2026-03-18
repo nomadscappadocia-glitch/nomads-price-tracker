@@ -60,6 +60,8 @@ class LiveQuoteService:
             Platform.GOOGLE_HOTELS: GoogleHotelsCollector(self.settings),
             Platform.AGODA: AgodaCollector(self.settings),
         }
+        self.platform_semaphore = asyncio.Semaphore(self.settings.platform_max_concurrency)
+        self.batch_task_semaphore = asyncio.Semaphore(self.settings.batch_task_concurrency)
 
     async def quote(
         self,
@@ -70,7 +72,7 @@ class LiveQuoteService:
         if not platforms:
             return LiveQuoteResponse(request=request, results=[])
 
-        semaphore = asyncio.Semaphore(min(3, len(platforms)))
+        semaphore = asyncio.Semaphore(min(self.settings.platform_max_concurrency, len(platforms)))
 
         async def run_one(platform: Platform) -> LivePlatformResult:
             async with semaphore:
@@ -90,17 +92,19 @@ class LiveQuoteService:
         on_progress: Callable[[str, str, dict[str, Any]], Awaitable[None]] | None = None,
     ) -> BatchQuoteResponse:
         """批量爬取多个酒店"""
-        semaphore = asyncio.Semaphore(request.concurrency)
+        hotel_concurrency = min(request.concurrency, self.settings.batch_hotel_concurrency)
+        semaphore = asyncio.Semaphore(hotel_concurrency)
         results: list[LiveQuoteResponse] = []
         errors: list[dict] = []
 
         async def crawl_one(req: LiveQuoteRequest, index: int) -> tuple[int, LiveQuoteResponse | dict]:
             async with semaphore:
-                try:
-                    result = await self.quote(req, on_progress)
-                    return index, result
-                except Exception as e:
-                    return index, {"hotel": req.hotel_name, "error": str(e)}
+                async with self.batch_task_semaphore:
+                    try:
+                        result = await self.quote(req, on_progress)
+                        return index, result
+                    except Exception as e:
+                        return index, {"hotel": req.hotel_name, "error": str(e)}
 
         # 并发执行所有酒店的爬取
         tasks = [crawl_one(req, i) for i, req in enumerate(request.hotels)]
@@ -202,7 +206,11 @@ class LiveQuoteService:
                     )
 
                 try:
-                    offers = await collector.fetch_rates(search)
+                    async with self.platform_semaphore:
+                        stagger_ms = self.settings.platform_request_stagger_ms
+                        if stagger_ms > 0 and len(attempts) > 0:
+                            await asyncio.sleep(stagger_ms / 1000)
+                        offers = await collector.fetch_rates(search)
                 except Exception as exc:
                     diagnosis = f"crawl error: {exc}"
                     state = AttemptState(
@@ -231,8 +239,9 @@ class LiveQuoteService:
 
                 if not offers and platform in {Platform.TRIP, Platform.BOOKING, Platform.AGODA}:
                     try:
-                        await asyncio.sleep(1.1)
-                        offers = await collector.fetch_rates(search)
+                        async with self.platform_semaphore:
+                            await asyncio.sleep(1.1)
+                            offers = await collector.fetch_rates(search)
                     except Exception:
                         pass
 

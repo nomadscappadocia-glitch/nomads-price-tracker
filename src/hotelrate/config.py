@@ -15,6 +15,11 @@ class Settings(BaseSettings):
     crawl_interval_minutes: int = Field(default=10, ge=1, le=120)
     crawl_concurrency: int = Field(default=4, ge=1, le=20)
     request_timeout_seconds: int = Field(default=25, ge=5, le=120)
+    crawl_insert_batch_size: int = Field(default=200, ge=20, le=2000)
+    platform_max_concurrency: int = Field(default=2, ge=1, le=8)
+    platform_request_stagger_ms: int = Field(default=250, ge=0, le=3000)
+    batch_hotel_concurrency: int = Field(default=3, ge=1, le=10)
+    batch_task_concurrency: int = Field(default=6, ge=1, le=30)
 
     headless: bool = True
     demo_mode: bool = True
@@ -38,7 +43,7 @@ class Settings(BaseSettings):
     firecrawl_api_key: str = ""
     firecrawl_fallback_for_live_quote: bool = True
     # Skip Google Hotels if Playwright keeps failing (Google often blocks automation)
-    google_skip: bool = False
+    google_skip: bool = True
     url_mapping_cache_path: str = "reports/url_mapping_cache.json"
     # 当 Google 只拿到 fallback 时，是否把当前页面 HTML 存到 reports/ 便于对照选择器
     google_debug_save_html: bool = False
