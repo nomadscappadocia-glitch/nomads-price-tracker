@@ -63,6 +63,73 @@ class LiveQuoteService:
         self.platform_semaphore = asyncio.Semaphore(self.settings.platform_max_concurrency)
         self.batch_task_semaphore = asyncio.Semaphore(self.settings.batch_task_concurrency)
 
+    @staticmethod
+    def _request_contains_google(request: LiveQuoteRequest) -> bool:
+        platforms = request.platforms
+        if not platforms:
+            return True
+        return Platform.GOOGLE_HOTELS in platforms
+
+    @staticmethod
+    def _partition_platforms(platforms: list[Platform]) -> tuple[list[Platform], list[Platform]]:
+        regular: list[Platform] = []
+        google: list[Platform] = []
+        for platform in platforms:
+            if platform == Platform.GOOGLE_HOTELS:
+                google.append(platform)
+            else:
+                regular.append(platform)
+        return regular, google
+
+    @classmethod
+    def _partition_batch_requests(
+        cls,
+        requests: list[LiveQuoteRequest],
+    ) -> tuple[list[tuple[int, LiveQuoteRequest]], list[tuple[int, LiveQuoteRequest]]]:
+        regular: list[tuple[int, LiveQuoteRequest]] = []
+        google: list[tuple[int, LiveQuoteRequest]] = []
+        for index, request in enumerate(requests):
+            if cls._request_contains_google(request):
+                google.append((index, request))
+            else:
+                regular.append((index, request))
+        return regular, google
+
+    @staticmethod
+    def _build_probe_offsets(
+        *,
+        platform: Platform,
+        probe_days_ahead: int,
+        probe_step_days: int,
+    ) -> list[int]:
+        offsets = [0]
+        if platform not in {Platform.AGODA, Platform.BOOKING}:
+            return offsets
+        if probe_days_ahead <= 0:
+            return offsets
+
+        for offset in range(probe_step_days, probe_days_ahead + 1, probe_step_days):
+            offsets.append(offset)
+
+        if offsets[-1] != probe_days_ahead:
+            offsets.append(probe_days_ahead)
+        return offsets
+
+    @staticmethod
+    def _build_attempt_plan(
+        *,
+        urls: list[str],
+        offsets: list[int],
+        max_attempts: int,
+    ) -> list[tuple[str, int]]:
+        plan: list[tuple[str, int]] = []
+        for offset in offsets:
+            for url in urls:
+                plan.append((url, offset))
+                if len(plan) >= max_attempts:
+                    return plan
+        return plan
+
     async def quote(
         self,
         request: LiveQuoteRequest,
@@ -72,19 +139,32 @@ class LiveQuoteService:
         if not platforms:
             return LiveQuoteResponse(request=request, results=[])
 
-        semaphore = asyncio.Semaphore(min(self.settings.platform_max_concurrency, len(platforms)))
+        results_by_platform: dict[Platform, LivePlatformResult] = {}
+        regular_platforms, google_platforms = self._partition_platforms(platforms)
 
-        async def run_one(platform: Platform) -> LivePlatformResult:
-            async with semaphore:
-                return await self._quote_one_platform(
-                    platform=platform,
-                    request=request,
-                    on_progress=on_progress,
-                )
+        async def run_group(group: list[Platform]) -> None:
+            if not group:
+                return
 
-        results = await asyncio.gather(*(run_one(platform) for platform in platforms))
+            semaphore = asyncio.Semaphore(min(self.settings.platform_max_concurrency, len(group)))
 
-        return LiveQuoteResponse(request=request, results=list(results))
+            async def run_one(platform: Platform) -> LivePlatformResult:
+                async with semaphore:
+                    return await self._quote_one_platform(
+                        platform=platform,
+                        request=request,
+                        on_progress=on_progress,
+                    )
+
+            group_results = await asyncio.gather(*(run_one(platform) for platform in group))
+            for result in group_results:
+                results_by_platform[result.platform] = result
+
+        await run_group(regular_platforms)
+        await run_group(google_platforms)
+
+        ordered_results = [results_by_platform[platform] for platform in platforms]
+        return LiveQuoteResponse(request=request, results=ordered_results)
 
     async def batch_quote(
         self,
@@ -93,22 +173,34 @@ class LiveQuoteService:
     ) -> BatchQuoteResponse:
         """批量爬取多个酒店"""
         hotel_concurrency = min(request.concurrency, self.settings.batch_hotel_concurrency)
-        semaphore = asyncio.Semaphore(hotel_concurrency)
         results: list[LiveQuoteResponse] = []
         errors: list[dict] = []
 
-        async def crawl_one(req: LiveQuoteRequest, index: int) -> tuple[int, LiveQuoteResponse | dict]:
-            async with semaphore:
-                async with self.batch_task_semaphore:
-                    try:
-                        result = await self.quote(req, on_progress)
-                        return index, result
-                    except Exception as e:
-                        return index, {"hotel": req.hotel_name, "error": str(e)}
+        async def crawl_group(
+            items: list[tuple[int, LiveQuoteRequest]],
+            *,
+            concurrency: int,
+        ) -> list[tuple[int, LiveQuoteResponse | dict]]:
+            if not items:
+                return []
 
-        # 并发执行所有酒店的爬取
-        tasks = [crawl_one(req, i) for i, req in enumerate(request.hotels)]
-        outcomes = await asyncio.gather(*tasks)
+            group_semaphore = asyncio.Semaphore(concurrency)
+
+            async def crawl_one(req: LiveQuoteRequest, index: int) -> tuple[int, LiveQuoteResponse | dict]:
+                async with group_semaphore:
+                    async with self.batch_task_semaphore:
+                        try:
+                            result = await self.quote(req, on_progress)
+                            return index, result
+                        except Exception as e:
+                            return index, {"hotel": req.hotel_name, "error": str(e)}
+
+            tasks = [crawl_one(req, i) for i, req in items]
+            return await asyncio.gather(*tasks)
+
+        regular_items, google_items = self._partition_batch_requests(request.hotels)
+        outcomes = await crawl_group(regular_items, concurrency=hotel_concurrency)
+        outcomes.extend(await crawl_group(google_items, concurrency=1))
 
         # 按顺序整理结果
         outcomes_dict = {idx: outcome for idx, outcome in outcomes}
@@ -153,6 +245,8 @@ class LiveQuoteService:
             children=request.children,
             currency=request.currency,
             known_url=known_url,
+            locale=request.locale,
+            market=request.market,
         )
 
         if not urls and known_url:
@@ -167,125 +261,127 @@ class LiveQuoteService:
         attempts: list[AttemptState] = []
         best: AttemptState | None = None
 
-        offsets = [0]
-        if platform in {Platform.AGODA, Platform.BOOKING} and request.probe_days_ahead > 0:
-            step = request.probe_step_days
-            offsets.append(step)
+        offsets = self._build_probe_offsets(
+            platform=platform,
+            probe_days_ahead=request.probe_days_ahead,
+            probe_step_days=request.probe_step_days,
+        )
 
         nights = (request.checkout - request.checkin).days
         max_attempts = 8
+        attempt_plan = self._build_attempt_plan(
+            urls=urls,
+            offsets=offsets,
+            max_attempts=max_attempts,
+        )
 
-        for candidate_url in urls:
-            for offset in offsets:
-                if len(attempts) >= max_attempts:
-                    break
-                checkin = request.checkin + timedelta(days=offset)
-                checkout = checkin + timedelta(days=nights)
-                hotel_id = self._platform_hotel_id(platform=platform, url=candidate_url, hotel_name=request.hotel_name)
+        for candidate_url, offset in attempt_plan:
+            checkin = request.checkin + timedelta(days=offset)
+            checkout = checkin + timedelta(days=nights)
+            hotel_id = self._platform_hotel_id(platform=platform, url=candidate_url, hotel_name=request.hotel_name)
 
-                search = SearchRequest(
-                    platform_hotel_id=hotel_id,
-                    platform_url=candidate_url,
-                    checkin=checkin,
-                    checkout=checkout,
-                    adults=request.adults,
-                    children=request.children,
-                    currency=request.currency,
+            search = SearchRequest(
+                platform_hotel_id=hotel_id,
+                platform_url=candidate_url,
+                checkin=checkin,
+                checkout=checkout,
+                adults=request.adults,
+                children=request.children,
+                currency=request.currency,
+                locale=request.locale,
+                market=request.market,
+            )
+
+            if on_progress:
+                await on_progress(
+                    platform_key,
+                    "attempt",
+                    {
+                        "attempt_index": len(attempts),
+                        "url": candidate_url,
+                        "checkin": checkin.isoformat(),
+                        "checkout": checkout.isoformat(),
+                    },
                 )
 
-                if on_progress:
-                    await on_progress(
-                        platform_key,
-                        "attempt",
-                        {
-                            "attempt_index": len(attempts),
-                            "url": candidate_url,
-                            "checkin": checkin.isoformat(),
-                            "checkout": checkout.isoformat(),
-                        },
-                    )
-
-                try:
-                    async with self.platform_semaphore:
-                        stagger_ms = self.settings.platform_request_stagger_ms
-                        if stagger_ms > 0 and len(attempts) > 0:
-                            await asyncio.sleep(stagger_ms / 1000)
-                        offers = await collector.fetch_rates(search)
-                except Exception as exc:
-                    diagnosis = f"crawl error: {exc}"
-                    state = AttemptState(
-                        request=search,
-                        url=candidate_url,
-                        offers=[],
-                        structured_count=0,
-                        fallback_count=0,
-                        match_score=0,
-                        diagnosis=diagnosis,
-                    )
-                    attempts.append(state)
-                    if on_progress:
-                        await on_progress(
-                            platform_key,
-                            "attempt_done",
-                            {
-                                "error": str(exc),
-                                "offer_count": 0,
-                                "structured_count": 0,
-                                "diagnosis": diagnosis,
-                                "elapsed": time.monotonic() - t0,
-                            },
-                        )
-                    continue
-
-                if not offers and platform in {Platform.TRIP, Platform.BOOKING, Platform.AGODA}:
-                    try:
-                        async with self.platform_semaphore:
-                            await asyncio.sleep(1.1)
-                            offers = await collector.fetch_rates(search)
-                    except Exception:
-                        pass
-
-                structured_count = collector.count_structured_offers(offers)
-                fallback_count = self._fallback_count(offers)
-                match_score = self._offer_match_score(hotel_name=request.hotel_name, offers=offers)
-                diagnosis = self._diagnosis(platform=platform, offers=offers, structured_count=structured_count)
-
+            try:
+                async with self.platform_semaphore:
+                    stagger_ms = self.settings.platform_request_stagger_ms
+                    if stagger_ms > 0 and len(attempts) > 0:
+                        await asyncio.sleep(stagger_ms / 1000)
+                    offers = await collector.fetch_rates(search)
+            except Exception as exc:
+                diagnosis = f"crawl error: {exc}"
                 state = AttemptState(
                     request=search,
                     url=candidate_url,
-                    offers=offers,
-                    structured_count=structured_count,
-                    fallback_count=fallback_count,
-                    match_score=match_score,
+                    offers=[],
+                    structured_count=0,
+                    fallback_count=0,
+                    match_score=0,
                     diagnosis=diagnosis,
                 )
                 attempts.append(state)
-
                 if on_progress:
                     await on_progress(
                         platform_key,
                         "attempt_done",
                         {
-                            "offer_count": len(offers),
-                            "structured_count": structured_count,
-                            "fallback_count": fallback_count,
+                            "error": str(exc),
+                            "offer_count": 0,
+                            "structured_count": 0,
                             "diagnosis": diagnosis,
                             "elapsed": time.monotonic() - t0,
                         },
                     )
+                continue
 
-                if best is None or self._is_better_attempt(state, best):
-                    best = state
+            if not offers and platform in {Platform.TRIP, Platform.BOOKING, Platform.AGODA}:
+                try:
+                    async with self.platform_semaphore:
+                        await asyncio.sleep(1.1)
+                        offers = await collector.fetch_rates(search)
+                except Exception:
+                    pass
 
-                if structured_count > 0:
-                    break
-            if best and best.structured_count > 0:
-                break
-            if len(attempts) >= max_attempts:
+            structured_count = collector.count_structured_offers(offers)
+            fallback_count = self._fallback_count(offers)
+            match_score = self._offer_match_score(hotel_name=request.hotel_name, offers=offers)
+            diagnosis = self._diagnosis(platform=platform, offers=offers, structured_count=structured_count)
+
+            state = AttemptState(
+                request=search,
+                url=candidate_url,
+                offers=offers,
+                structured_count=structured_count,
+                fallback_count=fallback_count,
+                match_score=match_score,
+                diagnosis=diagnosis,
+            )
+            attempts.append(state)
+
+            if on_progress:
+                await on_progress(
+                    platform_key,
+                    "attempt_done",
+                    {
+                        "offer_count": len(offers),
+                        "structured_count": structured_count,
+                        "fallback_count": fallback_count,
+                        "diagnosis": diagnosis,
+                        "elapsed": time.monotonic() - t0,
+                    },
+                )
+
+            if best is None or self._is_better_attempt(state, best):
+                best = state
+
+            if structured_count > 0:
                 break
 
         if (
             best is not None
+            and platform != Platform.AGODA
             and self.settings.firecrawl_enabled
             and getattr(self.settings, "firecrawl_fallback_for_live_quote", True)
             and best.structured_count == 0
@@ -415,6 +511,11 @@ class LiveQuoteService:
                 mode=str(offer.raw_payload.get("mode", "parsed")),
             )
             for offer in best.offers[:10]
+            if not (
+                platform == Platform.AGODA
+                and str(offer.raw_payload.get("mode", "")).lower()
+                in {"text_fallback", "firecrawl_fallback", "url_fallback"}
+            )
         ]
 
         if best.offers:

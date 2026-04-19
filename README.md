@@ -164,6 +164,44 @@ python scripts/live_meta_quote.py \
 
 > 注意：上面这些参数必须传**真实 URL**。像 `<Trip详情页URL>` 这样的占位符字符串会被自动忽略。
 
+### 7.1 批量 smoke（推荐日常回归命令）
+
+```bash
+URL_MAPPING_CACHE_PATH=/tmp/hotelrate_all_sites_smoke_cache.json \
+BOOKING_DEBUG_SAVE_JSON=true \
+AGODA_DEBUG_SAVE_JSON=true \
+python scripts/live_meta_quote.py \
+  --batch-config scripts/live_all_sites_smoke.json \
+  --batch-concurrency 2 \
+  --enable-google \
+  --out reports/live_all_sites_smoke_live.json
+```
+
+当前版本对 `google_hotels` 已内置稳定性兜底，正常情况下不需要再手动加：
+
+- `REQUEST_TIMEOUT_SECONDS=90`
+- `--batch-concurrency 1`
+- `PLAYWRIGHT_NODEJS_PATH=...`
+
+脚本在检测到 `google_hotels` 后会自动做这些事：
+
+- 优先使用系统 `node` 作为 Playwright driver runtime；通常不再需要手动传 `--use-system-playwright-node`
+- 给 Google 导航阶段使用更长超时，默认 `90s`
+- 在批量模式下把含 Google 的请求放到普通 OTA 之后再跑，并串行执行，减少互相抢浏览器资源
+- 默认不给 Google 复用共享持久化 profile；只有显式设置 `PLAYWRIGHT_USER_DATA_DIR_GOOGLE_HOTELS` 时才会启用
+
+如果你的机器上 `node` 不在 `PATH`，或者你就是想强制指定系统 Node，仍然可以手动传：
+
+```bash
+python scripts/live_meta_quote.py --use-system-playwright-node ...
+```
+
+如果你确实需要给 Google 复用单独 profile，请显式配置：
+
+```bash
+PLAYWRIGHT_USER_DATA_DIR_GOOGLE_HOTELS=/absolute/path/to/google-profile
+```
+
 ## 8) 自动发现详情页 URL（不手填）
 
 先跑候选发现：
@@ -236,6 +274,7 @@ python scripts/platform_login_warmup.py --platform agoda --wait-seconds 300
 
 > 实测在部分网络环境下，Booking 会长期停在 `pipl_consent` 页。建议先运行 booking warmup 手动同意一次，并复用 `PLAYWRIGHT_USER_DATA_DIR_BOOKING`。
 > 新版本会自动识别本地目录：`.playwright/trip-profile`、`.playwright/booking-profile`，即使你没显式配置 `.env` 也会自动复用会话。
+> Google Hotels 默认不复用共享持久化 profile；如果你希望 warmup 后复用 Google 会话，请单独设置 `PLAYWRIGHT_USER_DATA_DIR_GOOGLE_HOTELS`。
 
 ## 11) 夜间批量任务
 
@@ -313,5 +352,7 @@ docker compose up -d
 ## 14) 运行速度优化（已内置）
 
 - `live_meta_quote` 现在会并行跑多平台，不再串行等待。
+- 批量模式下如果包含 `google_hotels`，系统会自动把 Google 请求放到最后串行跑，避免拖慢或干扰 Trip/Booking/Agoda。
+- 请求里包含 `google_hotels` 时，会自动优先使用系统 `node`，并给 Google 更长的导航超时。
 - 每个平台会自动截断候选 URL 数量，优先 detail URL。
-- `booking/agoda` 的日期探测默认只探测 1 个偏移窗口（`0` 和 `probe-step`），减少卡住概率。
+- `booking/agoda` 的日期探测会覆盖完整 probe window，并按日期偏移交错尝试各候选 URL，兼顾成功率和速度。

@@ -21,6 +21,8 @@ class CrawlWindow:
     adults: int
     children: int
     currency: str = "USD"
+    locale: str = "en-US"
+    market: str | None = None
 
 
 class RateCrawlerService:
@@ -59,7 +61,8 @@ class RateCrawlerService:
 
                 success_count = 0
                 failed_count = 0
-                snapshots: list[NormalizedSnapshot] = []
+                inserted = 0
+                pending_snapshots: list[NormalizedSnapshot] = []
 
                 semaphore = asyncio.Semaphore(self.settings.crawl_concurrency)
                 tasks = [
@@ -77,7 +80,10 @@ class RateCrawlerService:
                 for ok, normalized_rows, error_msg in results:
                     if ok:
                         success_count += 1
-                        snapshots.extend(normalized_rows)
+                        pending_snapshots.extend(normalized_rows)
+                        if len(pending_snapshots) >= self.settings.crawl_insert_batch_size:
+                            inserted += await repo.insert_snapshots(pending_snapshots)
+                            pending_snapshots.clear()
                     else:
                         failed_count += 1
                         self.logger.warning(
@@ -86,7 +92,9 @@ class RateCrawlerService:
                             error_msg,
                         )
 
-                inserted = await repo.insert_snapshots(snapshots)
+                if pending_snapshots:
+                    inserted += await repo.insert_snapshots(pending_snapshots)
+                    pending_snapshots.clear()
                 status = "success" if failed_count == 0 else "partial"
 
                 await repo.finish_job_log(
@@ -122,6 +130,8 @@ class RateCrawlerService:
             adults=window.adults,
             children=window.children,
             currency=window.currency,
+            locale=window.locale,
+            market=window.market,
         )
 
         try:
@@ -137,9 +147,13 @@ class RateCrawlerService:
     def _build_default_window(self) -> CrawlWindow:
         checkin = date.today() + timedelta(days=self.settings.default_checkin_offset_days)
         checkout = checkin + timedelta(days=self.settings.default_length_of_stay)
+        dm = self.settings.default_market.strip().upper()
+        market = dm if len(dm) == 2 and dm.isalpha() else None
         return CrawlWindow(
             checkin=checkin,
             checkout=checkout,
             adults=self.settings.default_adults,
             children=self.settings.default_children,
+            locale=self.settings.default_locale,
+            market=market,
         )

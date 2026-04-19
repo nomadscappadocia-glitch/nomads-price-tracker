@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, parse_qsl, unquote, urlparse
 from playwright.async_api import async_playwright
 
 from hotelrate.collectors.base import BaseCollector
+from hotelrate.core.market_locale import booking_lang_param
 from hotelrate.schemas import Platform, RawRateOffer, SearchRequest
 
 
@@ -40,53 +41,45 @@ class BookingCollector(BaseCollector):
     async def _fetch_live_rates(self, request: SearchRequest) -> list[RawRateOffer]:
         url = self._build_search_url(request)
         async with async_playwright() as pw:
-            browser, context = await self.open_playwright_context(pw)
-            page = await context.new_page()
-            payloads = await self.capture_json_payloads(
-                page=page,
-                url=url,
-                response_patterns=self.RESPONSE_PATTERNS,
-                settle_ms=3000,
-                after_load=self._after_load_interactions,
-            )
-            
-            # Debug: save raw API responses if enabled
-            if getattr(self.settings, "booking_debug_save_json", False) and payloads:
-                try:
-                    from pathlib import Path
-                    import json
-                    import time
-                    reports_dir = Path("reports")
-                    reports_dir.mkdir(parents=True, exist_ok=True)
-                    path = reports_dir / f"booking_debug_{int(time.time()*1000)}.json"
-                    path.write_text(json.dumps(payloads, indent=2, default=str), encoding="utf-8")
-                    self.logger.info("booking debug: saved %d payloads to %s", len(payloads), path)
-                except Exception as e:
-                    self.logger.debug("booking debug save failed: %s", e)
-            
-            offers = self._parse_structured_offers(request=request, payloads=payloads)
-            if not offers:
-                offers = await self.parse_ld_json_fallback(page=page, request=request, max_offers=10)
-            if not offers:
-                offers = await self._parse_booking_env_room_offers(page=page, request=request)
-            if not offers:
-                offers = await self._parse_room_table_dom_fallback(page=page, request=request)
-            if not offers:
-                offers = self._parse_url_price_fallback(request)
-            if not offers:
-                offers = await self.parse_text_price_fallback(page=page, request=request, max_offers=6)
-            offers = self._filter_text_fallback_outliers(offers)
-            if not offers and "pipl_consent" in str(page.url).lower():
-                raise RuntimeError(
-                    "booking consent gate blocked; run scripts/platform_login_warmup.py --platform booking"
+            browser, context = await self.open_playwright_context(pw, request)
+            try:
+                page = await context.new_page()
+                payloads = await self.capture_json_payloads(
+                    page=page,
+                    url=url,
+                    response_patterns=self.RESPONSE_PATTERNS,
+                    settle_ms=3000,
+                    after_load=self._after_load_interactions,
                 )
-            self.logger.info(
-                "booking crawl url=%s payloads=%d offers=%d",
-                url,
-                len(payloads),
-                len(offers),
-            )
-            await self.close_playwright_context(browser=browser, context=context)
+
+                # Debug: save raw API responses if enabled
+                if getattr(self.settings, "booking_debug_save_json", False) and payloads:
+                    self._save_debug_payloads("booking", payloads)
+
+                offers = self._parse_structured_offers(request=request, payloads=payloads)
+                if not offers:
+                    offers = await self.parse_ld_json_fallback(page=page, request=request, max_offers=10)
+                if not offers:
+                    offers = await self._parse_booking_env_room_offers(page=page, request=request)
+                if not offers:
+                    offers = await self._parse_room_table_dom_fallback(page=page, request=request)
+                if not offers:
+                    offers = self._parse_url_price_fallback(request)
+                if not offers:
+                    offers = await self.parse_text_price_fallback(page=page, request=request, max_offers=6)
+                offers = self._filter_text_fallback_outliers(offers)
+                if not offers and "pipl_consent" in str(page.url).lower():
+                    raise RuntimeError(
+                        "booking consent gate blocked; run scripts/platform_login_warmup.py --platform booking"
+                    )
+                self.logger.info(
+                    "booking crawl url=%s payloads=%d offers=%d",
+                    url,
+                    len(payloads),
+                    len(offers),
+                )
+            finally:
+                await self.close_playwright_context(browser=browser, context=context)
         return offers
 
     def _filter_text_fallback_outliers(self, offers: list[RawRateOffer]) -> list[RawRateOffer]:
@@ -127,6 +120,7 @@ class BookingCollector(BaseCollector):
             "no_rooms": 1,
             "sb_price_type": "total",
             "selected_currency": request.currency,
+            "lang": booking_lang_param(request.locale),
         }
 
         if request.platform_url:

@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     crawl_interval_minutes: int = Field(default=10, ge=1, le=120)
     crawl_concurrency: int = Field(default=4, ge=1, le=20)
     request_timeout_seconds: int = Field(default=25, ge=5, le=120)
+    google_request_timeout_seconds: int = Field(default=90, ge=5, le=180)
     crawl_insert_batch_size: int = Field(default=200, ge=20, le=2000)
     platform_max_concurrency: int = Field(default=2, ge=1, le=8)
     platform_request_stagger_ms: int = Field(default=250, ge=0, le=3000)
@@ -35,6 +36,12 @@ class Settings(BaseSettings):
     default_length_of_stay: int = Field(default=1, ge=1, le=30)
     default_adults: int = Field(default=2, ge=1, le=8)
     default_children: int = Field(default=0, ge=0, le=6)
+    default_locale: str = Field(default="en-US", min_length=2, max_length=35)
+    default_market: str = Field(
+        default="",
+        max_length=2,
+        description="Optional ISO 3166-1 alpha-2; empty = infer from default_locale for Google gl.",
+    )
 
     target_city: str = ""
     firecrawl_base_url: str = "http://localhost:3002"
@@ -47,6 +54,8 @@ class Settings(BaseSettings):
     url_mapping_cache_path: str = "reports/url_mapping_cache.json"
     # 当 Google 只拿到 fallback 时，是否把当前页面 HTML 存到 reports/ 便于对照选择器
     google_debug_save_html: bool = False
+    # 是否保存 Google runtime HTML + probe JSON（体积较大，仅排障时开启）
+    google_debug_save_runtime_artifacts: bool = False
     booking_debug_save_json: bool = False
     agoda_debug_save_json: bool = False
     trip_debug_save_json: bool = False

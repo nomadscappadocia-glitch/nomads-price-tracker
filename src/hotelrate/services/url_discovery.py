@@ -8,6 +8,14 @@ from urllib.parse import parse_qs, parse_qsl, quote_plus, unquote, urlencode, ur
 import httpx
 
 from hotelrate.config import Settings
+from hotelrate.core.market_locale import (
+    accept_language_header,
+    agoda_locale_path_prefix,
+    booking_lang_param,
+    google_hl_gl,
+    normalize_bcp47_locale,
+    trip_locale_query_value,
+)
 from hotelrate.schemas import Platform
 from hotelrate.services.firecrawl_client import FirecrawlClient
 
@@ -41,6 +49,8 @@ class UrlDiscoveryService:
         children: int,
         currency: str,
         known_url: str | None,
+        locale: str = "en-US",
+        market: str | None = None,
     ) -> list[str]:
         candidates: list[tuple[str, int]] = []
         if known_url:
@@ -56,6 +66,8 @@ class UrlDiscoveryService:
                 children=children,
                 currency=currency,
                 known_url=known_url,
+                locale=locale,
+                market=market,
             ):
             candidates.append((url, 90))
 
@@ -70,6 +82,8 @@ class UrlDiscoveryService:
                 children=children,
                 currency=currency,
                 candidates=candidates,
+                locale=locale,
+                market=market,
             )
 
         search_links = await self._search_engine_links(
@@ -92,6 +106,7 @@ class UrlDiscoveryService:
             pw_extracted = await self._extract_detail_urls_with_playwright(
                 platform=platform,
                 seed_urls=[item for item, _ in candidates],
+                locale=locale,
             )
             for url in pw_extracted:
                 candidates.append((url, 82))
@@ -142,6 +157,8 @@ class UrlDiscoveryService:
             children=children,
             currency=currency,
             candidates=candidates,
+            locale=locale,
+            market=market,
         )
 
     async def _finalize_candidates(
@@ -156,6 +173,8 @@ class UrlDiscoveryService:
         children: int,
         currency: str,
         candidates: list[tuple[str, int]],
+        locale: str = "en-US",
+        market: str | None = None,
     ) -> list[str]:
         normalized: list[tuple[str, int]] = []
         for raw_url, base_score in candidates:
@@ -174,6 +193,8 @@ class UrlDiscoveryService:
                 adults=adults,
                 children=children,
                 currency=currency,
+                locale=locale,
+                market=market,
             )
             score = base_score + self._score_url(
                 platform=platform,
@@ -211,10 +232,13 @@ class UrlDiscoveryService:
         children: int,
         currency: str,
         known_url: str | None,
+        locale: str = "en-US",
+        market: str | None = None,
     ) -> list[str]:
         query_text = f"{hotel_name} {city}".strip()
 
         if platform == Platform.GOOGLE_HOTELS:
+            hl, gl = google_hl_gl(locale, market)
             query = urlencode(
                 {
                     "q": query_text,
@@ -222,8 +246,8 @@ class UrlDiscoveryService:
                     "checkout": checkout,
                     "adults": adults,
                     "children": children,
-                    "hl": "en-US",
-                    "gl": "us",
+                    "hl": hl,
+                    "gl": gl,
                 }
             )
             return [f"https://www.google.com/travel/search?{query}"]
@@ -246,6 +270,7 @@ class UrlDiscoveryService:
                     "group_children": children,
                     "no_rooms": 1,
                     "selected_currency": currency,
+                    "lang": booking_lang_param(locale),
                 }
             )
             urls.append(f"https://www.booking.com/searchresults.html?{search_query}")
@@ -269,7 +294,8 @@ class UrlDiscoveryService:
                     "textToSearch": query_text,
                 }
             )
-            urls.append(f"https://www.agoda.com/search?{search_query}")
+            agoda_pre = agoda_locale_path_prefix(locale)
+            urls.append(f"https://www.agoda.com/{agoda_pre}/search?{search_query}")
             return urls
 
         if platform == Platform.TRIP:
@@ -289,6 +315,7 @@ class UrlDiscoveryService:
                             "children": children,
                             "curr": currency,
                             "barcurr": currency,
+                            "locale": trip_locale_query_value(locale),
                         }
                     )
                     urls.append(f"https://www.trip.com/hotels/detail/?{detail_query}")
@@ -562,6 +589,7 @@ class UrlDiscoveryService:
         *,
         platform: Platform,
         seed_urls: list[str],
+        locale: str = "en-US",
     ) -> list[str]:
         candidates: list[str] = []
         for raw_url in seed_urls:
@@ -600,12 +628,13 @@ class UrlDiscoveryService:
             launch_kwargs["channel"] = channel
 
         try:
+            norm_locale = normalize_bcp47_locale(locale)
             async with async_playwright() as pw:
                 browser = await pw.chromium.launch(**launch_kwargs)
                 context = await browser.new_context(
-                    locale="en-US",
+                    locale=norm_locale,
                     user_agent=self.SEARCH_USER_AGENT,
-                    extra_http_headers={"Accept-Language": "en-US,en;q=0.9"},
+                    extra_http_headers={"Accept-Language": accept_language_header(norm_locale)},
                     viewport={"width": 1360, "height": 900},
                 )
                 await context.add_init_script(
@@ -814,6 +843,8 @@ class UrlDiscoveryService:
         adults: int,
         children: int,
         currency: str,
+        locale: str = "en-US",
+        market: str | None = None,
     ) -> str:
         parsed = urlparse(url)
         query = dict(parse_qsl(parsed.query, keep_blank_values=True))
@@ -831,6 +862,7 @@ class UrlDiscoveryService:
                         "children": children,
                         "curr": currency,
                         "barcurr": currency,
+                        "locale": trip_locale_query_value(locale),
                     }
                 )
                 return f"https://www.trip.com/hotels/detail/?{detail_query}"
@@ -843,6 +875,7 @@ class UrlDiscoveryService:
                         "children": str(children),
                         "curr": currency,
                         "barcurr": currency,
+                        "locale": trip_locale_query_value(locale),
                     }
                 )
                 return urlunparse(parsed._replace(query=urlencode(query, doseq=True)))
@@ -857,6 +890,7 @@ class UrlDiscoveryService:
                     "group_children": str(children),
                     "no_rooms": "1",
                     "selected_currency": currency,
+                    "lang": booking_lang_param(locale),
                 }
             )
             return urlunparse(parsed._replace(netloc="www.booking.com", path=path, query=urlencode(query, doseq=True)))
@@ -875,14 +909,15 @@ class UrlDiscoveryService:
             return urlunparse(parsed._replace(netloc="www.agoda.com", query=urlencode(query, doseq=True)))
 
         if platform == Platform.GOOGLE_HOTELS and "/travel/search" in parsed.path:
+            hl, gl = google_hl_gl(locale, market)
             query.update(
                 {
                     "checkin": checkin,
                     "checkout": checkout,
                     "adults": str(adults),
                     "children": str(children),
-                    "hl": "en-US",
-                    "gl": "us",
+                    "hl": hl,
+                    "gl": gl,
                 }
             )
             return urlunparse(parsed._replace(query=urlencode(query, doseq=True)))

@@ -6,7 +6,7 @@ from enum import Enum
 from typing import Any
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class Platform(str, Enum):
@@ -22,8 +22,31 @@ class SearchRequest(BaseModel):
     checkout: date
     adults: int = Field(default=2, ge=1, le=8)
     children: int = Field(default=0, ge=0, le=6)
-    currency: str = Field(default="USD", min_length=3, max_length=3)
+    currency: str = Field(
+        default="USD",
+        min_length=3,
+        max_length=3,
+        description="ISO 4217; collectors pass uppercased codes to OTAs.",
+    )
+    locale: str = Field(
+        default="en-US",
+        min_length=2,
+        max_length=35,
+        description="BCP 47 locale for Playwright, Accept-Language, and site query/path hints.",
+    )
+    market: str | None = Field(
+        default=None,
+        pattern=r"^[A-Za-z]{2}$",
+        description="ISO 3166-1 alpha-2 country for Google Travel gl=; optional elsewhere.",
+    )
     platform_url: str | None = None
+
+    @field_validator("market", mode="before")
+    @classmethod
+    def _empty_market_to_none(cls, value: object) -> object:
+        if value == "":
+            return None
+        return value
 
 
 class RawRateOffer(BaseModel):

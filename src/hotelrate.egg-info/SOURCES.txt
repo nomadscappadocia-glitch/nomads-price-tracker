@@ -25,6 +25,7 @@ src/hotelrate/collectors/google_hotels/collector.py
 src/hotelrate/collectors/trip/__init__.py
 src/hotelrate/collectors/trip/collector.py
 src/hotelrate/core/__init__.py
+src/hotelrate/core/market_locale.py
 src/hotelrate/core/matcher.py
 src/hotelrate/core/normalizer.py
 src/hotelrate/infra/__init__.py
@@ -39,3 +40,4 @@ src/hotelrate/services/firecrawl_client.py
 src/hotelrate/services/live_quote_service.py
 src/hotelrate/services/url_discovery.py
 src/hotelrate/services/url_mapping_cache.py
+tests/test_market_locale.py

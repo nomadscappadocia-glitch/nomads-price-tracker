@@ -39,9 +39,9 @@
     "platform": "booking",
     "hotel_name": "Peace hotel",
     "city": "Shanghai",
-    "url": "https://www.booking.com/hotel/cn/fairmont-peace.html?checkin=2026-03-13&checkout=2026-03-14&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
-    "structured_offer_count": 10,
-    "offer_count": 10,
+    "url": "https://www.booking.com/hotel/cn/fairmont-peace.html?checkin=2026-03-28&checkout=2026-03-29&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+    "structured_offer_count": 12,
+    "offer_count": 12,
     "diagnosis": "structured offers captured"
   },
   "agoda|peace-hotel|shanghai": {
@@ -57,9 +57,549 @@
     "platform": "trip",
     "hotel_name": "Peace hotel",
     "city": "Shanghai",
-    "url": "https://www.trip.com/hotels/detail/?hotelId=375539&checkIn=2026-03-13&checkOut=2026-03-14&adult=2&children=0&curr=USD&barcurr=USD",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=375539&checkIn=2026-03-19&checkOut=2026-03-20&adult=2&children=0&curr=USD&barcurr=USD",
     "structured_offer_count": 25,
     "offer_count": 25,
     "diagnosis": "structured offers captured"
+  },
+  "trip|mgm-grand-sanya|na": {
+    "platform": "trip",
+    "hotel_name": "MGM Grand Sanya",
+    "city": "三亚",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=345078&checkIn=2026-05-21&checkOut=2026-05-22&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 128,
+    "offer_count": 128,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|mgm-grand-sanya|na": {
+    "platform": "booking",
+    "hotel_name": "MGM Grand Sanya",
+    "city": "三亚",
+    "url": "https://www.booking.com/hotel/cn/sanya-mgm-grand.html?checkin=2026-03-31&checkout=2026-04-01&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD",
+    "structured_offer_count": 11,
+    "offer_count": 11,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|mgm-grand-sanya|na": {
+    "platform": "agoda",
+    "hotel_name": "MGM Grand Sanya",
+    "city": "三亚",
+    "url": "https://www.agoda.com/zh-cn/mgm-grand-sanya/hotel/sanya-cn.html?checkIn=2026-04-30&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 2,
+    "offer_count": 2,
+    "diagnosis": "structured offers captured"
+  },
+  "google_hotels|peace-hotel|shanghai": {
+    "platform": "google_hotels",
+    "hotel_name": "Peace hotel",
+    "city": "Shanghai",
+    "url": "https://www.google.com/travel/search?q=Peace+hotel+Shanghai&checkin=2026-03-19&checkout=2026-03-20&adults=2&children=0&hl=en-US&gl=us",
+    "structured_offer_count": 0,
+    "offer_count": 4,
+    "diagnosis": "fallback only (firecrawl_fallback)"
+  },
+  "trip|horizon-sanya-yalong-bay-resort-spa|na": {
+    "platform": "trip",
+    "hotel_name": "Horizon Sanya Yalong Bay Resort & Spa",
+    "city": "三亚",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=345522&checkIn=2026-05-21&checkOut=2026-05-22&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 88,
+    "offer_count": 88,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|horizon-sanya-yalong-bay-resort-spa|na": {
+    "platform": "booking",
+    "hotel_name": "Horizon Sanya Yalong Bay Resort & Spa",
+    "city": "三亚",
+    "url": "https://www.booking.com/hotel/cn/horizon-resort-spa.html?checkin=2026-05-14&checkout=2026-05-15&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|horizon-sanya-yalong-bay-resort-spa|na": {
+    "platform": "agoda",
+    "hotel_name": "Horizon Sanya Yalong Bay Resort & Spa",
+    "city": "三亚",
+    "url": "https://www.agoda.com/zh-tw/horizon-resort-spa-yalong-bay/hotel/sanya-cn.html?checkIn=2026-05-14&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 18,
+    "offer_count": 18,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|the-westin-shimei-bay-resort|na": {
+    "platform": "agoda",
+    "hotel_name": "The Westin Shimei Bay Resort",
+    "city": "万宁",
+    "url": "https://www.agoda.com/zh-cn/the-westin-shimei-bay-resort/hotel/wanning-cn.html?checkIn=2026-03-31&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 19,
+    "offer_count": 19,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|the-westin-shimei-bay-resort|na": {
+    "platform": "booking",
+    "hotel_name": "The Westin Shimei Bay Resort",
+    "city": "万宁",
+    "url": "https://www.booking.com/hotel/cn/the-westin-shimei-bay-resort.html?checkin=2026-04-23&checkout=2026-04-24&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|the-westin-shimei-bay-resort|na": {
+    "platform": "trip",
+    "hotel_name": "The Westin Shimei Bay Resort",
+    "city": "万宁",
+    "url": "https://www.trip.com/hotels/list?keyword=The+Westin+Shimei+Bay+Resort+%E4%B8%87%E5%AE%81&checkin=2026-03-31&checkout=2026-04-01&adult=2&children=0",
+    "structured_offer_count": 0,
+    "offer_count": 2,
+    "diagnosis": "fallback only (firecrawl_fallback)"
+  },
+  "trip|qingdao-haitian-hotel|na": {
+    "platform": "trip",
+    "hotel_name": "Qingdao Haitian Hotel",
+    "city": "青岛",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=6740319&checkIn=2026-04-25&checkOut=2026-04-26&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 61,
+    "offer_count": 61,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|qingdao-haitian-hotel|na": {
+    "platform": "booking",
+    "hotel_name": "Qingdao Haitian Hotel",
+    "city": "青岛",
+    "url": "https://www.booking.com/hotel/cn/qing-dao-hai-tian-da-jiu-dian.html?checkin=2026-06-02&checkout=2026-06-03&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 6,
+    "offer_count": 6,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|qingdao-haitian-hotel|na": {
+    "platform": "agoda",
+    "hotel_name": "Qingdao Haitian Hotel",
+    "city": "青岛",
+    "url": "https://www.agoda.com/zh-cn/qingdao-haitian-hotel/hotel/qingdao-cn.html?checkIn=2026-06-17&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 9,
+    "offer_count": 9,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|the-westin-sanya-haitang-bay-resort|na": {
+    "platform": "trip",
+    "hotel_name": "The Westin Sanya Haitang Bay Resort",
+    "city": "三亚",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=532834&checkIn=2026-06-02&checkOut=2026-06-03&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 98,
+    "offer_count": 98,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|the-westin-sanya-haitang-bay-resort|na": {
+    "platform": "agoda",
+    "hotel_name": "The Westin Sanya Haitang Bay Resort",
+    "city": "三亚",
+    "url": "https://www.agoda.com/zh-cn/the-westin-sanya-haitang-bay-resort/hotel/sanya-cn.html?checkIn=2026-06-02&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 25,
+    "offer_count": 25,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|the-westin-sanya-haitang-bay-resort|na": {
+    "platform": "booking",
+    "hotel_name": "The Westin Sanya Haitang Bay Resort",
+    "city": "三亚",
+    "url": "https://www.booking.com/hotel/cn/westin-haitang-bay-sanya.html?checkin=2026-06-02&checkout=2026-06-03&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|the-westin-sanya-haitang-bay-resort|sanya": {
+    "platform": "trip",
+    "hotel_name": "The Westin Sanya Haitang Bay Resort",
+    "city": "Sanya",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=532834&checkIn=2026-04-01&checkOut=2026-04-02&adult=2&children=0&curr=USD&barcurr=USD",
+    "structured_offer_count": 96,
+    "offer_count": 96,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|the-westin-sanya-haitang-bay-resort|sanya": {
+    "platform": "agoda",
+    "hotel_name": "The Westin Sanya Haitang Bay Resort",
+    "city": "Sanya",
+    "url": "https://www.agoda.com/zh-cn/the-westin-sanya-haitang-bay-resort/hotel/sanya-cn.html?checkIn=2026-04-01&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 66,
+    "offer_count": 66,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|the-westin-sanya-haitang-bay-resort|sanya": {
+    "platform": "booking",
+    "hotel_name": "The Westin Sanya Haitang Bay Resort",
+    "city": "Sanya",
+    "url": "https://www.booking.com/hotel/cn/westin-haitang-bay-sanya.html?checkin=2026-04-01&checkout=2026-04-02&group_adults=2&group_children=0&no_rooms=1&sb_price_type=total&type=total&selected_currency=USD",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|hilton-sanya-yalong-bay-resort-spa|na": {
+    "platform": "trip",
+    "hotel_name": "Hilton Sanya Yalong Bay Resort & Spa",
+    "city": "三亚",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=344928&checkIn=2026-05-14&checkOut=2026-05-15&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 129,
+    "offer_count": 129,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|hilton-sanya-yalong-bay-resort-spa|na": {
+    "platform": "booking",
+    "hotel_name": "Hilton Sanya Yalong Bay Resort & Spa",
+    "city": "三亚",
+    "url": "https://www.booking.com/hotel/cn/hilton-sanya-resort-spa.html?checkin=2026-05-14&checkout=2026-05-15&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|hilton-sanya-yalong-bay-resort-spa|na": {
+    "platform": "agoda",
+    "hotel_name": "Hilton Sanya Yalong Bay Resort & Spa",
+    "city": "三亚",
+    "url": "https://www.agoda.com/zh-cn/crowne-plaza-sanya-haitang-bay-resort/hotel/sanya-cn.html?checkIn=2026-05-14&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 25,
+    "offer_count": 25,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|atour-hotel-shanghai-huangpu-xintiandi-metro-station|shanghai": {
+    "platform": "trip",
+    "hotel_name": "Atour Hotel Shanghai HuangPu Xintiandi Metro Station",
+    "city": "Shanghai",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=114516981&checkIn=2026-04-22&checkOut=2026-04-23&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 40,
+    "offer_count": 40,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|atour-hotel-shanghai-huangpu-xintiandi-metro-station|shanghai": {
+    "platform": "booking",
+    "hotel_name": "Atour Hotel Shanghai HuangPu Xintiandi Metro Station",
+    "city": "Shanghai",
+    "url": "https://www.booking.com/hotel/cn/shang-hai-ren-min-yan-chang-huang-he-da-lou-ya-duo-jiu-dian.html?checkin=2026-04-10&checkout=2026-04-11&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 6,
+    "offer_count": 6,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|tru-by-hilton-las-vegas-airport|las-vegas": {
+    "platform": "agoda",
+    "hotel_name": "Tru by Hilton Las Vegas Airport",
+    "city": "Las Vegas",
+    "url": "https://www.agoda.com/zh-hk/tru-by-hilton-las-vegas-airport/hotel/las-vegas-nv-us.html?checkIn=2026-06-17&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (demo)"
+  },
+  "google_hotels|atour-hotel-shanghai-huangpu-xintiandi-metro-station|shanghai": {
+    "platform": "google_hotels",
+    "hotel_name": "Atour Hotel Shanghai HuangPu Xintiandi Metro Station",
+    "city": "Shanghai",
+    "url": "https://www.google.com/travel/search?q=Atour+Hotel+Shanghai+HuangPu+Xintiandi+Metro+Station&checkin=2026-04-10&checkout=2026-04-11&adults=2&children=0&hl=en-US&gl=us",
+    "structured_offer_count": 4,
+    "offer_count": 4,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|ji-hotel-shanghai-xintiandi-xizang-south-road|na": {
+    "platform": "booking",
+    "hotel_name": "JI Hotel (Shanghai Xintiandi Xizang South Road)",
+    "city": "上海",
+    "url": "https://www.booking.com/hotel/cn/ji-shanghai-new-international-expo-center-longyang-road.html?checkin=2026-06-02&checkout=2026-06-03&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 8,
+    "offer_count": 8,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|ji-hotel-shanghai-xintiandi-xizang-south-road|na": {
+    "platform": "agoda",
+    "hotel_name": "JI Hotel (Shanghai Xintiandi Xizang South Road)",
+    "city": "上海",
+    "url": "https://www.agoda.com/zh-hk/ji-hotel-shanghai-xintiandi-south-xizang-road/hotel/shanghai-cn.html?checkIn=2026-05-07&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 10,
+    "offer_count": 10,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|ji-hotel-shanghai-xintiandi-xizang-south-road|na": {
+    "platform": "trip",
+    "hotel_name": "JI Hotel (Shanghai Xintiandi Xizang South Road)",
+    "city": "上海",
+    "url": "https://www.trip.com/hotels/list/?keyword=JI+Hotel+%28Shanghai+Xintiandi+Xizang+South+Road%29+%E4%B8%8A%E6%B5%B7&checkin=2026-04-22&checkout=2026-04-23&adult=2&children=0",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "booking|waiting-century-hotel-shanghai-jing-an-railway-station|na": {
+    "platform": "booking",
+    "hotel_name": "Waiting Century Hotel (Shanghai Jing'an Railway Station)",
+    "city": "上海",
+    "url": "https://www.booking.com/hotel/cn/jinglaihotel-bushe-shanghai-bund-branch.html?aid=304142&label=gen173nr-10CAQoggJCRnNlYXJjaF93YWl0aW5nIGNlbnR1cnkgaG90ZWwgKHNoYW5naGFpIGppbmcnYW4gcmFpbHdheSBzdGF0aW9uKSDkuIrmtbdIMVgEaMkBiAEBmAEzuAEHyAEM2AED6AEB-AEBiAIBqAIBuALe7vvOBsACAdICJDE2M2FkMTY5LTU5ZTItNDE2NS04NGM1LWMwMTRjMTc5ZTJkMtgCAeACAQ&ucfs=1&arphpl=1&checkin=2026-05-14&checkout=2026-05-15&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=20&hapos=20&sr_order=popularity&srpvid=47ef112feddb0328&srepoch=1776219999&all_sr_blocks=1482039601_0_2_0_0&highlighted_blocks=1482039601_0_2_0_0&matching_block_id=1482039601_0_2_0_0&sr_pri_blocks=1482039601_0_2_0_0__99458&from=searchresults&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|waiting-century-hotel-shanghai-jing-an-railway-station|na": {
+    "platform": "trip",
+    "hotel_name": "Waiting Century Hotel (Shanghai Jing'an Railway Station)",
+    "city": "上海",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=1230251&checkIn=2026-05-31&checkOut=2026-06-01&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 35,
+    "offer_count": 35,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|waiting-century-hotel-shanghai-jing-an-railway-station|na": {
+    "platform": "agoda",
+    "hotel_name": "Waiting Century Hotel (Shanghai Jing'an Railway Station)",
+    "city": "上海",
+    "url": "https://www.agoda.com/zh-cn/ji-hotel-caohejing-shanghai/hotel/shanghai-cn.html?checkIn=2026-04-30&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 10,
+    "offer_count": 10,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|vienna-international-hotel-wenchang|na": {
+    "platform": "booking",
+    "hotel_name": "Vienna International Hotel (Wenchang)",
+    "city": "文昌",
+    "url": "https://www.booking.com/hotel/cn/wyndham-garden-wenchang-nanguo.html?aid=304142&label=gen173nr-10CAQoggJCM3NlYXJjaF92aWVubmEgaW50ZXJuYXRpb25hbCBob3RlbCAod2VuY2hhbmcpIOaWh-aYjEgxWARoyQGIAQGYATO4AQfIAQzYAQPoAQH4AQGIAgGoAgG4Aurw-84GwAIB0gIkM2I0ZDMxOTQtNjc3NS00OGE5LTg5MDctZTVjZWFlNTYzMWE52AIB4AIB&ucfs=1&arphpl=1&checkin=2026-04-22&checkout=2026-04-23&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=3&hapos=3&sr_order=popularity&srpvid=80b511b5c9ea022a&srepoch=1776220273&all_sr_blocks=568032901_229063785_2_2_0&highlighted_blocks=568032901_229063785_2_2_0&matching_block_id=568032901_229063785_2_2_0&sr_pri_blocks=568032901_229063785_2_2_0__52890&from=searchresults&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|yitel-hotel|na": {
+    "platform": "trip",
+    "hotel_name": "Yitel Hotel",
+    "city": "北京",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=96808158&checkIn=2026-06-02&checkOut=2026-06-03&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 20,
+    "offer_count": 20,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|yitel-hotel|na": {
+    "platform": "agoda",
+    "hotel_name": "Yitel Hotel",
+    "city": "北京",
+    "url": "https://www.agoda.com/ja-jp/yitel-collection-beijing-capital-airport-hotel/hotel/beijing-cn.html?checkIn=2026-06-02&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 4,
+    "offer_count": 4,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|yitel-hotel|na": {
+    "platform": "booking",
+    "hotel_name": "Yitel Hotel",
+    "city": "北京",
+    "url": "https://www.booking.com/hotel/cn/po-yitel-collection-beijing-hepingli.html?checkin=2026-06-02&checkout=2026-06-03&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 0,
+    "offer_count": 4,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "trip|true-go-hotel-beijing-new-international-exhibition-center-capital-airport|na": {
+    "platform": "trip",
+    "hotel_name": "TRUE GO Hotel (Beijing New International Exhibition Center Capital Airport)",
+    "city": "北京",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=44461848&checkIn=2026-04-30&checkOut=2026-05-01&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 57,
+    "offer_count": 57,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|crystal-orange-shanghai-oriental-pearl-binjiang|na": {
+    "platform": "booking",
+    "hotel_name": "Crystal Orange (Shanghai Oriental Pearl Binjiang)",
+    "city": "上海",
+    "url": "https://www.booking.com/hotel/cn/jie-zi-shui-jing-shang-hai-lu-jia-zui-dong-fang-ming-zhu-jiu-dian.html?checkin=2026-05-14&checkout=2026-05-15&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|crystal-orange-shanghai-oriental-pearl-binjiang|na": {
+    "platform": "trip",
+    "hotel_name": "Crystal Orange (Shanghai Oriental Pearl Binjiang)",
+    "city": "上海",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=2302358&checkIn=2026-05-07&checkOut=2026-05-08&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 34,
+    "offer_count": 34,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|true-go-hotel-beijing-new-international-exhibition-center-capital-airport|na": {
+    "platform": "booking",
+    "hotel_name": "TRUE GO Hotel (Beijing New International Exhibition Center Capital Airport)",
+    "city": "北京",
+    "url": "https://www.booking.com/hotel/cn/ji-beijing-capital-airport-new-international-exhibition-center.html?checkin=2026-05-14&checkout=2026-05-15&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|true-go-hotel-beijing-new-international-exhibition-center-capital-airport|na": {
+    "platform": "agoda",
+    "hotel_name": "TRUE GO Hotel (Beijing New International Exhibition Center Capital Airport)",
+    "city": "北京",
+    "url": "https://www.agoda.com/zh-tw/atour-hotel-beijing-capital-airport-new-international-exhibition-center/hotel/beijing-cn.html?checkIn=2026-04-23&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 1,
+    "offer_count": 1,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|valley-love-holiday-home-zhangjiajie-forest-park-zhongmen-ticket-station-store|na": {
+    "platform": "booking",
+    "hotel_name": "Valley Love Holiday Home (Zhangjiajie Forest Park Zhongmen Ticket Station Store)",
+    "city": "张家界",
+    "url": "https://www.booking.com/hotel/cn/valley-love-lligh-holiday.html?checkin=2026-05-14&checkout=2026-05-15&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 5,
+    "offer_count": 5,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|valley-love-holiday-home-zhangjiajie-forest-park-zhongmen-ticket-station-store|na": {
+    "platform": "trip",
+    "hotel_name": "Valley Love Holiday Home (Zhangjiajie Forest Park Zhongmen Ticket Station Store)",
+    "city": "张家界",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=123018768&checkIn=2026-05-21&checkOut=2026-05-22&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 9,
+    "offer_count": 9,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|crystal-orange-shanghai-oriental-pearl-binjiang|na": {
+    "platform": "agoda",
+    "hotel_name": "Crystal Orange (Shanghai Oriental Pearl Binjiang)",
+    "city": "上海",
+    "url": "https://www.agoda.com/zh-cn/crystal-orange-hotel-shanghai-oriental-pearl-binjiang/hotel/shanghai-cn.html?checkIn=2026-05-14&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 1,
+    "offer_count": 1,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|crowne-plaza-shenzhen-wecc-by-ihg|na": {
+    "platform": "booking",
+    "hotel_name": "Crowne Plaza SHENZHEN WECC by IHG",
+    "city": "深圳",
+    "url": "https://www.booking.com/hotel/cn/crowne-plaza-shenzhen-wecc.html?checkin=2026-06-02&checkout=2026-06-03&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|crowne-plaza-shenzhen-wecc-by-ihg|na": {
+    "platform": "trip",
+    "hotel_name": "Crowne Plaza SHENZHEN WECC by IHG",
+    "city": "深圳",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=54506880&checkIn=2026-06-02&checkOut=2026-06-03&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 110,
+    "offer_count": 110,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|crowne-plaza-shenzhen-wecc-by-ihg|na": {
+    "platform": "agoda",
+    "hotel_name": "Crowne Plaza SHENZHEN WECC by IHG",
+    "city": "深圳",
+    "url": "https://www.agoda.com/zh-cn/crowne-plaza-shenzhen-wecc/hotel/shenzhen-cn.html?checkIn=2026-06-02&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 25,
+    "offer_count": 25,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|qinglian-furun-hotel-beijing-caishikou|na": {
+    "platform": "booking",
+    "hotel_name": "Qinglian Furun Hotel (Beijing Caishikou)",
+    "city": "北京",
+    "url": "https://www.booking.com/searchresults.html?ss=Qinglian+Furun+Hotel+%28Beijing+Caishikou%29+%E5%8C%97%E4%BA%AC&checkin=2026-05-02&checkout=2026-05-03&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 0,
+    "offer_count": 4,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "agoda|qinglian-furun-hotel-beijing-caishikou|na": {
+    "platform": "agoda",
+    "hotel_name": "Qinglian Furun Hotel (Beijing Caishikou)",
+    "city": "北京",
+    "url": "https://www.agoda.com/beijing-airport-jinglin-hotel/hotel/beijing-cn.html?checkIn=2026-06-02&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 10,
+    "offer_count": 10,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|amita-hotel-dongxiaonan-subway-station-store|na": {
+    "platform": "booking",
+    "hotel_name": "AMITA HOTEL(dongxiaonan subway station store)",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/cn/guangzhou-beijing-road-pedestrian-street-dongshankou-metro-station-atour.html?checkin=2026-06-02&checkout=2026-06-03&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 6,
+    "offer_count": 6,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|amita-hotel-dongxiaonan-subway-station-store|na": {
+    "platform": "trip",
+    "hotel_name": "AMITA HOTEL(dongxiaonan subway station store)",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=75539377&checkIn=2026-05-02&checkOut=2026-05-03&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 9,
+    "offer_count": 9,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|sungold-designer-hotel-taikoo-li-chunxi-road-chengdu|na": {
+    "platform": "booking",
+    "hotel_name": "Sungold Designer  Hotel (Taikoo Li, Chunxi Road, Chengdu)",
+    "city": "成都",
+    "url": "https://www.booking.com/hotel/cn/chengdu-enji-s-chunxi-road-taikoo-li.html?checkin=2026-04-25&checkout=2026-04-26&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 10,
+    "offer_count": 10,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|sungold-designer-hotel-taikoo-li-chunxi-road-chengdu|na": {
+    "platform": "trip",
+    "hotel_name": "Sungold Designer  Hotel (Taikoo Li, Chunxi Road, Chengdu)",
+    "city": "成都",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=63123139&checkIn=2026-04-25&checkOut=2026-04-26&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 14,
+    "offer_count": 14,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|city-comfort-inn-guangzhou-baiyun-mountain|na": {
+    "platform": "agoda",
+    "hotel_name": "City Comfort Inn (Guangzhou Baiyun Mountain)",
+    "city": "广州",
+    "url": "https://www.agoda.com/zh-cn/city-comfort-inn-guangzhou-baiyun-bao-branch/hotel/guangzhou-cn.html?checkIn=2026-06-02&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 5,
+    "offer_count": 5,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|city-comfort-inn-guangzhou-baiyun-mountain|na": {
+    "platform": "booking",
+    "hotel_name": "City Comfort Inn (Guangzhou Baiyun Mountain)",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/cn/po-city-comfort-inn-guangzhou-baiyun-mountain-baiyun-mountain-scenic-area.html?checkin=2026-05-02&checkout=2026-05-03&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 0,
+    "offer_count": 4,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "agoda|sungold-designer-hotel-taikoo-li-chunxi-road-chengdu|na": {
+    "platform": "agoda",
+    "hotel_name": "Sungold Designer  Hotel (Taikoo Li, Chunxi Road, Chengdu)",
+    "city": "成都",
+    "url": "https://www.agoda.com/r-royalss-hotel-chengdu-chunxi-road-taikooli-tianfu/hotel/chengdu-cn.html?checkIn=2026-04-25&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 16,
+    "offer_count": 16,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|amita-hotel-dongxiaonan-subway-station-store|na": {
+    "platform": "agoda",
+    "hotel_name": "AMITA HOTEL(dongxiaonan subway station store)",
+    "city": "广州",
+    "url": "https://www.agoda.com/zh-cn/james-joyce-coffetel-guangzhou-dongxiaonan-metro-station-branch/hotel/guangzhou-cn.html?checkIn=2026-06-02&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 2,
+    "offer_count": 2,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|yue-hakka-riverview-apartment-chongqing-jiefangbei-hongyadong|na": {
+    "platform": "trip",
+    "hotel_name": "Yue Hakka Riverview Apartment (Chongqing Jiefangbei Hongyadong)",
+    "city": "重庆",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=105860333&checkIn=2026-06-02&checkOut=2026-06-03&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 6,
+    "offer_count": 6,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|no-1-international-youth-travel-service|na": {
+    "platform": "booking",
+    "hotel_name": "No.1 International Youth Travel Service",
+    "city": "上海",
+    "url": "https://www.booking.com/searchresults.html?ss=No.1+International+Youth+Travel+Service+%E4%B8%8A%E6%B5%B7&checkin=2026-05-09&checkout=2026-05-10&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 0,
+    "offer_count": 4,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "trip|no-1-international-youth-travel-service|na": {
+    "platform": "trip",
+    "hotel_name": "No.1 International Youth Travel Service",
+    "city": "上海",
+    "url": "https://www.trip.com/hotels/list?keyword=No.1+International+Youth+Travel+Service+%E4%B8%8A%E6%B5%B7&checkin=2026-05-09&checkout=2026-05-10&adult=2&children=0",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (text_fallback)"
   }
 }

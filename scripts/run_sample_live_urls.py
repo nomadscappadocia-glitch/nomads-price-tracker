@@ -29,6 +29,8 @@ class LiveTask:
     adults: int = 2
     children: int = 0
     currency: str = "USD"
+    locale: str = "en-US"
+    market: str | None = None
 
 
 @dataclass(slots=True)
@@ -191,12 +193,14 @@ async def crawl_once(
         adults=task.adults,
         children=task.children,
         currency=task.currency,
+        locale=task.locale,
+        market=task.market,
     )
 
     url = collector._build_search_url(request)
 
     async with async_playwright() as pw:
-        browser, context = await collector.open_playwright_context(pw)
+        browser, context = await collector.open_playwright_context(pw, request)
         page = await context.new_page()
 
         payloads = await collector.capture_json_payloads(

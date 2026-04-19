@@ -1,13 +1,17 @@
 from __future__ import annotations
 
+import json
+import time
 import re
 from decimal import Decimal
+from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, unquote_plus, urlparse
 
 from playwright.async_api import async_playwright
 
 from hotelrate.collectors.base import BaseCollector
+from hotelrate.core.market_locale import trip_locale_query_value
 from hotelrate.schemas import Platform, RawRateOffer, SearchRequest
 
 
@@ -35,41 +39,43 @@ class TripCollector(BaseCollector):
     async def _fetch_live_rates(self, request: SearchRequest) -> list[RawRateOffer]:
         url = self._build_search_url(request)
         async with async_playwright() as pw:
-            browser, context = await self.open_playwright_context(pw)
-            page = await context.new_page()
-            payloads = await self.capture_json_payloads(
-                page=page,
-                url=url,
-                response_patterns=self.RESPONSE_PATTERNS,
-                settle_ms=4200,
-                after_load=self._after_load_interactions,
-            )
-            signin_redirected = self._is_signin_redirect(page.url)
-            offers = self._parse_structured_offers(request=request, payloads=payloads)
-            if not offers:
-                offers = await self.parse_ld_json_fallback(page=page, request=request, max_offers=10)
-            if not offers and not signin_redirected and await self._has_offer_signals(page=page, request=request):
-                offers = await self.parse_text_price_fallback(page=page, request=request, max_offers=6)
+            browser, context = await self.open_playwright_context(pw, request)
+            try:
+                page = await context.new_page()
+                payloads = await self.capture_json_payloads(
+                    page=page,
+                    url=url,
+                    response_patterns=self.RESPONSE_PATTERNS,
+                    settle_ms=4200,
+                    after_load=self._after_load_interactions,
+                )
+                signin_redirected = self._is_signin_redirect(page.url)
+                offers = self._parse_structured_offers(request=request, payloads=payloads)
+                if not offers:
+                    offers = await self.parse_ld_json_fallback(page=page, request=request, max_offers=10)
+                if not offers and not signin_redirected and await self._has_offer_signals(page=page, request=request):
+                    offers = await self.parse_text_price_fallback(page=page, request=request, max_offers=6)
 
-            spider_error = self._find_spider_error_code(payloads)
-            if spider_error is not None:
-                self.logger.warning("trip room api returned spider error code=%s", spider_error)
-            if signin_redirected:
-                if self.settings.playwright_user_data_dir.strip():
-                    self.logger.warning(
-                        "trip redirected to sign-in even with persistent profile; refresh local session manually"
-                    )
-                else:
-                    self.logger.warning(
-                        "trip redirected to sign-in; set PLAYWRIGHT_USER_DATA_DIR and run trip login warmup script"
-                    )
-            self.logger.info(
-                "trip crawl url=%s payloads=%d offers=%d",
-                url,
-                len(payloads),
-                len(offers),
-            )
-            await self.close_playwright_context(browser=browser, context=context)
+                spider_error = self._find_spider_error_code(payloads)
+                if spider_error is not None:
+                    self.logger.warning("trip room api returned spider error code=%s", spider_error)
+                if signin_redirected:
+                    if self.settings.playwright_user_data_dir.strip():
+                        self.logger.warning(
+                            "trip redirected to sign-in even with persistent profile; refresh local session manually"
+                        )
+                    else:
+                        self.logger.warning(
+                            "trip redirected to sign-in; set PLAYWRIGHT_USER_DATA_DIR and run trip login warmup script"
+                        )
+                self.logger.info(
+                    "trip crawl url=%s payloads=%d offers=%d",
+                    url,
+                    len(payloads),
+                    len(offers),
+                )
+            finally:
+                await self.close_playwright_context(browser=browser, context=context)
         return offers
 
     def _build_search_url(self, request: SearchRequest) -> str:
@@ -82,6 +88,7 @@ class TripCollector(BaseCollector):
             "crn": 1,
             "curr": request.currency,
             "barcurr": request.currency,
+            "locale": trip_locale_query_value(request.locale),
         }
         if request.platform_url:
             cleaned = self.remove_url_query_keys(request.platform_url, self.DROPPED_QUERY_KEYS)
@@ -119,6 +126,7 @@ class TripCollector(BaseCollector):
     ) -> list[RawRateOffer]:
         offers: list[RawRateOffer] = []
         seen: set[tuple[str, str, str]] = set()
+        debug_saved = False
 
         for payload in payloads:
             url = str(payload.get("url", ""))
@@ -128,21 +136,9 @@ class TripCollector(BaseCollector):
             if not isinstance(data, dict):
                 continue
 
-            # Debug: save raw API response
-            import os
-            save_debug = os.environ.get("TRIP_DEBUG_SAVE_JSON", "").lower() == "true"
-            if save_debug:
-                try:
-                    from pathlib import Path
-                    import json
-                    import time
-                    reports_dir = Path("/Users/sean/Desktop/hotelrate-crawl/reports")
-                    reports_dir.mkdir(parents=True, exist_ok=True)
-                    path = reports_dir / f"trip_debug_{int(time.time()*1000)}.json"
-                    path.write_text(json.dumps(payloads, indent=2, default=str), encoding="utf-8")
-                    self.logger.info("trip debug: saved %d payloads to %s", len(payloads), path)
-                except Exception as e:
-                    self.logger.debug("trip debug save failed: %s", e)
+            if self.settings.trip_debug_save_json and not debug_saved:
+                self._save_debug_payloads("trip", payloads)
+                debug_saved = True
             body = data.get("data")
             if not isinstance(body, dict):
                 continue
@@ -225,6 +221,7 @@ class TripCollector(BaseCollector):
         if offers:
             offers.sort(key=lambda o: o.final_price)
         return offers
+
 
     def _trip_room_name(self, *, raw_sale: dict[str, Any], physical_map: dict[str, Any]) -> str:
         direct = str(raw_sale.get("name", "")).strip()

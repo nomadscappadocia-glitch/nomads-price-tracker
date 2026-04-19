@@ -25,6 +25,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--adults", type=int, default=2)
     parser.add_argument("--children", type=int, default=0)
     parser.add_argument("--currency", default="USD")
+    parser.add_argument("--locale", default="en-US", help="BCP 47 locale for site hints and discovery")
+    parser.add_argument("--market", default="", help="ISO 3166-1 alpha-2 for Google gl= (optional)")
     parser.add_argument("--top", type=int, default=5)
     return parser.parse_args()
 
@@ -33,6 +35,8 @@ async def main() -> None:
     args = parse_args()
     checkin = date.fromisoformat(args.checkin).isoformat()
     checkout = date.fromisoformat(args.checkout).isoformat()
+    market_arg = args.market.strip().upper()
+    market = market_arg if len(market_arg) == 2 and market_arg.isalpha() else None
 
     settings = get_settings()
     discovery = UrlDiscoveryService(settings)
@@ -49,6 +53,8 @@ async def main() -> None:
             children=args.children,
             currency=args.currency,
             known_url=None,
+            locale=args.locale,
+            market=market,
         )
         print(f"\n[{platform.value}] candidates={len(urls)}")
         if not urls:

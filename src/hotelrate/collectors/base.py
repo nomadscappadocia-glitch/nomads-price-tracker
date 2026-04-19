@@ -6,6 +6,7 @@ import hashlib
 import logging
 import random
 import re
+import time
 from abc import ABC, abstractmethod
 from collections import deque
 from collections.abc import Iterable
@@ -19,6 +20,7 @@ from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from playwright.async_api import Browser, BrowserContext, Page, Playwright, Response
 
 from hotelrate.config import Settings
+from hotelrate.core.market_locale import accept_language_header, normalize_bcp47_locale
 from hotelrate.schemas import Platform, RawRateOffer, SearchRequest
 
 
@@ -129,7 +131,20 @@ class BaseCollector(ABC):
         rng = random.Random(seed)
         return Decimal(str(rng.randint(low, high))).quantize(Decimal("0.01"))
 
-    async def open_playwright_context(self, pw: Playwright) -> tuple[Browser | None, BrowserContext]:
+    def _navigation_timeout_ms(self) -> int:
+        timeout_seconds = self.settings.request_timeout_seconds
+        if self.platform == Platform.GOOGLE_HOTELS:
+            timeout_seconds = max(
+                timeout_seconds,
+                getattr(self.settings, "google_request_timeout_seconds", timeout_seconds),
+            )
+        return timeout_seconds * 1000
+
+    async def open_playwright_context(
+        self,
+        pw: Playwright,
+        request: SearchRequest | None = None,
+    ) -> tuple[Browser | None, BrowserContext]:
         launch_kwargs: dict[str, Any] = {"headless": self.settings.headless}
         if self.settings.playwright_disable_automation_flags:
             launch_kwargs["args"] = [
@@ -145,13 +160,14 @@ class BaseCollector(ABC):
 
         channel = self.settings.playwright_browser_channel.strip()
         user_data_dir = self._resolve_user_data_dir()
+        locale = normalize_bcp47_locale(request.locale if request else "en-US")
         context_kwargs: dict[str, Any] = {
-            "locale": "en-US",
+            "locale": locale,
             "user_agent": random.choice(self.USER_AGENTS),
             "viewport": {"width": 1360, "height": 900},
         }
         non_persistent_headers = {
-            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Language": accept_language_header(locale),
             "Upgrade-Insecure-Requests": "1",
         }
 
@@ -197,6 +213,10 @@ class BaseCollector(ABC):
             value = self.settings.playwright_user_data_dir_google_hotels.strip()
             if value:
                 return value
+            # Google Hotels does not require a logged-in session. Avoid reusing a
+            # shared persistent profile by default because it can destabilize the
+            # Playwright driver or cross-pollute state from other OTAs.
+            return ""
         global_value = self.settings.playwright_user_data_dir.strip()
         if global_value:
             return global_value
@@ -253,15 +273,16 @@ class BaseCollector(ABC):
 
         page.on("response", on_response)
         try:
+            timeout_ms = self._navigation_timeout_ms()
             await page.goto(
                 url,
                 wait_until="load",
-                timeout=self.settings.request_timeout_seconds * 1000,
+                timeout=timeout_ms,
             )
             try:
                 await page.wait_for_load_state(
                     "networkidle",
-                    timeout=self.settings.request_timeout_seconds * 1000,
+                    timeout=timeout_ms,
                 )
             except Exception:
                 self.logger.debug("networkidle timeout on %s", url)
@@ -618,6 +639,17 @@ class BaseCollector(ABC):
             except InvalidOperation:
                 return None
         return None
+
+    def _save_debug_payloads(self, platform_name: str, payloads: list[dict[str, Any]]) -> None:
+        """Save raw API payloads to reports/ for debugging."""
+        try:
+            reports_dir = Path("reports")
+            reports_dir.mkdir(parents=True, exist_ok=True)
+            path = reports_dir / f"{platform_name}_debug_{int(time.time() * 1000)}.json"
+            path.write_text(json.dumps(payloads, indent=2, default=str), encoding="utf-8")
+            self.logger.info("%s debug: saved %d payloads to %s", platform_name, len(payloads), path)
+        except Exception as exc:
+            self.logger.debug("%s debug save failed: %s", platform_name, exc)
 
     def _clip_dict(self, data: dict[str, Any], max_items: int = 24) -> dict[str, Any]:
         clipped: dict[str, Any] = {}
