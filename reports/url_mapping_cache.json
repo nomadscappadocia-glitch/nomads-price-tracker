@@ -552,7 +552,7 @@
     "platform": "booking",
     "hotel_name": "City Comfort Inn (Guangzhou Baiyun Mountain)",
     "city": "广州",
-    "url": "https://www.booking.com/hotel/cn/po-city-comfort-inn-guangzhou-baiyun-mountain-baiyun-mountain-scenic-area.html?checkin=2026-05-02&checkout=2026-05-03&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "url": "https://www.booking.com/searchresults.html?ss=City+Comfort+Inn+%28Guangzhou+Baiyun+Mountain%29+%E5%B9%BF%E5%B7%9E&checkin=2026-06-03&checkout=2026-06-04&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
     "structured_offer_count": 0,
     "offer_count": 4,
     "diagnosis": "fallback only (text_fallback)"
@@ -601,5 +601,671 @@
     "structured_offer_count": 0,
     "offer_count": 1,
     "diagnosis": "fallback only (text_fallback)"
+  },
+  "trip|city-comfort-inn-guangzhou-baiyun-mountain|na": {
+    "platform": "trip",
+    "hotel_name": "City Comfort Inn (Guangzhou Baiyun Mountain)",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=1049741&checkIn=2026-06-03&checkOut=2026-06-04&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 20,
+    "offer_count": 20,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|qinglian-furun-hotel-beijing-caishikou|na": {
+    "platform": "trip",
+    "hotel_name": "Qinglian Furun Hotel (Beijing Caishikou)",
+    "city": "北京",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=1776800&checkIn=2026-05-03&checkOut=2026-05-04&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 13,
+    "offer_count": 13,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|ease-hotel-beking-jiuxianqiaodonglu-798-art-center|na": {
+    "platform": "booking",
+    "hotel_name": "Ease Hotel(Beking Jiuxianqiaodonglu 798 Art Center)",
+    "city": "北京",
+    "url": "https://www.booking.com/hotel/cn/bei-jing-zhu-san-jiao-jwmo-hao-jiu-dian.html?checkin=2026-06-03&checkout=2026-06-04&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|shanghai-yunfeng-hotel|na": {
+    "platform": "trip",
+    "hotel_name": "Shanghai Yunfeng Hotel",
+    "city": "上海",
+    "url": "https://www.trip.com/hotels/list/?keyword=Shanghai+Yunfeng+Hotel+%E4%B8%8A%E6%B5%B7&checkin=2026-06-03&checkout=2026-06-04&adult=2&children=0",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "booking|shanghai-yunfeng-hotel|na": {
+    "platform": "booking",
+    "hotel_name": "Shanghai Yunfeng Hotel",
+    "city": "上海",
+    "url": "https://www.booking.com/searchresults.html?ss=Shanghai+Yunfeng+Hotel+%E4%B8%8A%E6%B5%B7&checkin=2026-06-03&checkout=2026-06-04&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 0,
+    "offer_count": 4,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "trip|zhejiang-hotel|na": {
+    "platform": "trip",
+    "hotel_name": "Zhejiang  Hotel",
+    "city": "杭州",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=346316&checkIn=2026-04-29&checkOut=2026-04-30&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 39,
+    "offer_count": 39,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|zhejiang-hotel|na": {
+    "platform": "booking",
+    "hotel_name": "Zhejiang  Hotel",
+    "city": "杭州",
+    "url": "https://www.booking.com/searchresults.html?ss=Zhejiang++Hotel+%E6%9D%AD%E5%B7%9E&checkin=2026-04-29&checkout=2026-04-30&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 0,
+    "offer_count": 4,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "booking|yishanggong-art-themed-hotel-guangzhou-jiangnanxi-metro-station|na": {
+    "platform": "booking",
+    "hotel_name": "Yishanggong Art Themed Hotel (Guangzhou Jiangnanxi Metro Station)",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/cn/hanting-guangzhou-jiangnanxi-metro-station.html?aid=304142&label=gen173nr-10CAQoggJCT3NlYXJjaF95aXNoYW5nZ29uZyBhcnQgdGhlbWVkIGhvdGVsIChndWFuZ3pob3UgamlhbmduYW54aSBtZXRybyBzdGF0aW9uKSDlub_lt55IMVgEaMkBiAEBmAEzuAEHyAEM2AED6AEB-AEBiAIBqAIBuAKs_JXPBsACAdICJDE5NmE3OGQyLWZlMTAtNDdiNS05ODQ0LTU1N2NiMjc1Y2Q5M9gCAeACAQ&ucfs=1&arphpl=1&checkin=2026-04-29&checkout=2026-04-30&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=501f08d6cb840307&srepoch=1776647729&soh=1&from=searchresults&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 8,
+    "offer_count": 8,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|atour-hotel-shenzhen-futian-xiangmi-lake|na": {
+    "platform": "booking",
+    "hotel_name": "Atour Hotel Shenzhen Futian Xiangmi Lake",
+    "city": "深圳",
+    "url": "https://www.booking.com/hotel/cn/atour-s-shenzhen-futian-xinzhou.html?checkin=2026-05-25&checkout=2026-05-26&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 7,
+    "offer_count": 7,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|atour-hotel-shenzhen-futian-xiangmi-lake|na": {
+    "platform": "agoda",
+    "hotel_name": "Atour Hotel Shenzhen Futian Xiangmi Lake",
+    "city": "深圳",
+    "url": "https://www.agoda.com/zh-tw/yaduo-hotel-xiangmi-lake-futian-shenzhen/hotel/shenzhen-cn.html?checkIn=2026-04-30&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 2,
+    "offer_count": 2,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|romantic-fish-seaview-apartment|na": {
+    "platform": "booking",
+    "hotel_name": "Romantic Fish Seaview Apartment",
+    "city": "三亚",
+    "url": "https://www.booking.com/hotel/cn/san-ya-zhi-ai-bai-he-hai-jing-du-jia-gong-yu.html?checkin=2026-06-06&checkout=2026-06-07&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 10,
+    "offer_count": 10,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|yishanggong-art-themed-hotel-guangzhou-jiangnanxi-metro-station|na": {
+    "platform": "trip",
+    "hotel_name": "Yishanggong Art Themed Hotel (Guangzhou Jiangnanxi Metro Station)",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=6128458&checkIn=2026-04-29&checkOut=2026-04-30&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 9,
+    "offer_count": 9,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|grand-hyatt-sanya-haitang-bay-resort-and-spa|na": {
+    "platform": "trip",
+    "hotel_name": "Grand Hyatt Sanya Haitang Bay Resort and Spa",
+    "city": "三亚",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=79656886&checkIn=2026-05-06&checkOut=2026-05-07&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 17,
+    "offer_count": 17,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|grand-hyatt-sanya-haitang-bay-resort-and-spa|na": {
+    "platform": "booking",
+    "hotel_name": "Grand Hyatt Sanya Haitang Bay Resort and Spa",
+    "city": "三亚",
+    "url": "https://www.booking.com/hotel/cn/grand-hyatt-sanya-haitang-bay-resort-and-spa.html?checkin=2026-06-06&checkout=2026-06-07&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|shanghai-marriott-marquis-city-centre|na": {
+    "platform": "booking",
+    "hotel_name": "Shanghai Marriott Marquis City Centre",
+    "city": "上海",
+    "url": "https://www.booking.com/hotel/cn/marriott-shanghai-city-centre.html?checkin=2026-06-19&checkout=2026-06-20&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|shanghai-marriott-marquis-city-centre|na": {
+    "platform": "trip",
+    "hotel_name": "Shanghai Marriott Marquis City Centre",
+    "city": "上海",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=345827&checkIn=2026-05-04&checkOut=2026-05-05&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 54,
+    "offer_count": 54,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|shanghai-marriott-marquis-city-centre|na": {
+    "platform": "agoda",
+    "hotel_name": "Shanghai Marriott Marquis City Centre",
+    "city": "上海",
+    "url": "https://www.agoda.com/shanghai-marriott-hotel-city-centre/hotel/shanghai-cn.html?checkIn=2026-05-04&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 18,
+    "offer_count": 18,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|city-join-hotel-guangzhou-sports-center-shipaiqiao-metro-station|na": {
+    "platform": "booking",
+    "hotel_name": "City Join Hotel (Guangzhou Sports Center Shipaiqiao Metro Station)",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/cn/mercure-guangzhou-tianhe-sports-center.html?checkin=2026-06-06&checkout=2026-06-07&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|city-join-hotel-guangzhou-sports-center-shipaiqiao-metro-station|na": {
+    "platform": "trip",
+    "hotel_name": "City Join Hotel (Guangzhou Sports Center Shipaiqiao Metro Station)",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/list?keyword=City+Join+Hotel+%28Guangzhou+Sports+Center+Shipaiqiao+Metro+Station%29+%E5%B9%BF%E5%B7%9E&checkin=2026-06-04&checkout=2026-06-05&adult=2&children=0",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "agoda|city-join-hotel-guangzhou-sports-center-shipaiqiao-metro-station|na": {
+    "platform": "agoda",
+    "hotel_name": "City Join Hotel (Guangzhou Sports Center Shipaiqiao Metro Station)",
+    "city": "广州",
+    "url": "https://www.agoda.com/zh-cn/city-comfort-inn-guangzhou-ti-yu-xi-road-metro-station/hotel/guangzhou-cn.html?checkIn=2026-04-30&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 7,
+    "offer_count": 7,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|ibis-hotel-guangzhou-pazhou-convention-and-exhibition-center-haizhu-wetland-park|na": {
+    "platform": "booking",
+    "hotel_name": "Ibis Hotel (Guangzhou pazhou Convention and Exhibition Center Haizhu Wetland Park)",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/cn/ibis-guangzhou-pazhou-convention-and-exhibition-center-haizhu-wetland-park.html?checkin=2026-05-04&checkout=2026-05-05&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 10,
+    "offer_count": 10,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|ibis-hotel-guangzhou-pazhou-convention-and-exhibition-center-haizhu-wetland-park|na": {
+    "platform": "trip",
+    "hotel_name": "Ibis Hotel (Guangzhou pazhou Convention and Exhibition Center Haizhu Wetland Park)",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=30843484&checkIn=2026-06-04&checkOut=2026-06-05&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 20,
+    "offer_count": 20,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|ibis-hotel-guangzhou-pazhou-convention-and-exhibition-center-haizhu-wetland-park|na": {
+    "platform": "agoda",
+    "hotel_name": "Ibis Hotel (Guangzhou pazhou Convention and Exhibition Center Haizhu Wetland Park)",
+    "city": "广州",
+    "url": "https://www.agoda.com/zh-cn/yizhi-guangzhou-tower-pazhou-convention-and-exhibition-center-guangzhou-tower-subway-station-branch/hotel/guangzhou-cn.html?checkIn=2026-05-04&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 22,
+    "offer_count": 22,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|renaissance-shenzhen-bay-hotel|na": {
+    "platform": "booking",
+    "hotel_name": "Renaissance Shenzhen Bay Hotel",
+    "city": "深圳",
+    "url": "https://www.booking.com/hotel/cn/panglin-shenzhen.html?checkin=2026-06-04&checkout=2026-06-05&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|renaissance-shenzhen-bay-hotel|na": {
+    "platform": "trip",
+    "hotel_name": "Renaissance Shenzhen Bay Hotel",
+    "city": "深圳",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=68407220&checkIn=2026-05-04&checkOut=2026-05-05&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 44,
+    "offer_count": 44,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|renaissance-shenzhen-bay-hotel|na": {
+    "platform": "agoda",
+    "hotel_name": "Renaissance Shenzhen Bay Hotel",
+    "city": "深圳",
+    "url": "https://www.agoda.com/zh-hk/renaissance-shenzhen-bay-hotel/hotel/shenzhen-cn.html?checkIn=2026-05-04&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 15,
+    "offer_count": 15,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|woping-youth-hostel-beijing-road-store-female-only|na": {
+    "platform": "booking",
+    "hotel_name": "WoPing Youth Hostel（Beijing Road Store, Female Only）",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/cn/only-female-woping-guangzhou-beijingroad-2nd.html?checkin=2026-06-04&checkout=2026-06-05&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 3,
+    "offer_count": 3,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|grand-mercure-shanghai-hongqiao|na": {
+    "platform": "booking",
+    "hotel_name": "Grand Mercure Shanghai Hongqiao",
+    "city": "上海",
+    "url": "https://www.booking.com/hotel/cn/grand-hongqiao-shanghai.html?checkin=2026-06-19&checkout=2026-06-20&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|grand-mercure-shanghai-hongqiao|na": {
+    "platform": "trip",
+    "hotel_name": "Grand Mercure Shanghai Hongqiao",
+    "city": "上海",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=345044&checkIn=2026-04-27&checkOut=2026-04-28&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 69,
+    "offer_count": 69,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|grand-mercure-shanghai-hongqiao|na": {
+    "platform": "agoda",
+    "hotel_name": "Grand Mercure Shanghai Hongqiao",
+    "city": "上海",
+    "url": "https://www.agoda.com/zh-cn/grand-mercure-shanghai-hongqiao_2/hotel/shanghai-cn.html?checkIn=2026-05-04&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 25,
+    "offer_count": 25,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|echarm-hotel-guangzhou-beijing-road-pedestrian-street-tianzi-pier|na": {
+    "platform": "booking",
+    "hotel_name": "Echarm Hotel (Guangzhou Beijing Road Pedestrian Street Tianzi Pier)",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/cn/echic-mercure-international-guangzhou-beijing-road-pedestrian-street-flagship-br.html?checkin=2026-06-19&checkout=2026-06-20&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|echarm-hotel-guangzhou-beijing-road-pedestrian-street-tianzi-pier|na": {
+    "platform": "trip",
+    "hotel_name": "Echarm Hotel (Guangzhou Beijing Road Pedestrian Street Tianzi Pier)",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=1017178&checkIn=2026-06-19&checkOut=2026-06-20&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 30,
+    "offer_count": 30,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|woping-youth-hostel-beijing-road-store-female-only|na": {
+    "platform": "trip",
+    "hotel_name": "WoPing Youth Hostel（Beijing Road Store, Female Only）",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/list?keyword=WoPing+Youth+Hostel%EF%BC%88Beijing+Road+Store%2C+Female+Only%EF%BC%89+%E5%B9%BF%E5%B7%9E&checkin=2026-04-30&checkout=2026-05-01&adult=2&children=0",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "agoda|woping-youth-hostel-beijing-road-store-female-only|na": {
+    "platform": "agoda",
+    "hotel_name": "WoPing Youth Hostel（Beijing Road Store, Female Only）",
+    "city": "广州",
+    "url": "https://www.agoda.com/guangzhou-hakka-apartment-beijing-road/hotel/guangzhou-cn.html?checkIn=2026-06-19&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 8,
+    "offer_count": 8,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|atour-hotel-shenzhen-futian-xiangmi-lake|na": {
+    "platform": "trip",
+    "hotel_name": "Atour Hotel Shenzhen Futian Xiangmi Lake",
+    "city": "深圳",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=99168937&checkIn=2026-06-04&checkOut=2026-06-05&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 49,
+    "offer_count": 49,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|courtyard-by-marriott-nanjing-jiangning|na": {
+    "platform": "booking",
+    "hotel_name": "Courtyard by Marriott Nanjing Jiangning",
+    "city": "南京",
+    "url": "https://www.booking.com/hotel/cn/courtyard-by-marriott-nanjing-jiangning.html?checkin=2026-04-29&checkout=2026-04-30&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|courtyard-by-marriott-nanjing-jiangning|na": {
+    "platform": "trip",
+    "hotel_name": "Courtyard by Marriott Nanjing Jiangning",
+    "city": "南京",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=71312227&checkIn=2026-04-29&checkOut=2026-04-30&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 40,
+    "offer_count": 40,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|courtyard-by-marriott-nanjing-jiangning|na": {
+    "platform": "agoda",
+    "hotel_name": "Courtyard by Marriott Nanjing Jiangning",
+    "city": "南京",
+    "url": "https://www.agoda.com/zh-hk/courtyard-by-marriott-nanjing-jiangning/hotel/nanjing-cn.html?checkIn=2026-04-29&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 11,
+    "offer_count": 11,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|romantic-fish-seaview-apartment|na": {
+    "platform": "trip",
+    "hotel_name": "Romantic Fish Seaview Apartment",
+    "city": "三亚",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=1722403&checkIn=2026-06-06&checkOut=2026-06-07&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 16,
+    "offer_count": 16,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|tomorrow-hotel-bao-an-international-airport-huangtian-subway-station|na": {
+    "platform": "booking",
+    "hotel_name": "Tomorrow Hotel (Bao'an International Airport Huangtian Subway Station)",
+    "city": "深圳",
+    "url": "https://www.booking.com/hotel/cn/shen-gang-xing-zheng-gong-yu-bao-an-guo-ji-ji-chang-bi-hai-wan-di-tie-zhan-dian.html?aid=304142&label=gen173nr-10CAQoggJCVHNlYXJjaF90b21vcnJvdyBob3RlbCAoYmFvJ2FuIGludGVybmF0aW9uYWwgYWlycG9ydCBodWFuZ3RpYW4gc3Vid2F5IHN0YXRpb24pIOa3seWcs0gxWARoyQGIAQGYATO4AQfIAQzYAQPoAQH4AQGIAgGoAgG4AsbroM8GwAIB0gIkNTRlYjkxMmUtODI4ZS00NDNkLThmY2ItZjUwNDBmYTg3NDVl2AIB4AIB&ucfs=1&arphpl=1&checkin=2026-06-06&checkout=2026-06-07&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=773d13238494008d&srepoch=1776825803&soh=1&from=searchresults&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|livetour-international-apartment-guangzhou-ke-hui-jin-gu-shenzhou-road-subway-station|na": {
+    "platform": "booking",
+    "hotel_name": "Livetour International Apartment (Guangzhou Ke Hui Jin Gu Shenzhou Road Subway Station)",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/my/the-bess-tokyopi-lin-xin-jia-po-jin-xiang-hai-jing-shang-wu-fu-li-go-johor-bahru.html?label=gen173nr-10CAQoggJCZXNlYXJjaF9saXZldG91ciBpbnRlcm5hdGlvbmFsIGFwYXJ0bWVudCAoZ3Vhbmd6aG91IGtlIGh1aSBqaW4gZ3Ugc2hlbnpob3Ugcm9hZCBzdWJ3YXkgc3RhdGlvbikg5bm_5beeSDFYBGjJAYgBAZgBM7gBB8gBDNgBA-gBAfgBAYgCAagCAbgC0OygzwbAAgHSAiQ0MmEwMjhmNC0yN2ViLTRjNzMtYjVlNy0wZmFmOGJiMTNmZTDYAgHgAgE&sid=1a28911bd461d0d56e2697dc0dbfe21b&aid=304142&ucfs=1&arphpl=1&checkin=2026-06-06&checkout=2026-06-07&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|livetour-international-apartment-guangzhou-ke-hui-jin-gu-shenzhou-road-subway-station|na": {
+    "platform": "trip",
+    "hotel_name": "Livetour International Apartment (Guangzhou Ke Hui Jin Gu Shenzhou Road Subway Station)",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/list?keyword=Livetour+International+Apartment+%28Guangzhou+Ke+Hui+Jin+Gu+Shenzhou+Road+Subway+Station%29+%E5%B9%BF%E5%B7%9E&checkin=2026-06-06&checkout=2026-06-07&adult=2&children=0",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "booking|twilight-seek-qianxun-riverfront-homestay-chongqing-jiefangbei-hongyadong|na": {
+    "platform": "booking",
+    "hotel_name": "Twilight Seek·Qianxun Riverfront Homestay（Chongqing Jiefangbei-Hongyadong）",
+    "city": "重庆",
+    "url": "https://www.booking.com/hotel/my/fuju-homestay.html?label=gen173nr-10CAQoggJCXXNlYXJjaF90d2lsaWdodCBzZWVrwrdxaWFueHVuIHJpdmVyZnJvbnQgaG9tZXN0YXnvvIhjaG9uZ3FpbmcgamllZmFuZ2JlaS1ob25neWFkb25n77yJIOmHjeW6hkgxWARoyQGIAQGYATO4AQfIAQzYAQPoAQH4AQGIAgGoAgG4Aq_yoM8GwAIB0gIkNzQzZGU2ZjctYWQ5Zi00ZmM0LWIzYzAtYzlhZGUyN2U3YWE52AIB4AIB&sid=510393b9d8c5dfb4533afcb932cbcc36&aid=304142&ucfs=1&arphpl=1&checkin=2026-06-22&checkout=2026-06-23&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|holiday-inn-shanghai-pudong-nanpu-by-ihg|na": {
+    "platform": "booking",
+    "hotel_name": "Holiday Inn SHANGHAI PUDONG NANPU by IHG",
+    "city": "上海",
+    "url": "https://www.booking.com/hotel/cn/holiday-inn-shanghai-pudong-nanpu.html?aid=304142&label=gen173nr-10CAQoggJCNnNlYXJjaF9ob2xpZGF5IGlubiBzaGFuZ2hhaSBwdWRvbmcgbmFucHUgYnkgaWhnIOS4iua1t0gxWARoyQGIAQGYATO4AQfIAQzYAQPoAQH4AQGIAgGoAgG4Ao70oM8GwAIB0gIkMzM4MzU5YTQtMThjOS00NTk2LTg0MDQtZjYzNjNlNWJkOTM32AIB4AIB&ucfs=1&arphpl=1&checkin=2026-06-22&checkout=2026-06-23&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=c62b1547f2ea0549&srepoch=1776826899&soh=1&from=searchresults&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|holiday-inn-shanghai-pudong-nanpu-by-ihg|na": {
+    "platform": "agoda",
+    "hotel_name": "Holiday Inn SHANGHAI PUDONG NANPU by IHG",
+    "city": "上海",
+    "url": "https://www.agoda.com/zh-cn/holiday-inn-shanghai-pudong-nanpu/hotel/shanghai-cn.html?checkIn=2026-04-30&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 25,
+    "offer_count": 25,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|kaoyu-hotel-chongqing-guanyinqiao-pedestrian-street|na": {
+    "platform": "booking",
+    "hotel_name": "Kaoyu Hotel (Chongqing Guanyinqiao Pedestrian Street)",
+    "city": "重庆",
+    "url": "https://www.booking.com/hotel/cn/landyatt-park-chongqing.html?checkin=2026-05-03&checkout=2026-05-04&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|kaoyu-hotel-chongqing-guanyinqiao-pedestrian-street|na": {
+    "platform": "trip",
+    "hotel_name": "Kaoyu Hotel (Chongqing Guanyinqiao Pedestrian Street)",
+    "city": "重庆",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=435664&checkIn=2026-05-03&checkOut=2026-05-04&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 34,
+    "offer_count": 34,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|kaoyu-hotel-chongqing-guanyinqiao-pedestrian-street|na": {
+    "platform": "agoda",
+    "hotel_name": "Kaoyu Hotel (Chongqing Guanyinqiao Pedestrian Street)",
+    "city": "重庆",
+    "url": "https://www.agoda.com/zh-cn/chongqing-landyatt-park-hotel/hotel/chongqing-cn.html?checkIn=2026-05-03&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 22,
+    "offer_count": 22,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|shangri-la-guangzhou|na": {
+    "platform": "trip",
+    "hotel_name": "Shangri-La Guangzhou",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=429562&checkIn=2026-06-22&checkOut=2026-06-23&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 83,
+    "offer_count": 83,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|shangri-la-guangzhou|na": {
+    "platform": "booking",
+    "hotel_name": "Shangri-La Guangzhou",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/cn/shangrila-guangzhou.html?checkin=2026-04-30&checkout=2026-05-01&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|hi-inn-select-guangzhou-wanjia-garment-city-shaheding-metro-station|na": {
+    "platform": "trip",
+    "hotel_name": "Hi Inn Select (Guangzhou Wanjia Garment City Shaheding Metro Station)",
+    "city": "广州",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=6300171&checkIn=2026-05-03&checkOut=2026-05-04&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 10,
+    "offer_count": 10,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|hi-inn-select-guangzhou-wanjia-garment-city-shaheding-metro-station|na": {
+    "platform": "booking",
+    "hotel_name": "Hi Inn Select (Guangzhou Wanjia Garment City Shaheding Metro Station)",
+    "city": "广州",
+    "url": "https://www.booking.com/hotel/sg/lloyd-39-s-inn.html?label=gen173nr-10CAQoggJCU3NlYXJjaF9oaSBpbm4gc2VsZWN0IChndWFuZ3pob3Ugd2FuamlhIGdhcm1lbnQgY2l0eSBzaGFoZWRpbmcgbWV0cm8gc3RhdGlvbikg5bm_5beeSDFYBGjJAYgBAZgBM7gBB8gBDNgBA-gBAfgBAYgCAagCAbgCr4OmzwbAAgHSAiRlODFlYmExOC02NTY3LTQ2OTktOTViZi1mZjYyZTE3MzU3ZTPYAgHgAgE&sid=c5fc90f5b1afe34fdde52dbb838e7ebb&aid=304142&ucfs=1&arphpl=1&checkin=2026-05-03&checkout=2026-05-04&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 3,
+    "offer_count": 3,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|hi-inn-select-guangzhou-wanjia-garment-city-shaheding-metro-station|na": {
+    "platform": "agoda",
+    "hotel_name": "Hi Inn Select (Guangzhou Wanjia Garment City Shaheding Metro Station)",
+    "city": "广州",
+    "url": "https://www.agoda.com/hi-inn-guangzhou-shaheding-subway-station/hotel/guangzhou-cn.html?checkIn=2026-05-03&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 3,
+    "offer_count": 3,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|fancy-hotel-shenzhen-bantian-guangyayuan-subway-station|na": {
+    "platform": "trip",
+    "hotel_name": "Fancy Hotel (Shenzhen Bantian, Guangyayuan Subway Station)",
+    "city": "深圳",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=5677620&checkIn=2026-06-22&checkOut=2026-06-23&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 22,
+    "offer_count": 22,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|fancy-hotel-shenzhen-bantian-guangyayuan-subway-station|na": {
+    "platform": "booking",
+    "hotel_name": "Fancy Hotel (Shenzhen Bantian, Guangyayuan Subway Station)",
+    "city": "深圳",
+    "url": "https://www.booking.com/hotel/cn/hello-shenzhen-bantian-north-subway-station.html?aid=304142&label=gen173nr-10CAQoggJCSHNlYXJjaF9mYW5jeSBob3RlbCAoc2hlbnpoZW4gYmFudGlhbiwgZ3Vhbmd5YXl1YW4gc3Vid2F5IHN0YXRpb24pIOa3seWcs0gxWARoyQGIAQGYATO4AQfIAQzYAQPoAQH4AQGIAgGoAgG4ApCEps8GwAIB0gIkMmJlMjBkNmQtNGYyOS00ZDIwLWE4NzktNGZkYmI4ZThlMDVh2AIB4AIB&ucfs=1&arphpl=1&checkin=2026-06-22&checkout=2026-06-23&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=44c2108884880131&srepoch=1776910870&soh=1&from=searchresults&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 8,
+    "offer_count": 8,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|jinglai-hotel-selected-shanghai-nanjing-road-pedestrian-street-people-s-square|na": {
+    "platform": "booking",
+    "hotel_name": "Jinglai Hotel. Selected (Shanghai Nanjing Road Pedestrian Street People's Square)",
+    "city": "上海",
+    "url": "https://www.booking.com/hotel/cn/jinglaihotel-bushe-shanghai-bund-branch.html?checkin=2026-05-03&checkout=2026-05-04&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|jinglai-hotel-selected-shanghai-nanjing-road-pedestrian-street-people-s-square|na": {
+    "platform": "trip",
+    "hotel_name": "Jinglai Hotel. Selected (Shanghai Nanjing Road Pedestrian Street People's Square)",
+    "city": "上海",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=1686849&checkIn=2026-05-03&checkOut=2026-05-04&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 24,
+    "offer_count": 24,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|jinglai-hotel-selected-shanghai-nanjing-road-pedestrian-street-people-s-square|na": {
+    "platform": "agoda",
+    "hotel_name": "Jinglai Hotel. Selected (Shanghai Nanjing Road Pedestrian Street People's Square)",
+    "city": "上海",
+    "url": "https://www.agoda.com/en-in/jinglai-hotel-selected-shanghai-nanjing-road-pedestrian-street-people-s-square/hotel/shanghai-cn.html?checkIn=2026-04-30&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 10,
+    "offer_count": 10,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|lanxi-youth-hotel-beijing-yonghegong-gulou-street-subway-station|na": {
+    "platform": "booking",
+    "hotel_name": "Lanxi Youth Hotel (Beijing Yonghegong Gulou Street Subway Station)",
+    "city": "北京",
+    "url": "https://www.booking.com/hotel/cn/james-joyce-coffetel-beijing-gulou.html?checkin=2026-06-22&checkout=2026-06-23&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 6,
+    "offer_count": 6,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|lanxi-youth-hotel-beijing-yonghegong-gulou-street-subway-station|na": {
+    "platform": "trip",
+    "hotel_name": "Lanxi Youth Hotel (Beijing Yonghegong Gulou Street Subway Station)",
+    "city": "北京",
+    "url": "https://www.trip.com/hotels/list?keyword=Lanxi+Youth+Hotel+%28Beijing+Yonghegong+Gulou+Street+Subway+Station%29+%E5%8C%97%E4%BA%AC&checkin=2026-04-30&checkout=2026-05-01&adult=2&children=0",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "agoda|lanxi-youth-hotel-beijing-yonghegong-gulou-street-subway-station|na": {
+    "platform": "agoda",
+    "hotel_name": "Lanxi Youth Hotel (Beijing Yonghegong Gulou Street Subway Station)",
+    "city": "北京",
+    "url": "https://www.agoda.com/zh-hk/beijing-lanting-youth-hostel/hotel/beijing-cn.html?checkIn=2026-04-30&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 2,
+    "offer_count": 2,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|zhonghang-xiangtong-yacht-club-hotel-qingdao-olympic-sailing-center-may-4th-square|na": {
+    "platform": "trip",
+    "hotel_name": "Zhonghang Xiangtong Yacht Club Hotel (Qingdao Olympic Sailing Center May 4th Square)",
+    "city": "青岛",
+    "url": "https://www.trip.com/hotels/list?keyword=Zhonghang+Xiangtong+Yacht+Club+Hotel+%28Qingdao+Olympic+Sailing+Center+May+4th+Square%29+%E9%9D%92%E5%B2%9B&checkin=2026-06-22&checkout=2026-06-23&adult=2&children=0",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (text_fallback)"
+  },
+  "booking|chengdu-yuanheyuan-buddha-zen-hotel|na": {
+    "platform": "booking",
+    "hotel_name": "Chengdu Yuanheyuan Buddha Zen Hotel",
+    "city": "成都",
+    "url": "https://www.booking.com/hotel/cn/chengdu-buddhazen.html?checkin=2026-05-03&checkout=2026-05-04&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|chengdu-yuanheyuan-buddha-zen-hotel|na": {
+    "platform": "trip",
+    "hotel_name": "Chengdu Yuanheyuan Buddha Zen Hotel",
+    "city": "成都",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=432216&checkIn=2026-05-03&checkOut=2026-05-04&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 19,
+    "offer_count": 19,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|chengdu-yuanheyuan-buddha-zen-hotel|na": {
+    "platform": "agoda",
+    "hotel_name": "Chengdu Yuanheyuan Buddha Zen Hotel",
+    "city": "成都",
+    "url": "https://www.agoda.com/zh-cn/buddhazen-hotel/hotel/chengdu-cn.html?checkIn=2026-05-03&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 8,
+    "offer_count": 8,
+    "diagnosis": "structured offers captured"
+  },
+  "trip|nostalgia-hotel-beijing-prince-gong-s-mansion|na": {
+    "platform": "trip",
+    "hotel_name": "Nostalgia Hotel（Beijing Prince Gong’s Mansion）",
+    "city": "北京",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=6738862&checkIn=2026-04-30&checkOut=2026-05-01&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 22,
+    "offer_count": 22,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|nostalgia-hotel-beijing-prince-gong-s-mansion|na": {
+    "platform": "booking",
+    "hotel_name": "Nostalgia Hotel（Beijing Prince Gong’s Mansion）",
+    "city": "北京",
+    "url": "https://www.booking.com/hotel/cn/shi-guang-man-bu-huai-jiu-zhu-ti-jiu-dian-bei-jing-gong-wang-fu-dian.html?checkin=2026-04-30&checkout=2026-05-01&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 2,
+    "offer_count": 2,
+    "diagnosis": "structured offers captured"
+  },
+  "agoda|nostalgia-hotel-beijing-prince-gong-s-mansion|na": {
+    "platform": "agoda",
+    "hotel_name": "Nostalgia Hotel（Beijing Prince Gong’s Mansion）",
+    "city": "北京",
+    "url": "https://www.agoda.com/zh-cn/nostalgia-hotel-prince-gong-mansion/hotel/beijing-cn.html?checkIn=2026-04-30&los=1&adults=2&children=0&rooms=1&currencyCode=USD",
+    "structured_offer_count": 4,
+    "offer_count": 4,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|true-go-hotel-beijing-workers-stadium-sanlitun-taikoo-li|na": {
+    "platform": "booking",
+    "hotel_name": "TRUE GO Hotel (Beijing Workers' Stadium Sanlitun Taikoo Li)",
+    "city": "北京",
+    "url": "https://www.booking.com/hotel/cn/true-go-bejing-sanyuangiao-yansha.html?checkin=2026-04-30&checkout=2026-05-01&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 12,
+    "offer_count": 12,
+    "diagnosis": "structured offers captured"
+  },
+  "booking|test-hotel-demo|testcity": {
+    "platform": "booking",
+    "hotel_name": "Test Hotel Demo",
+    "city": "TestCity",
+    "url": "https://www.booking.com/searchresults.html?ss=Test+Hotel+Demo+TestCity&checkin=2026-05-01&checkout=2026-05-02&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (demo)"
+  },
+  "trip|test-hotel-demo|testcity": {
+    "platform": "trip",
+    "hotel_name": "Test Hotel Demo",
+    "city": "TestCity",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=43097171&checkIn=2026-05-01&checkOut=2026-05-02&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (demo)"
+  },
+  "booking|hotel-b|cityb": {
+    "platform": "booking",
+    "hotel_name": "Hotel B",
+    "city": "CityB",
+    "url": "https://www.booking.com/hotel/cn/city-shanghai.html?checkin=2026-05-01&checkout=2026-05-02&group_adults=2&group_children=0&no_rooms=1&selected_currency=USD&lang=en-us",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (demo)"
+  },
+  "trip|hotel-a|citya": {
+    "platform": "trip",
+    "hotel_name": "Hotel A",
+    "city": "CityA",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=106553471&checkIn=2026-05-01&checkOut=2026-05-02&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (demo)"
+  },
+  "trip|test-hotel|na": {
+    "platform": "trip",
+    "hotel_name": "Test Hotel",
+    "city": "",
+    "url": "https://www.trip.com/hotels/detail/?hotelId=120&checkIn=2026-05-01&checkOut=2026-05-02&adult=2&children=0&curr=USD&barcurr=USD&locale=en-US",
+    "structured_offer_count": 0,
+    "offer_count": 1,
+    "diagnosis": "fallback only (demo)"
   }
 }

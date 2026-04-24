@@ -1,358 +1,210 @@
-# hotelrate
+# hotelrate-mcp
 
-Trip / Booking / Google Hotels / Agoda 多源酒店价格抓取学习项目（MVP）。
+Real-time multi-platform hotel price comparison via [MCP](https://modelcontextprotocol.io/) (Model Context Protocol).
 
-## 1) 项目内容
+Compare hotel rates across **Trip.com**, **Booking.com**, **Agoda**, and **Google Hotels** — from any AI agent (Claude Code, Claude Desktop, Cursor, etc.) or as a standalone CLI.
 
-- 后端 API：查询最新价、最低价、历史价。
-- Worker：定时拉取多个平台的报价并落库。
-- 统一模型：不同平台字段标准化到 `rate_snapshot`。
-- 四个平台 Adapter 模板：支持 Demo 模式和 Live 模式扩展点。
-
-## 2) 目录结构
-
-- `src/hotelrate/apps/api/main.py` FastAPI 入口
-- `src/hotelrate/apps/worker/main.py` 定时抓取入口
-- `src/hotelrate/apps/worker/service.py` 抓取编排逻辑
-- `src/hotelrate/collectors/*/collector.py` 各平台 adapter 模板
-- `src/hotelrate/core/normalizer.py` 统一字段规范
-- `src/hotelrate/infra/models.py` SQLAlchemy 模型
-- `src/hotelrate/infra/repository.py` 数据读写
-- `sql/schema.sql` 原生 PostgreSQL 建表 SQL
-- `scripts/init_db.py` 初始化 + 示例数据
-
-## 3) 快速开始
-
-### 3.1 启动 PostgreSQL
+## Quick Start — MCP Server
 
 ```bash
-docker compose up -d
-```
-
-可选：若要用 Firecrawl 做 URL 发现，可同时启动 Firecrawl（见 [13) Firecrawl 集成说明](#13-firecrawl-集成说明本地-3002)）：
-
-```bash
-docker compose -f docker-compose.yml -f docker-compose.firecrawl.yml up -d
-```
-
-### 3.2 安装依赖
-
-```bash
-python3.12 -m venv .venv
-source .venv/bin/activate
+# Install
 pip install -e .
 playwright install chromium
-```
 
-### 3.3 环境变量
-
-```bash
+# Copy config (demo mode is on by default — no browser needed)
 cp .env.example .env
+
+# Run the MCP server (stdio transport)
+hotelrate-mcp
 ```
 
-默认 `DEMO_MODE=true`，可直接产出样例价格数据。
+## Claude Desktop Setup
 
-### 3.4 初始化数据库
+Add to your `claude_desktop_config.json`:
 
-```bash
-python scripts/init_db.py
+```json
+{
+  "mcpServers": {
+    "hotelrate": {
+      "command": "hotelrate-mcp",
+      "env": {
+        "DEMO_MODE": "true"
+      }
+    }
+  }
+}
 ```
 
-### 3.5 启动 worker（定时抓取）
+## Claude Code Setup
 
 ```bash
-python -m hotelrate.apps.worker.main
+claude mcp add hotelrate -- hotelrate-mcp
 ```
 
-### 3.6 启动 API
+Then in Claude Code:
 
-```bash
-uvicorn hotelrate.apps.api.main:app --reload
+> "Compare prices for Park Hyatt Tokyo on May 1st across all platforms"
+
+## Available MCP Tools
+
+### `hotel_quote`
+
+Get real-time hotel prices from multiple OTA platforms.
+
+```
+hotel_name: "Park Hyatt Tokyo"    # required
+checkin:    "2026-05-01"           # default: 7 days from now
+checkout:   "2026-05-02"           # default: checkin + 1
+city:       "Tokyo"                # helps URL discovery
+adults:     2                      # 1-8
+children:   0                      # 0-6
+currency:   "USD"                  # ISO 4217
+platforms:  ["trip", "booking"]    # default: all enabled
+locale:     "en-US"                # BCP 47
 ```
 
-## 4) API 示例
+### `hotel_quote_batch`
 
-```bash
-curl "http://127.0.0.1:8000/rates/search?city=Shanghai&checkin=2026-03-10&checkout=2026-03-11&adults=2&children=0"
+Query multiple hotels in parallel.
 
-curl "http://127.0.0.1:8000/rates/best?city=Shanghai&checkin=2026-03-10&checkout=2026-03-11&adults=2&children=0"
-
-curl "http://127.0.0.1:8000/rates/history/<hotel_id>?checkin=2026-03-10&checkout=2026-03-11&adults=2&children=0"
+```
+hotels: [
+  {"hotel_name": "Park Hyatt Tokyo", "city": "Tokyo", "checkin": "2026-05-01", "checkout": "2026-05-02"},
+  {"hotel_name": "The Peninsula Shanghai", "city": "Shanghai"}
+]
+concurrency: 3   # 1-10
 ```
 
-实时多平台报价（新增）：
+### `list_platforms`
+
+List supported OTA platforms and their status. No parameters.
+
+### `health_check`
+
+Check Playwright, Firecrawl, and platform readiness. No parameters.
+
+## CLI Usage
+
+The project also provides a CLI for direct use:
 
 ```bash
-curl -X POST "http://127.0.0.1:8000/meta/quote" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "hotel_name":"Atour Hotel Shanghai HuangPu Xintiandi Metro Station",
-    "city":"Shanghai",
-    "checkin":"2026-03-09",
-    "checkout":"2026-03-10",
-    "adults":2,
-    "children":0,
-    "currency":"USD",
-    "platforms":["trip","booking","google_hotels","agoda"]
-  }'
-```
-
-## 5) Live 模式扩展
-
-把 `.env` 中 `DEMO_MODE=false`，然后按目标站点持续微调解析规则（字段经常变化）：
-
-1. 扩大/收敛 `RESPONSE_PATTERNS`
-2. 调整 `room_keys/price_keys/tax_keys/currency_keys`
-3. 对特殊房型结构增加平台专用解析逻辑
-4. 增加错误重试、截图与告警
-
-当前版本已经内置了第一版 Live 骨架：
-
-- 自动抓取 XHR/FETCH JSON 响应（按平台关键词过滤）
-- 基于通用字段映射解析 `room + price + tax + currency`
-- Trip 已支持 `getHotelRoomListOversea` 结构化解析（`mode=trip_room_list_oversea`）
-- 当 XHR 解析不到时，自动尝试 `application/ld+json` 兜底
-
-## 6) 调试 Live Payload（强烈建议先跑）
-
-```bash
-python scripts/inspect_live_payloads.py \
-  --platform trip \
-  --platform-hotel-id 123456 \
-  --platform-url \"https://www.trip.com/hotels/detail/?hotelId=123456\" \
-  --checkin 2026-03-20 \
-  --nights 1
-```
-
-可选平台：`trip` / `booking` / `google_hotels` / `agoda`。
-
-如果 `parsed_offers=0`，优先看输出的 payload url 与 keys，再回到对应 collector 的：
-
-- `RESPONSE_PATTERNS`（扩大响应匹配范围）
-- `parse_payloads_to_offers(...)` 的 `room_keys/price_keys/tax_keys`（按真实字段微调）
-
-也可以直接跑内置四站点样例：
-
-```bash
-python scripts/run_sample_live_urls.py
-```
-
-输出里重点看 3 个字段：
-
-- `date_window`：本次实际抓取的入住窗口（脚本会对 Agoda/Booking 自动探测未来可用日期窗口）。
-- `structured_offers`：结构化解析成功的报价数量。
-- `mode=text_fallback`：该条价格来自页面文本兜底，不是结构化 API 解析结果。
-
-## 7) 一键实时抓取（酒店名 + 日期）
-
-```bash
+# Single hotel quote
 python scripts/live_meta_quote.py \
-  --hotel "Atour Hotel Shanghai HuangPu Xintiandi Metro Station" \
-  --city "Shanghai" \
-  --checkin 2026-03-09 \
-  --checkout 2026-03-10 \
+  --hotel "Park Hyatt Tokyo" \
+  --city "Tokyo" \
+  --checkin 2026-05-01 \
+  --checkout 2026-05-02 \
   --currency USD \
-  --out reports/live_quote_sample.json
-```
+  --out reports/live_quote_latest.json
 
-可选传入已知 URL（提升命中）：
-
-- `--trip-url`
-- `--booking-url`
-- `--google-url`
-- `--agoda-url`
-
-> 注意：上面这些参数必须传**真实 URL**。像 `<Trip详情页URL>` 这样的占位符字符串会被自动忽略。
-
-### 7.1 批量 smoke（推荐日常回归命令）
-
-```bash
-URL_MAPPING_CACHE_PATH=/tmp/hotelrate_all_sites_smoke_cache.json \
-BOOKING_DEBUG_SAVE_JSON=true \
-AGODA_DEBUG_SAVE_JSON=true \
+# Batch smoke test (4 hotels across all platforms)
 python scripts/live_meta_quote.py \
   --batch-config scripts/live_all_sites_smoke.json \
   --batch-concurrency 2 \
   --enable-google \
-  --out reports/live_all_sites_smoke_live.json
+  --out reports/smoke.json
 ```
 
-当前版本对 `google_hotels` 已内置稳定性兜底，正常情况下不需要再手动加：
+## API Usage
 
-- `REQUEST_TIMEOUT_SECONDS=90`
-- `--batch-concurrency 1`
-- `PLAYWRIGHT_NODEJS_PATH=...`
-
-脚本在检测到 `google_hotels` 后会自动做这些事：
-
-- 优先使用系统 `node` 作为 Playwright driver runtime；通常不再需要手动传 `--use-system-playwright-node`
-- 给 Google 导航阶段使用更长超时，默认 `90s`
-- 在批量模式下把含 Google 的请求放到普通 OTA 之后再跑，并串行执行，减少互相抢浏览器资源
-- 默认不给 Google 复用共享持久化 profile；只有显式设置 `PLAYWRIGHT_USER_DATA_DIR_GOOGLE_HOTELS` 时才会启用
-
-如果你的机器上 `node` 不在 `PATH`，或者你就是想强制指定系统 Node，仍然可以手动传：
+The FastAPI server is available for HTTP-based access:
 
 ```bash
-python scripts/live_meta_quote.py --use-system-playwright-node ...
+# Install API dependencies
+pip install -e ".[api]"
+
+# Start the API
+uvicorn hotelrate.apps.api.main:app --reload
+
+# Query
+curl -X POST http://127.0.0.1:8000/meta/quote \
+  -H "Content-Type: application/json" \
+  -d '{"hotel_name":"Park Hyatt Tokyo","city":"Tokyo","checkin":"2026-05-01","checkout":"2026-05-02"}'
 ```
 
-如果你确实需要给 Google 复用单独 profile，请显式配置：
+## Configuration
 
-```bash
-PLAYWRIGHT_USER_DATA_DIR_GOOGLE_HOTELS=/absolute/path/to/google-profile
-```
+All configuration is via environment variables (or `.env` file). Key settings:
 
-## 8) 自动发现详情页 URL（不手填）
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEMO_MODE` | `true` | `true` = synthetic data, no browser. `false` = live Playwright crawls |
+| `HEADLESS` | `true` | Show/hide browser windows |
+| `GOOGLE_SKIP` | `true` | Skip Google Hotels (slower, fragile) |
+| `FIRECRAWL_ENABLED` | `true` | Enable Firecrawl for URL discovery |
+| `DEFAULT_CHECKIN_OFFSET_DAYS` | `7` | Default check-in offset from today |
+| `DEFAULT_LENGTH_OF_STAY` | `1` | Default number of nights |
 
-先跑候选发现：
+See [`.env.example`](.env.example) for the complete list.
 
-```bash
-python scripts/discover_platform_urls.py \
-  --hotel "Atour Hotel Shanghai HuangPu Xintiandi Metro Station" \
-  --city "Shanghai" \
-  --checkin 2026-03-16 \
-  --checkout 2026-03-17
-```
+### Live Mode Setup
 
-该脚本会输出每个平台 top 候选，并标记 `(detail)` 或 `(search/list)`。
+For real hotel prices (not demo data):
 
-系统本身也会自动做：
-- 平台规则 URL 构建
-- Yahoo + Brave + DuckDuckGo 多搜索引擎检索
-- Firecrawl `map + crawl`
-- 搜索页 HTML 反向抽取详情页链接
-- Playwright 页面级链接抽取（处理动态 DOM）
-
-并优先选择 detail URL。
-
-## 9) URL 映射缓存（自动记忆）
-
-当某平台本次抓取成功，会把 URL 记到本地缓存，后续同酒店可自动复用：
-
-- `reports/url_mapping_cache.json`
-
-可在 `.env` 修改路径：
-
-```bash
-URL_MAPPING_CACHE_PATH=reports/url_mapping_cache.json
-```
-
-## 10) Trip 持久会话（解决登录墙/反爬）
-
-1) 先把 `.env` 设为：
-
-```bash
-DEMO_MODE=false
-PLAYWRIGHT_USER_DATA_DIR_TRIP=/Users/<you>/Desktop/hotelrate/.playwright/trip-profile
-PLAYWRIGHT_USER_DATA_DIR_BOOKING=/Users/<you>/Desktop/hotelrate/.playwright/booking-profile
-PLAYWRIGHT_USER_DATA_DIR_AGODA=/Users/<you>/Desktop/hotelrate/.playwright/agoda-profile
-HEADLESS=true
-```
-
-2) 首次手动登录（只需一次，后续复用 profile）：
-
-```bash
-python scripts/trip_login_warmup.py --wait-seconds 240
-```
-
-3) 登录后探测 Trip session 是否可用：
-
-```bash
-python scripts/trip_session_probe.py
-```
-
-> 如果 Trip 仍跳转到 `/account/signin`，再次执行 warmup，并在浏览器里保持已登录状态后再 probe。
-> 新版本在复用持久化 profile 时会自动避免注入额外请求头，减少 Trip 详情页空白/无 payload 的概率。
-
-也可以用通用暖机脚本（支持 booking/agoda/google）：
+1. Set `DEMO_MODE=false` in `.env`
+2. Install Playwright: `playwright install chromium`
+3. Warm up browser profiles for OTA login walls:
 
 ```bash
 python scripts/platform_login_warmup.py --platform trip --wait-seconds 300
 python scripts/platform_login_warmup.py --platform booking --wait-seconds 300
-python scripts/platform_login_warmup.py --platform agoda --wait-seconds 300
 ```
 
-> 实测在部分网络环境下，Booking 会长期停在 `pipl_consent` 页。建议先运行 booking warmup 手动同意一次，并复用 `PLAYWRIGHT_USER_DATA_DIR_BOOKING`。
-> 新版本会自动识别本地目录：`.playwright/trip-profile`、`.playwright/booking-profile`，即使你没显式配置 `.env` 也会自动复用会话。
-> Google Hotels 默认不复用共享持久化 profile；如果你希望 warmup 后复用 Google 会话，请单独设置 `PLAYWRIGHT_USER_DATA_DIR_GOOGLE_HOTELS`。
+## Architecture
 
-## 11) 夜间批量任务
+```
+src/hotelrate/
+├── apps/
+│   ├── mcp/        # MCP Server (this project's main interface)
+│   │   ├── server.py   # FastMCP server + CLI entry point
+│   │   └── tools.py    # 4 MCP tool definitions
+│   ├── api/        # FastAPI REST endpoints
+│   └── worker/     # APScheduler periodic crawler
+├── services/
+│   └── live_quote_service.py   # Core orchestration
+├── collectors/
+│   ├── trip/       # Trip.com adapter
+│   ├── booking/    # Booking.com adapter
+│   ├── agoda/      # Agoda adapter
+│   └── google_hotels/  # Google Hotels adapter
+├── schemas/        # Pydantic models
+├── core/           # Normalizer, matcher, locale helpers
+├── infra/          # Database (SQLAlchemy, optional)
+└── config.py       # Settings (pydantic-settings)
+```
+
+The MCP server is a thin wrapper (~250 lines) around the existing `LiveQuoteService`. All collectors, schemas, and business logic remain unchanged.
+
+## Development
 
 ```bash
-python scripts/nightly_quote_job.py
-python scripts/report_nightly_summary.py
+# Setup
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[all,dev]"
+playwright install chromium
+
+# Run tests
+pytest tests/ -v
+
+# Lint
+ruff check src/
+
+# Run MCP server locally
+hotelrate-mcp
+
+# Run with SSE transport
+hotelrate-mcp --transport sse --port 8080
 ```
 
-输出文件：
+## Supported Transports
 
-- `reports/nightly_quote_report.json`
+| Transport | Command | Use Case |
+|-----------|---------|----------|
+| stdio | `hotelrate-mcp` | Claude Code, Claude Desktop |
+| SSE | `hotelrate-mcp --transport sse` | Web clients, remote access |
+| Streamable HTTP | `hotelrate-mcp --transport streamable-http` | HTTP-based MCP clients |
 
-## 12) URL 规范（已按你给的样例修正）
+## License
 
-- `trip.com`：使用 `https://www.trip.com/hotels/detail/`，并更新 `hotelId/checkIn/checkOut/adult/children/curr/barcurr`。
-- `agoda.com`：支持完整详情路径（如 `zh-hk/.../hotel/...html`），并更新 `checkIn/los/adults/children/rooms/currencyCode`。
-- `booking.com`：支持 `hotel/<country>/<slug>.<locale>.html` 详情页，并更新 `checkin/checkout/group_adults/group_children/no_rooms/selected_currency`。
-- `google hotel meta`：改用 `https://www.google.com/travel/search`，并更新 `q/checkin/checkout/adults/children`（保留其它追踪参数）。
-
-如果你在 `hotel_mapping.platform_url` 里直接保存整条详情页 URL（带一堆 query），系统会在每次抓取时只覆盖入住日期和人数等关键参数，其他参数保持不变。
-
-## 13) Firecrawl 集成说明（本地 3002）
-
-已接入 `FIRECRAWL_BASE_URL=http://localhost:3002`：
-
-- `map`：候选 URL 扩展
-- `crawl`：候选 URL 深挖与补充
-
-如本地 Firecrawl 暂不可用，系统会自动降级为 DuckDuckGo + 平台规则 URL 生成，不影响主流程执行。
-
-### 在本地 Docker 中添加 Firecrawl
-
-**方式一：使用本项目提供的 Compose（推荐）**
-
-与现有 PostgreSQL 一起启动（同时起数据库 + Firecrawl）：
-
-```bash
-docker compose -f docker-compose.yml -f docker-compose.firecrawl.yml up -d
-```
-
-仅启动 Firecrawl（本机已有 Postgres 时）：
-
-```bash
-docker compose -f docker-compose.firecrawl.yml up -d
-```
-
-可选：在 `.env` 中为 Firecrawl 单独设置（否则用默认值即可）：
-
-```bash
-# Firecrawl 管理后台认证（可选，默认 CHANGEME）
-FIRECRAWL_BULL_AUTH_KEY=CHANGEME
-# NuQ 用到的 Postgres（与主库无关，默认 5433 映射）
-# FIRECRAWL_POSTGRES_USER=postgres
-# FIRECRAWL_POSTGRES_PASSWORD=postgres
-# FIRECRAWL_POSTGRES_DB=postgres
-```
-
-验证：`curl -s http://127.0.0.1:3002/health` 或访问 `http://127.0.0.1:3002/admin/CHANGEME/queues`（将 `CHANGEME` 换成你的 `FIRECRAWL_BULL_AUTH_KEY`）。
-
-**方式二：在 Firecrawl 官方仓库中单独启动**
-
-若方式一拉取/启动失败（例如缺少 `ghcr.io/firecrawl/nuq-postgres`），可改为在官方仓库中启动：
-
-```bash
-git clone https://github.com/mendableai/firecrawl.git
-cd firecrawl
-cp apps/api/.env.example .env
-# 编辑 .env：PORT=3002, HOST=0.0.0.0, USE_DB_AUTHENTICATION=false
-docker compose build
-docker compose up -d
-```
-
-本项目中保持 `FIRECRAWL_BASE_URL=http://localhost:3002` 即可。
-
-## 14) 运行速度优化（已内置）
-
-- `live_meta_quote` 现在会并行跑多平台，不再串行等待。
-- 批量模式下如果包含 `google_hotels`，系统会自动把 Google 请求放到最后串行跑，避免拖慢或干扰 Trip/Booking/Agoda。
-- 请求里包含 `google_hotels` 时，会自动优先使用系统 `node`，并给 Google 更长的导航超时。
-- 每个平台会自动截断候选 URL 数量，优先 detail URL。
-- `booking/agoda` 的日期探测会覆盖完整 probe window，并按日期偏移交错尝试各候选 URL，兼顾成功率和速度。
+[MIT](LICENSE)

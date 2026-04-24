@@ -6,7 +6,16 @@ __pycache__/
 .env
 .DS_Store
 .playwright/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Reports and runtime artifacts
 reports/*_debug_*.json
 reports/google_runtime_*.html
 reports/google_runtime_*.json
 reports/nightly_quote_report.json
+reports/live_*.json
+reports/url_mapping_cache.json
