@@ -52,9 +52,9 @@ class Settings(BaseSettings):
     # Skip Google Hotels if Playwright keeps failing (Google often blocks automation)
     google_skip: bool = True
     url_mapping_cache_path: str = "reports/url_mapping_cache.json"
-    # 当 Google 只拿到 fallback 时，是否把当前页面 HTML 存到 reports/ 便于对照选择器
+    # Save page HTML to reports/ when Google only returns fallback results (for debugging selectors)
     google_debug_save_html: bool = False
-    # 是否保存 Google runtime HTML + probe JSON（体积较大，仅排障时开启）
+    # Save Google runtime HTML + probe JSON (large files, enable only for troubleshooting)
     google_debug_save_runtime_artifacts: bool = False
     booking_debug_save_json: bool = False
     agoda_debug_save_json: bool = False

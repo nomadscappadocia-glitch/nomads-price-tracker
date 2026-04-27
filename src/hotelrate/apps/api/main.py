@@ -103,6 +103,6 @@ async def meta_quote(payload: LiveQuoteRequest) -> dict:
 
 @app.post("/meta/quote/batch")
 async def meta_quote_batch(payload: BatchQuoteRequest) -> BatchQuoteResponse:
-    """批量爬取多个酒店"""
+    """Batch-crawl multiple hotels concurrently."""
     response = await live_quote_service.batch_quote(payload)
     return response

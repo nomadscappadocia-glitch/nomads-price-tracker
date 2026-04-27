@@ -14,8 +14,17 @@ classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
 ]
+authors = [
+  {name = "Sean", email = "shantianfenghk@gmail.com"},
+]
+
+[project.urls]
+Homepage = "https://github.com/seanbabalala/hotelrate-crawl"
+Repository = "https://github.com/seanbabalala/hotelrate-crawl"
+Issues = "https://github.com/seanbabalala/hotelrate-crawl/issues"
 dependencies = [
   "mcp[cli]>=1.20.0",
   "pydantic>=2.11.0",

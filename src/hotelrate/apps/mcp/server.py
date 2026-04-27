@@ -55,11 +55,8 @@ from hotelrate.apps.mcp.tools import register_tools  # noqa: E402
 register_tools(mcp)
 
 
-def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        prog="hotelrate-mcp",
-        description="Run the hotelrate MCP server",
-    )
+def _add_serve_args(parser: argparse.ArgumentParser) -> None:
+    """Add --transport / --host / --port flags to *parser*."""
     parser.add_argument(
         "--transport",
         choices=["stdio", "sse", "streamable-http"],
@@ -77,6 +74,57 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=8080,
         help="Port for SSE/HTTP transport (default: 8080)",
     )
+
+
+def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="hotelrate-mcp",
+        description="Hotel rate MCP server & CLI tools",
+    )
+    sub = parser.add_subparsers(dest="command")
+
+    # ── serve ──────────────────────────────────────────────────────────
+    serve = sub.add_parser("serve", help="Run the MCP server (default)")
+    _add_serve_args(serve)
+
+    # ── setup ──────────────────────────────────────────────────────────
+    setup = sub.add_parser("setup", help="Interactive first-time setup wizard")
+    setup.add_argument(
+        "--platforms",
+        nargs="*",
+        choices=["trip", "booking", "agoda"],
+        help="Platforms to configure (default: interactive prompt)",
+    )
+    setup.add_argument(
+        "--skip-login",
+        action="store_true",
+        help="Skip browser login steps (useful for CI)",
+    )
+    setup.add_argument(
+        "--timeout",
+        type=int,
+        default=300,
+        help="Seconds to wait for manual login per platform (default: 300)",
+    )
+
+    # ── doctor ─────────────────────────────────────────────────────────
+    doctor = sub.add_parser("doctor", help="Check environment health")
+    doctor.add_argument(
+        "--probe",
+        action="store_true",
+        help="Also run live session probes (needs browser profiles)",
+    )
+    doctor.add_argument(
+        "--json",
+        action="store_true",
+        dest="json_output",
+        help="Output machine-readable JSON to stdout",
+    )
+
+    # ── Top-level flags for backward compat ────────────────────────────
+    # ``hotelrate-mcp --transport sse`` still works (command = None → serve)
+    _add_serve_args(parser)
+
     return parser.parse_args(argv)
 
 
@@ -84,12 +132,21 @@ def main(argv: list[str] | None = None) -> None:
     """CLI entry point for ``hotelrate-mcp``."""
     args = _parse_args(argv)
 
-    run_kwargs: dict = {"transport": args.transport}
-    if args.transport in ("sse", "streamable-http"):
-        run_kwargs["host"] = args.host
-        run_kwargs["port"] = args.port
+    if args.command == "setup":
+        from hotelrate.apps.mcp.cli import run_setup
 
-    mcp.run(**run_kwargs)
+        run_setup(args)
+    elif args.command == "doctor":
+        from hotelrate.apps.mcp.cli import run_doctor
+
+        run_doctor(args)
+    else:
+        # None (bare flags) or "serve" — run the MCP server.
+        run_kwargs: dict = {"transport": args.transport}
+        if args.transport in ("sse", "streamable-http"):
+            run_kwargs["host"] = args.host
+            run_kwargs["port"] = args.port
+        mcp.run(**run_kwargs)
 
 
 if __name__ == "__main__":

@@ -81,13 +81,13 @@ class LiveQuoteResponse(BaseModel):
 
 
 class BatchQuoteRequest(BaseModel):
-    """批量爬取请求"""
+    """Batch quote request for multiple hotels."""
     hotels: list[LiveQuoteRequest] = Field(min_length=1, max_length=50)
-    concurrency: int = Field(default=3, ge=1, le=10, description="并发爬取的酒店数量")
+    concurrency: int = Field(default=3, ge=1, le=10, description="Number of hotels to crawl concurrently")
 
 
 class BatchQuoteResponse(BaseModel):
-    """批量爬取响应"""
+    """Batch quote response containing results for multiple hotels."""
     generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     total_hotels: int
     successful: int

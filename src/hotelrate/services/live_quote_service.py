@@ -171,7 +171,7 @@ class LiveQuoteService:
         request: BatchQuoteRequest,
         on_progress: Callable[[str, str, dict[str, Any]], Awaitable[None]] | None = None,
     ) -> BatchQuoteResponse:
-        """批量爬取多个酒店"""
+        """Batch-crawl multiple hotels concurrently."""
         hotel_concurrency = min(request.concurrency, self.settings.batch_hotel_concurrency)
         results: list[LiveQuoteResponse] = []
         errors: list[dict] = []
@@ -202,7 +202,7 @@ class LiveQuoteService:
         outcomes = await crawl_group(regular_items, concurrency=hotel_concurrency)
         outcomes.extend(await crawl_group(google_items, concurrency=1))
 
-        # 按顺序整理结果
+        # Reassemble results in original request order
         outcomes_dict = {idx: outcome for idx, outcome in outcomes}
 
         for i in range(len(request.hotels)):

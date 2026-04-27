@@ -2,22 +2,84 @@
 
 Real-time multi-platform hotel price comparison via [MCP](https://modelcontextprotocol.io/) (Model Context Protocol).
 
-Compare hotel rates across **Trip.com**, **Booking.com**, **Agoda**, and **Google Hotels** — from any AI agent (Claude Code, Claude Desktop, Cursor, etc.) or as a standalone CLI.
+Ask any AI agent to compare hotel prices — it queries **Trip.com**, **Booking.com**, **Agoda**, and **Google Hotels** in parallel and returns normalized results.
 
-## Quick Start — MCP Server
+Works with **Claude Code**, **Claude Desktop**, **Cursor**, and any MCP-compatible client.
+
+## Features
+
+- **4 OTA platforms** — Trip.com, Booking.com, Agoda, Google Hotels
+- **Real-time Playwright crawling** — live prices from actual OTA websites
+- **Demo mode** — synthetic data for instant testing, no browser needed
+- **Batch queries** — compare multiple hotels concurrently
+- **3 transports** — stdio, SSE, streamable-http
+- **Interactive setup** — `hotelrate-mcp setup` configures everything in one command
+- **Environment diagnostics** — `hotelrate-mcp doctor` checks health at a glance
+
+---
+
+## Quick Start
+
+### 1. Install
 
 ```bash
-# Install
+git clone https://github.com/seanbabalala/hotelrate-crawl.git
+cd hotelrate-crawl
 pip install -e .
+```
 
-# Copy config (demo mode is on by default, so no browser login is required)
+### 2. Configure
+
+**Option A — Interactive wizard** (recommended):
+
+```bash
+hotelrate-mcp setup
+```
+
+This walks you through dependency checks, `.env` creation, platform selection, browser login, and session verification. Ctrl+C is safe at any point.
+
+**Option B — Demo mode** (no browser needed):
+
+```bash
 cp .env.example .env
+# That's it — DEMO_MODE=true by default
+```
 
-# Run the MCP server (stdio transport)
+### 3. Run
+
+```bash
 hotelrate-mcp
 ```
 
-## Claude Desktop Setup
+### 4. Verify
+
+```bash
+hotelrate-mcp doctor
+```
+
+```
+  Prerequisites
+    ✓ Python ≥3.12 — Python 3.13.3
+    ✓ Playwright package — installed
+    ✓ Chromium browser — found
+
+  Configuration
+    ✓ .env file — exists
+    ! Settings — DEMO_MODE=true (set to false for live crawls)
+
+  Platform Profiles
+    ✓ Trip.com profile — .playwright/trip-profile/ (16494 files)
+    ✓ Booking.com profile — .playwright/booking-profile/ (53375 files)
+    ✓ Agoda profile — .playwright/agoda-profile/ (13688 files)
+
+  8 passed  •  0 error(s)  •  1 warning(s)
+```
+
+---
+
+## Connect to AI Agents
+
+### Claude Desktop
 
 Add to your `claude_desktop_config.json`:
 
@@ -34,17 +96,19 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
-## Claude Code Setup
+### Claude Code
 
 ```bash
 claude mcp add hotelrate -- hotelrate-mcp
 ```
 
-Then in Claude Code:
+Then ask naturally:
 
 > "Compare prices for Park Hyatt Tokyo on May 1st across all platforms"
 
-## Available MCP Tools
+---
+
+## MCP Tools
 
 ### `hotel_quote`
 
@@ -76,173 +140,180 @@ concurrency: 3   # 1-10
 
 ### `list_platforms`
 
-List supported OTA platforms and their status. No parameters.
+List supported OTA platforms and their status.
 
 ### `health_check`
 
-Check Playwright, Firecrawl, and platform readiness. No parameters.
+Check Playwright, Firecrawl, and platform readiness.
 
-## CLI Usage
+---
 
-The project also provides a CLI for direct use:
+## CLI Commands
 
-```bash
-# Single hotel quote
-python scripts/live_meta_quote.py \
-  --hotel "Park Hyatt Tokyo" \
-  --city "Tokyo" \
-  --checkin 2026-05-01 \
-  --checkout 2026-05-02 \
-  --currency USD \
-  --out reports/live_quote_latest.json
+| Command | Description |
+|---------|-------------|
+| `hotelrate-mcp` | Start the MCP server (default) |
+| `hotelrate-mcp serve` | Start the MCP server (explicit) |
+| `hotelrate-mcp setup` | Interactive first-time setup wizard |
+| `hotelrate-mcp doctor` | Environment health diagnostics |
 
-# Batch smoke test (4 hotels across all platforms)
-python scripts/live_meta_quote.py \
-  --batch-config scripts/live_all_sites_smoke.json \
-  --batch-concurrency 2 \
-  --enable-google \
-  --out reports/smoke.json
-```
+### `hotelrate-mcp setup`
 
-## API Usage
-
-The FastAPI server is available for HTTP-based access:
+Interactive 7-step wizard: dependency checks → `.env` creation → platform selection → browser login → session verification.
 
 ```bash
-# Install API dependencies
-pip install -e ".[api]"
-
-# Start the API
-uvicorn hotelrate.apps.api.main:app --reload
-
-# Query
-curl -X POST http://127.0.0.1:8000/meta/quote \
-  -H "Content-Type: application/json" \
-  -d '{"hotel_name":"Park Hyatt Tokyo","city":"Tokyo","checkin":"2026-05-01","checkout":"2026-05-02"}'
+hotelrate-mcp setup                          # full interactive wizard
+hotelrate-mcp setup --platforms trip booking  # specific platforms only
+hotelrate-mcp setup --skip-login             # skip browser login (CI)
+hotelrate-mcp setup --timeout 600            # adjust login wait time
 ```
+
+### `hotelrate-mcp doctor`
+
+One-command environment diagnostics.
+
+```bash
+hotelrate-mcp doctor          # quick check
+hotelrate-mcp doctor --probe  # also verify live sessions via headless browser
+hotelrate-mcp doctor --json   # machine-readable JSON output
+```
+
+Exit code: `0` = healthy, `1` = errors found.
+
+### Transports
+
+| Transport | Command | Use Case |
+|-----------|---------|----------|
+| stdio | `hotelrate-mcp` | Claude Code, Claude Desktop |
+| SSE | `hotelrate-mcp serve --transport sse` | Web clients, remote access |
+| Streamable HTTP | `hotelrate-mcp serve --transport streamable-http` | HTTP-based MCP clients |
+
+> Backward compat: `hotelrate-mcp --transport sse` (without `serve`) still works.
+
+---
+
+## Live Mode Setup
+
+Demo mode works out of the box. For **real OTA prices**, you need to log in to each platform once so browser cookies are saved.
+
+The easiest path:
+
+```bash
+hotelrate-mcp setup
+```
+
+Or manually:
+
+1. Edit `.env`:
+   ```dotenv
+   DEMO_MODE=false
+   PLAYWRIGHT_BROWSER_CHANNEL=chrome
+   ```
+
+2. Install browser: `playwright install chrome`
+
+3. Log in to each platform:
+   ```bash
+   python scripts/platform_login_warmup.py --platform trip
+   python scripts/platform_login_warmup.py --platform booking
+   ```
+
+4. Close browser after login. Session cookies are saved to `.playwright/` profiles.
+
+5. Verify: `hotelrate-mcp doctor --probe`
+
+See [docs/live-mode-login.md](docs/live-mode-login.md) for details.
+
+---
 
 ## Configuration
 
-All configuration is via environment variables (or `.env` file). Key settings:
+All via environment variables or `.env` file. Key settings:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEMO_MODE` | `true` | `true` = synthetic data, no browser. `false` = live Playwright crawls |
+| `DEMO_MODE` | `true` | `true` = synthetic data, `false` = live Playwright crawls |
 | `HEADLESS` | `true` | Show/hide browser windows |
-| `GOOGLE_SKIP` | `true` | Skip Google Hotels (slower, fragile) |
+| `GOOGLE_SKIP` | `true` | Skip Google Hotels (slower, often blocked) |
 | `FIRECRAWL_ENABLED` | `true` | Enable Firecrawl for URL discovery |
 | `DEFAULT_CHECKIN_OFFSET_DAYS` | `7` | Default check-in offset from today |
 | `DEFAULT_LENGTH_OF_STAY` | `1` | Default number of nights |
 
 See [`.env.example`](.env.example) for the complete list.
 
-### Live Mode Setup
+---
 
-For live OTA prices, switch from demo mode to Playwright mode.
+## Scripting & API
 
-#### Chrome Login Walkthrough
-
-This is the recommended flow for open-source users because Trip and Booking often need a warmed-up logged-in browser profile.
-
-1. Edit `.env`:
-
-```dotenv
-DEMO_MODE=false
-HEADLESS=false
-PLAYWRIGHT_BROWSER_CHANNEL=chrome
-```
-
-2. Install the branded browser channel:
-
-```bash
-playwright install chrome
-```
-
-3. Warm up local profiles and complete login manually in the opened Chrome windows:
-
-```bash
-python scripts/platform_login_warmup.py --platform trip --wait-seconds 300
-python scripts/platform_login_warmup.py --platform booking --wait-seconds 300
-```
-
-4. Close the browser window after login so the profile is saved.
-
-5. Run a live quote:
+### CLI Script
 
 ```bash
 python scripts/live_meta_quote.py \
-  --hotel "Park Hyatt Tokyo" \
-  --city "Tokyo" \
-  --checkin 2026-05-01 \
-  --checkout 2026-05-02 \
-  --platforms trip booking
+  --hotel "Park Hyatt Tokyo" --city "Tokyo" \
+  --checkin 2026-05-01 --checkout 2026-05-02 \
+  --currency USD --out reports/quote.json
 ```
 
-More detail is available in [docs/live-mode-login.md](docs/live-mode-login.md).
+### REST API (optional)
 
-### Open-Source Safety Notes
+```bash
+pip install -e ".[api]"
+uvicorn hotelrate.apps.api.main:app --reload
 
-- Do not commit `.env`, `.playwright/`, or any `reports/*_debug_*` files.
-- Browser login state is local machine state; it is not portable repository data.
-- If you need to share a bug, prefer sanitized samples like `reports/live_quote_sample.json`.
-- Security issues should be reported using [SECURITY.md](SECURITY.md).
+curl -X POST http://127.0.0.1:8000/meta/quote \
+  -H "Content-Type: application/json" \
+  -d '{"hotel_name":"Park Hyatt Tokyo","city":"Tokyo","checkin":"2026-05-01","checkout":"2026-05-02"}'
+```
+
+---
 
 ## Architecture
 
 ```
 src/hotelrate/
 ├── apps/
-│   ├── mcp/        # MCP Server (this project's main interface)
-│   │   ├── server.py   # FastMCP server + CLI entry point
-│   │   └── tools.py    # 4 MCP tool definitions
-│   ├── api/        # FastAPI REST endpoints
-│   └── worker/     # APScheduler periodic crawler
-├── services/
-│   └── live_quote_service.py   # Core orchestration
+│   ├── mcp/               # MCP Server (main interface)
+│   │   ├── server.py      # FastMCP server + CLI routing
+│   │   ├── tools.py       # 4 MCP tool definitions
+│   │   └── cli/           # setup & doctor subcommands
+│   ├── api/               # FastAPI REST endpoints (optional)
+│   └── worker/            # APScheduler periodic crawler (optional)
 ├── collectors/
-│   ├── trip/       # Trip.com adapter
-│   ├── booking/    # Booking.com adapter
-│   ├── agoda/      # Agoda adapter
-│   └── google_hotels/  # Google Hotels adapter
-├── schemas/        # Pydantic models
-├── core/           # Normalizer, matcher, locale helpers
-├── infra/          # Database (SQLAlchemy, optional)
-└── config.py       # Settings (pydantic-settings)
+│   ├── trip/              # Trip.com adapter
+│   ├── booking/           # Booking.com adapter
+│   ├── agoda/             # Agoda adapter
+│   └── google_hotels/     # Google Hotels adapter
+├── services/
+│   └── live_quote_service.py  # Core orchestration
+├── schemas/               # Pydantic models
+├── core/                  # Normalizer, matcher, locale helpers
+├── infra/                 # Database (SQLAlchemy, optional)
+└── config.py              # Settings (pydantic-settings)
 ```
 
-The MCP server is a thin wrapper (~250 lines) around the existing `LiveQuoteService`. All collectors, schemas, and business logic remain unchanged.
+---
 
 ## Development
 
 ```bash
-# Setup
-python3.12 -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[all,dev]"
 
-# Run tests
-pytest tests/ -v
-
-# Lint
-ruff check src/
-
-# Run MCP server locally
-hotelrate-mcp
-
-# Optional: install a browser for live mode
-playwright install chromium
-
-# Run with SSE transport
-hotelrate-mcp --transport sse --port 8080
+pytest tests/ -v          # 112 tests
+ruff check src/ tests/    # lint
+hotelrate-mcp doctor      # environment check
 ```
 
-## Supported Transports
+## Safety Notes
 
-| Transport | Command | Use Case |
-|-----------|---------|----------|
-| stdio | `hotelrate-mcp` | Claude Code, Claude Desktop |
-| SSE | `hotelrate-mcp --transport sse` | Web clients, remote access |
-| Streamable HTTP | `hotelrate-mcp --transport streamable-http` | HTTP-based MCP clients |
+- **Do not commit** `.env`, `.playwright/`, or `reports/*_debug_*` files
+- Browser login state is local-only — not portable across machines
+- Report security issues via [SECURITY.md](SECURITY.md)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
