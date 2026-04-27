@@ -2,27 +2,27 @@
 
 Thank you for your interest in contributing! This guide covers development setup, testing, and how to add new OTA platforms.
 
-Please also follow [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+Please also follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Development Setup
 
 ```bash
 # Clone the repo
-git clone https://github.com/<your-org>/hotelrate-crawl.git
+git clone https://github.com/seanbabalala/hotelrate-crawl.git
 cd hotelrate-crawl
 
 # Create virtual environment (Python 3.12+)
-python3.12 -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 
 # Install all dependencies (core + API + worker + dev tools)
 pip install -e ".[all,dev]"
 
-# Install Playwright browser
-playwright install chromium
+# Check environment health
+hotelrate-mcp doctor
 
-# Copy environment config
-cp .env.example .env
+# Or run the interactive setup wizard
+hotelrate-mcp setup
 ```
 
 ## Repo Hygiene
@@ -48,10 +48,10 @@ pytest tests/ -v --cov=hotelrate
 
 ```bash
 # Check for issues
-ruff check src/
+ruff check src/ tests/
 
 # Auto-fix
-ruff check src/ --fix
+ruff check src/ tests/ --fix
 ```
 
 ## Running the MCP Server
@@ -61,10 +61,10 @@ ruff check src/ --fix
 hotelrate-mcp
 
 # SSE transport (for web clients)
-hotelrate-mcp --transport sse --port 8080
+hotelrate-mcp serve --transport sse --port 8080
 
 # streamable-http transport
-hotelrate-mcp --transport streamable-http --port 8080
+hotelrate-mcp serve --transport streamable-http --port 8080
 ```
 
 For live OTA debugging with a real Chrome window, see [docs/live-mode-login.md](docs/live-mode-login.md).
