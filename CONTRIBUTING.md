@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing! This guide covers development setup, testing, and how to add new OTA platforms.
 
+Please also follow [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
 ## Development Setup
 
 ```bash
@@ -22,6 +24,12 @@ playwright install chromium
 # Copy environment config
 cp .env.example .env
 ```
+
+## Repo Hygiene
+
+- Never commit `.env`, `.playwright/`, or raw `reports/*_debug_*` artifacts.
+- If you need to attach debugging data to an issue or PR, sanitize tokens, session ids, and account-specific URLs first.
+- Browser login profiles are local-only state. Document the warmup steps instead of sharing profile folders.
 
 ## Running Tests
 
@@ -58,6 +66,8 @@ hotelrate-mcp --transport sse --port 8080
 # streamable-http transport
 hotelrate-mcp --transport streamable-http --port 8080
 ```
+
+For live OTA debugging with a real Chrome window, see [docs/live-mode-login.md](docs/live-mode-login.md).
 
 ## Project Structure
 

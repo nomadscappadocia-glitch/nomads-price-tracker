@@ -27,6 +27,15 @@ logger = logging.getLogger(__name__)
 _CHROMIUM_CACHE = Path.home() / ".cache" / "ms-playwright"
 
 
+def _browser_install_target(settings: Settings) -> str:
+    channel = settings.playwright_browser_channel.strip().lower()
+    return channel or "chromium"
+
+
+def _browser_install_command(settings: Settings) -> str:
+    return f"playwright install {_browser_install_target(settings)}"
+
+
 def _check_playwright_package(settings: Settings) -> dict[str, Any] | None:
     """Check whether the ``playwright`` Python package is importable."""
     if importlib.util.find_spec("playwright") is not None:
@@ -40,7 +49,7 @@ def _check_playwright_package(settings: Settings) -> dict[str, Any] | None:
             "Playwright Python package is not installed. "
             "Live mode requires it to launch browsers."
         ),
-        "fix_command": "pip install playwright",
+        "fix_command": f"pip install playwright && {_browser_install_command(settings)}",
     }
 
 
@@ -49,6 +58,8 @@ def _check_chromium_binary(settings: Settings) -> dict[str, Any] | None:
     # If playwright package itself is missing, skip the binary check —
     # the package check already covers that.
     if importlib.util.find_spec("playwright") is None:
+        return None
+    if _browser_install_target(settings) != "chromium":
         return None
 
     found = False
@@ -67,7 +78,7 @@ def _check_chromium_binary(settings: Settings) -> dict[str, Any] | None:
             f"{_CHROMIUM_CACHE}. "
             "Live mode needs it for Playwright crawls."
         ),
-        "fix_command": "playwright install chromium",
+        "fix_command": _browser_install_command(settings),
     }
 
 

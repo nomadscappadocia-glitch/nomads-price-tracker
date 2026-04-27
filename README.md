@@ -9,9 +9,8 @@ Compare hotel rates across **Trip.com**, **Booking.com**, **Agoda**, and **Googl
 ```bash
 # Install
 pip install -e .
-playwright install chromium
 
-# Copy config (demo mode is on by default — no browser needed)
+# Copy config (demo mode is on by default, so no browser login is required)
 cp .env.example .env
 
 # Run the MCP server (stdio transport)
@@ -139,16 +138,54 @@ See [`.env.example`](.env.example) for the complete list.
 
 ### Live Mode Setup
 
-For real hotel prices (not demo data):
+For live OTA prices, switch from demo mode to Playwright mode.
 
-1. Set `DEMO_MODE=false` in `.env`
-2. Install Playwright: `playwright install chromium`
-3. Warm up browser profiles for OTA login walls:
+#### Chrome Login Walkthrough
+
+This is the recommended flow for open-source users because Trip and Booking often need a warmed-up logged-in browser profile.
+
+1. Edit `.env`:
+
+```dotenv
+DEMO_MODE=false
+HEADLESS=false
+PLAYWRIGHT_BROWSER_CHANNEL=chrome
+```
+
+2. Install the branded browser channel:
+
+```bash
+playwright install chrome
+```
+
+3. Warm up local profiles and complete login manually in the opened Chrome windows:
 
 ```bash
 python scripts/platform_login_warmup.py --platform trip --wait-seconds 300
 python scripts/platform_login_warmup.py --platform booking --wait-seconds 300
 ```
+
+4. Close the browser window after login so the profile is saved.
+
+5. Run a live quote:
+
+```bash
+python scripts/live_meta_quote.py \
+  --hotel "Park Hyatt Tokyo" \
+  --city "Tokyo" \
+  --checkin 2026-05-01 \
+  --checkout 2026-05-02 \
+  --platforms trip booking
+```
+
+More detail is available in [docs/live-mode-login.md](docs/live-mode-login.md).
+
+### Open-Source Safety Notes
+
+- Do not commit `.env`, `.playwright/`, or any `reports/*_debug_*` files.
+- Browser login state is local machine state; it is not portable repository data.
+- If you need to share a bug, prefer sanitized samples like `reports/live_quote_sample.json`.
+- Security issues should be reported using [SECURITY.md](SECURITY.md).
 
 ## Architecture
 
@@ -182,7 +219,6 @@ The MCP server is a thin wrapper (~250 lines) around the existing `LiveQuoteServ
 python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[all,dev]"
-playwright install chromium
 
 # Run tests
 pytest tests/ -v
@@ -192,6 +228,9 @@ ruff check src/
 
 # Run MCP server locally
 hotelrate-mcp
+
+# Optional: install a browser for live mode
+playwright install chromium
 
 # Run with SSE transport
 hotelrate-mcp --transport sse --port 8080

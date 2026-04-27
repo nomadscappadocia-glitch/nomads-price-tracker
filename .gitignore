@@ -14,6 +14,7 @@ build/
 
 # Reports and runtime artifacts
 reports/*_debug_*.json
+reports/*_debug_*.html
 reports/google_runtime_*.html
 reports/google_runtime_*.json
 reports/nightly_quote_report.json

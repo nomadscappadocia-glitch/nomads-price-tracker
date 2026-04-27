@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import os
 import sys
 from pathlib import Path
 
@@ -13,14 +12,17 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from hotelrate.config import get_settings
+
 
 def parse_args() -> argparse.Namespace:
+    settings = get_settings()
     parser = argparse.ArgumentParser(
         description="Open Trip with persistent Playwright profile and keep it open for manual login."
     )
     parser.add_argument(
         "--user-data-dir",
-        default=os.environ.get("PLAYWRIGHT_USER_DATA_DIR", str(ROOT / ".playwright" / "trip-profile")),
+        default=settings.playwright_user_data_dir_trip or settings.playwright_user_data_dir or str(ROOT / ".playwright" / "trip-profile"),
     )
     parser.add_argument(
         "--url",
@@ -29,19 +31,20 @@ def parse_args() -> argparse.Namespace:
             "&checkIn=2026-03-02&checkOut=2026-03-03&adult=2&children=0&curr=USD&barcurr=USD"
         ),
     )
-    parser.add_argument("--channel", default=os.environ.get("PLAYWRIGHT_BROWSER_CHANNEL", "chromium"))
+    parser.add_argument("--channel", default=settings.playwright_browser_channel)
     parser.add_argument("--wait-seconds", type=int, default=240, help="How long to keep browser open.")
     return parser.parse_args()
 
 
 async def main() -> None:
     args = parse_args()
+    settings = get_settings()
     user_data_dir = Path(args.user_data_dir).expanduser().resolve()
     user_data_dir.mkdir(parents=True, exist_ok=True)
 
     launch_kwargs: dict[str, object] = {
         "headless": False,
-        "locale": "en-US",
+        "locale": settings.default_locale,
         "args": ["--disable-blink-features=AutomationControlled"],
     }
     if args.channel and args.channel != "chromium":

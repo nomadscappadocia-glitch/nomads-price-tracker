@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import date, datetime, timezone
+from datetime import date
 from decimal import Decimal
 
 from hotelrate.core.normalizer import normalize_offer, _build_rate_hash

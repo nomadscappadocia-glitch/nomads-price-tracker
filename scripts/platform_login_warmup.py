@@ -2,9 +2,17 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
 from playwright.async_api import async_playwright
+
+from hotelrate.config import get_settings
 
 
 DEFAULT_URLS = {
@@ -16,26 +24,42 @@ DEFAULT_URLS = {
 
 
 def parse_args() -> argparse.Namespace:
+    settings = get_settings()
     parser = argparse.ArgumentParser(description="Warm up persistent browser profile for a platform login.")
     parser.add_argument("--platform", required=True, choices=sorted(DEFAULT_URLS.keys()))
     parser.add_argument("--user-data-dir", default="")
     parser.add_argument("--url", default="")
     parser.add_argument("--wait-seconds", type=int, default=300)
-    parser.add_argument("--channel", default="chromium")
+    parser.add_argument("--channel", default=settings.playwright_browser_channel)
     return parser.parse_args()
+
+
+def _default_profile_dir(platform: str) -> str:
+    settings = get_settings()
+    platform_dirs = {
+        "trip": settings.playwright_user_data_dir_trip.strip(),
+        "booking": settings.playwright_user_data_dir_booking.strip(),
+        "agoda": settings.playwright_user_data_dir_agoda.strip(),
+        "google_hotels": settings.playwright_user_data_dir_google_hotels.strip(),
+    }
+    if platform_dirs.get(platform):
+        return platform_dirs[platform]
+    if settings.playwright_user_data_dir.strip():
+        return settings.playwright_user_data_dir.strip()
+    return str(ROOT / ".playwright" / f"{platform}-profile")
 
 
 async def main() -> None:
     args = parse_args()
-    root = Path(__file__).resolve().parents[1]
-    user_data_dir = args.user_data_dir or str(root / ".playwright" / f"{args.platform}-profile")
+    settings = get_settings()
+    user_data_dir = args.user_data_dir or _default_profile_dir(args.platform)
     url = args.url or DEFAULT_URLS[args.platform]
     profile = Path(user_data_dir).expanduser().resolve()
     profile.mkdir(parents=True, exist_ok=True)
 
     launch_kwargs: dict[str, object] = {
         "headless": False,
-        "locale": "en-US",
+        "locale": settings.default_locale,
         "args": ["--disable-blink-features=AutomationControlled"],
     }
     if args.channel and args.channel != "chromium":

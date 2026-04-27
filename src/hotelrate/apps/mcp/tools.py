@@ -315,6 +315,7 @@ def register_tools(mcp: FastMCP) -> None:
             import importlib.util
 
             playwright_ok = importlib.util.find_spec("playwright") is not None
+            browser_target = settings.playwright_browser_channel.strip() or "chromium"
             if playwright_ok:
                 playwright_note = (
                     f"channel={settings.playwright_browser_channel}, headless={settings.headless}"
@@ -322,13 +323,14 @@ def register_tools(mcp: FastMCP) -> None:
             else:
                 playwright_note = (
                     "playwright not installed — "
-                    "run: pip install playwright && playwright install chromium"
+                    f"run: pip install playwright && playwright install {browser_target}"
                 )
         except Exception:
             playwright_ok = False
+            browser_target = settings.playwright_browser_channel.strip() or "chromium"
             playwright_note = (
                 "playwright not installed — "
-                "run: pip install playwright && playwright install chromium"
+                f"run: pip install playwright && playwright install {browser_target}"
             )
 
         # Check Firecrawl connectivity
