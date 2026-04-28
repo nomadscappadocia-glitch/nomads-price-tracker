@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hotelrate-mcp"
-version = "0.2.0"
+version = "0.3.0"
 description = "MCP Server & CLI for real-time multi-platform hotel price comparison (Trip.com, Booking.com, Agoda, Google Hotels)"
 readme = "README.md"
 license = "MIT"
