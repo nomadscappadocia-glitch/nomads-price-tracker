@@ -426,6 +426,8 @@ class BookingCollector(BaseCollector):
             if not room_name:
                 continue
 
+            if __import__("os").environ.get("NOMADS_PRICE_DIAGNOSTICS") == "1":
+                print("NOMADS_BOOKING_PRICE", repr({k: row.get(k) for k in ("roomName", "displayPrice", "rawPrice", "cancellationType", "mealPlan")}), flush=True)
             amount = self._to_decimal(row.get("rawPrice")) or self._to_decimal(row.get("displayPrice"))
             if amount is None or amount <= Decimal("0"):
                 continue
