@@ -28,9 +28,14 @@ jobs:
       - name: Collect candidate public prices
         shell: bash
         run: |
-          CHECKIN=$(TZ=Europe/Istanbul date -d '+3 days' +%F)
-          CHECKOUT=$(TZ=Europe/Istanbul date -d '+4 days' +%F)
-          python scripts/live_meta_quote.py --hotel "Nomads Cave Hotel & Rooftop" --city "Göreme" --checkin "$CHECKIN" --checkout "$CHECKOUT" --adults 2 --children 0 --currency EUR --platforms ${{ matrix.platform }} --probe-days 0 --no-rich --out "reports/pilot-${{ matrix.platform }}.json"
+          CHECKIN=2026-11-29
+          CHECKOUT=2026-11-30
+          case "${{ matrix.platform }}" in
+            booking) URL_ARGS=(--booking-url "https://www.booking.com/hotel/tr/blue-moon-motel.html");;
+            agoda) URL_ARGS=(--agoda-url "https://www.agoda.com/blue-moon-cave-hotel/hotel/goreme-tr.html");;
+            trip) URL_ARGS=(--trip-url "https://www.trip.com/hotels/goreme-hotel-detail-2547306/blue-moon-cave-hotel/");;
+          esac
+          python scripts/live_meta_quote.py --hotel "Nomads Cave Hotel & Rooftop" --city "Göreme" --checkin "$CHECKIN" --checkout "$CHECKOUT" --adults 2 --children 0 --currency GBP --platforms ${{ matrix.platform }} "${URL_ARGS[@]}" --probe-days 0 --no-rich --out "reports/pilot-${{ matrix.platform }}.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
