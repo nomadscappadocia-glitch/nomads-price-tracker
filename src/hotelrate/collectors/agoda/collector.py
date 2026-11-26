@@ -207,6 +207,20 @@ class AgodaCollector(BaseCollector):
                         if not isinstance(price_block, dict):
                             continue
 
+                        if __import__("os").environ.get("NOMADS_PRICE_DIAGNOSTICS") == "1":
+                            def price_fields(value, prefix="", depth=0):
+                                if depth > 5 or not isinstance(value, dict):
+                                    return {}
+                                result = {}
+                                for key, item in value.items():
+                                    field = f"{prefix}.{key}" if prefix else str(key)
+                                    if isinstance(item, dict):
+                                        result.update(price_fields(item, field, depth + 1))
+                                    elif isinstance(item, (str, int, float)) and any(word in str(key).lower() for word in ("amount", "currency", "tax", "fee", "total", "price")):
+                                        if len(str(item)) <= 80:
+                                            result[field] = item
+                                return result
+                            print("NOMADS_AGODA_PRICE", repr({"room": room_name, "fields": price_fields(price_block)}), flush=True)
                         final_price = self._extract_decimal_path(price_block, ("final", "amount"))
                         base_price = self._extract_decimal_path(price_block, ("sell", "amount"))
                         if base_price is None:
