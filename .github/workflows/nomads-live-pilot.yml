@@ -1,0 +1,40 @@
+name: Nomads live price pilot
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [booking, agoda, trip]
+    env:
+      DEMO_MODE: "false"
+      HEADLESS: "true"
+      GOOGLE_SKIP: "true"
+      FIRECRAWL_ENABLED: "false"
+      FIRECRAWL_FALLBACK_FOR_LIVE_QUOTE: "false"
+      PLAYWRIGHT_DISABLE_AUTOMATION_FLAGS: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - run: python -m playwright install --with-deps chromium
+      - name: Collect candidate public prices
+        shell: bash
+        run: |
+          CHECKIN=$(TZ=Europe/Istanbul date -d '+3 days' +%F)
+          CHECKOUT=$(TZ=Europe/Istanbul date -d '+4 days' +%F)
+          python scripts/live_meta_quote.py --hotel "Nomads Cave Hotel & Rooftop" --city "Göreme" --checkin "$CHECKIN" --checkout "$CHECKOUT" --adults 2 --children 0 --currency EUR --platforms ${{ matrix.platform }} --probe-days 0 --no-rich --out "reports/pilot-${{ matrix.platform }}.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pilot-${{ matrix.platform }}
+          path: reports/pilot-${{ matrix.platform }}.json
+          if-no-files-found: warn
+          retention-days: 3
