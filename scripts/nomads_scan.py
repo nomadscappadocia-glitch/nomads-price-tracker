@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--days", type=int, choices=range(1, 8), default=1)
     args = parser.parse_args()
     platform = args.platform
+    currency = 'EUR' if platform == 'booking' else 'USD'
     hotels = json.loads((ROOT / "config/nomads_competitors.json").read_text())
     today = datetime.now(ZoneInfo("Europe/Istanbul")).date()
     folder = ROOT / "reports" / ("competitors-" + platform)
@@ -33,7 +34,7 @@ def main():
             checkout = checkin + timedelta(days=1)
             url = hotel.get(platform)
             row = dict(scan_date=str(today), hotel=hotel["name"], platform=platform,
-                       checkin=str(checkin), checkout=str(checkout), currency="EUR",
+                       checkin=str(checkin), checkout=str(checkout), currency=currency,
                        price="", room="", status="not_listed", tax_inclusion="unknown")
             report = folder / f"{i}-{checkin}.json"
             if url:
@@ -41,7 +42,7 @@ def main():
                 cmd = [sys.executable, str(ROOT / "scripts/live_meta_quote.py"),
                        "--hotel", hotel["name"], "--city", "Göreme", "--checkin", str(checkin),
                        "--checkout", str(checkout), "--adults", "2", "--children", "0",
-                       "--currency", "EUR", "--platforms", platform, f"--{platform}-url", url,
+                       "--currency", currency, "--platforms", platform, f"--{platform}-url", url,
                        "--probe-days", "0", "--no-rich", "--out", str(report)]
                 try:
                     report.unlink(missing_ok=True)
@@ -57,7 +58,7 @@ def main():
                     else:
                         candidates = []
                         for offer in result["offers"]:
-                            if offer.get("currency") != "EUR":
+                            if offer.get("currency") != currency:
                                 continue
                             if offer.get("mode") not in {"booking_env", "room_grid_offer"}:
                                 continue
@@ -71,7 +72,7 @@ def main():
                             price, room = min(candidates)
                             row.update(price=str(price), room=room, status="indicative_unverified")
                         else:
-                            row["status"] = "no_eligible_eur_offer"
+                            row["status"] = "no_eligible_currency_offer"
                 except (subprocess.SubprocessError, OSError, ValueError, KeyError, TypeError) as exc:
                     print(f"Collection failed for {hotel['name']}: {type(exc).__name__}", flush=True)
             rows.append(row)
