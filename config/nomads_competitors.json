@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Nomads Cave Hotel & Rooftop",
+    "booking": "https://www.booking.com/hotel/tr/blue-moon-motel.html",
+    "agoda": "https://www.agoda.com/blue-moon-cave-hotel/hotel/goreme-tr.html"
+  },
+  {
+    "name": "Goreme Cave Rooms",
+    "booking": "https://www.booking.com/hotel/tr/goreme-city.html",
+    "agoda": "https://www.agoda.com/goreme-cave-rooms-h34597608/hotel/goreme-tr.html"
+  },
+  {
+    "name": "Cappadocia Cave Rooms",
+    "booking": null,
+    "agoda": null
+  },
+  {
+    "name": "Historical Goreme House",
+    "booking": "https://www.booking.com/hotel/tr/historical-goreme-house-goreme.html",
+    "agoda": null
+  },
+  {
+    "name": "Adventure Inn Cappadocia",
+    "booking": "https://www.booking.com/hotel/tr/adventure-inn-cappadocia.html",
+    "agoda": null
+  },
+  {
+    "name": "Lord of Cappadocia Hotel",
+    "booking": "https://www.booking.com/hotel/tr/sef-cave.html",
+    "agoda": "https://www.agoda.com/sef-cave-hotel/hotel/goreme-tr.html"
+  },
+  {
+    "name": "Vintage Cave House",
+    "booking": "https://www.booking.com/hotel/tr/vintage-cave-house.html",
+    "agoda": "https://www.agoda.com/vintage-cave-house-hotel/hotel/goreme-tr.html"
+  },
+  {
+    "name": "Goreme Palace Cave Suite",
+    "booking": "https://www.booking.com/hotel/tr/goreme-palace-cave.html",
+    "agoda": null
+  }
+]
