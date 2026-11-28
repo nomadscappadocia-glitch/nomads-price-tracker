@@ -1,0 +1,36 @@
+name: Nomads competitor scan
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [booking, agoda]
+    env:
+      DEMO_MODE: "false"
+      HEADLESS: "true"
+      GOOGLE_SKIP: "true"
+      FIRECRAWL_ENABLED: "false"
+      FIRECRAWL_FALLBACK_FOR_LIVE_QUOTE: "false"
+      PLAYWRIGHT_DISABLE_AUTOMATION_FLAGS: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - run: python -m playwright install --with-deps chromium
+      - name: Scan configured properties
+        run: python scripts/nomads_scan.py --platform ${{ matrix.platform }} --days 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: competitors-${{ matrix.platform }}
+          path: reports/competitors-${{ matrix.platform }}/
+          if-no-files-found: warn
+          retention-days: 7
