@@ -10,19 +10,19 @@
     "agoda": "https://www.agoda.com/goreme-cave-rooms-h34597608/hotel/goreme-tr.html"
   },
   {
-    "name": "Cappadocia Cave Rooms",
-    "booking": null,
-    "agoda": null
+    "name": "Risus Cave Suites",
+    "booking": "https://www.booking.com/hotel/tr/risus-cave-suites.html",
+    "agoda": "https://www.agoda.com/risus-cave-suites/hotel/goreme-tr.html"
   },
   {
     "name": "Historical Goreme House",
     "booking": "https://www.booking.com/hotel/tr/historical-goreme-house-goreme.html",
-    "agoda": null
+    "agoda": "https://www.agoda.com/historical-goreme-house/hotel/goreme-tr.html"
   },
   {
     "name": "Adventure Inn Cappadocia",
     "booking": "https://www.booking.com/hotel/tr/adventure-inn-cappadocia.html",
-    "agoda": null
+    "agoda": "https://www.agoda.com/adventure-inn-cappadocia/hotel/all/goreme-tr.html"
   },
   {
     "name": "Lord of Cappadocia Hotel",
